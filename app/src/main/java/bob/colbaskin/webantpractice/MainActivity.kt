@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice
+   package bob.colbaskin.webantpractice
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import bob.colbaskin.webantpractice.ui.theme.WebAntPracticeTheme
+import bob.colbaskin.webantpractice.design_system.theme.WebAntPracticeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
