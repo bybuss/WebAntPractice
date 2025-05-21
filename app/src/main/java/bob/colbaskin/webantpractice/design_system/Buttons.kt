@@ -76,7 +76,7 @@ fun FilledButton(
                 CircularProgressIndicator(
                     color = CustomTheme.colors.white,
                     modifier = Modifier.size(22.dp),
-                    strokeWidth = 1.dp
+                    strokeWidth = 2.dp
                 )
             }
         }
@@ -133,7 +133,7 @@ fun CustomOutlinedButton(
                 CircularProgressIndicator(
                     color = CustomTheme.colors.black,
                     modifier = Modifier.size(22.dp),
-                    strokeWidth = 1.dp
+                    strokeWidth = 2.dp
                 )
             }
         }
@@ -181,7 +181,7 @@ fun CustomTextButton(
                 CircularProgressIndicator(
                     color = CustomTheme.colors.black,
                     modifier = Modifier.size(22.dp),
-                    strokeWidth = 1.dp
+                    strokeWidth = 2.dp
                 )
             }
         }
@@ -286,6 +286,13 @@ fun ButtonsPreview() {
                 enabled = true,
                 isLoading = false
             )
+            Spacer(modifier = Modifier.size(10.dp))
+            FilledButton(
+                text = R.string.sign_up,
+                onClick = { },
+                enabled = true,
+                isLoading = true
+            )
             Spacer(modifier = Modifier.size(20.dp))
             CustomOutlinedButton(
                 text = R.string.sign_in,
@@ -317,6 +324,7 @@ fun ButtonsPreview() {
                 onClick = { },
                 isSelected = false
             )
+            Spacer(modifier = Modifier.size(10.dp))
         }
     }
 }
