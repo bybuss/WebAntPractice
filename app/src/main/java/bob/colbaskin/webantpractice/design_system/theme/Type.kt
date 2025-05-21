@@ -10,8 +10,8 @@ import bob.colbaskin.webantpractice.R
 
 val Roboto = FontFamily(
     Font(R.font.roboto_bold, FontWeight.Bold),
-    Font(R.font.roboto_regular, FontWeight.Medium),
-    Font(R.font.roboto_medium, FontWeight.Normal)
+    Font(R.font.roboto_medium, FontWeight.Medium),
+    Font(R.font.roboto_regular, FontWeight.Normal)
 )
 
 val LocalTextStyles = compositionLocalOf { AppTextStyles }
