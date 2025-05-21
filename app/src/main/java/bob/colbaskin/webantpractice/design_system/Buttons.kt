@@ -6,22 +6,24 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.RippleConfiguration
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,7 +64,7 @@ fun FilledButton(
             contentAlignment = Alignment.Center,
             modifier = Modifier.wrapContentSize()
         ) {
-            Text(
+               Text(
                 text = stringResource(text),
                 style = CustomTheme.typography.h4,
                 modifier = Modifier.alpha(if (isLoading) 0f else 1f)
@@ -184,8 +186,46 @@ fun CustomTextButton(
 }
 
 @Composable
-fun FABButton() {
-    // TODO: Implement
+fun FABButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed = interactionSource.collectIsPressedAsState().value
+
+    FloatingActionButton(
+        onClick = { if (enabled) onClick else {} },
+        modifier = modifier,
+        shape = CustomTheme.shapes.FAB,
+        containerColor = when {
+            !enabled -> CustomTheme.colors.grayLight
+            isPressed -> CustomTheme.colors.main
+            else -> CustomTheme.colors.black
+        },
+        contentColor = when {
+            !enabled -> CustomTheme.colors.gray
+            else -> CustomTheme.colors.white
+        },
+        elevation = FloatingActionButtonDefaults.elevation(
+            defaultElevation = when {
+                isPressed -> 0.dp
+                !enabled -> 0.dp
+                else -> 4.dp
+            },
+            pressedElevation = when {
+                !enabled -> 0.dp
+                isPressed -> 0.dp
+                else -> 8.dp
+            }
+        ),
+        interactionSource = interactionSource
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.add_new),
+            contentDescription = stringResource(R.string.add_new_logo),
+        )
+    }
 }
 
 @Composable
@@ -216,7 +256,12 @@ fun ButtonsPreview() {
                 enabled = true,
                 isLoading = false
             )
-            FABButton()
+            Spacer(modifier = Modifier.size(20.dp))
+            FABButton(
+                onClick = { },
+                enabled = true
+            )
+            Spacer(modifier = Modifier.size(20.dp))
             TabButton()
         }
     }
