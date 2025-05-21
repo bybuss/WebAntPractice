@@ -10,8 +10,8 @@ object Shapes {
     val button = RoundedCornerShape(10.dp)
     val FAB = RoundedCornerShape(20.dp)
     val textField = RoundedCornerShape(10.dp)
-        val search = RoundedCornerShape(28.dp)
-        val card = RoundedCornerShape(28.dp)
-        val photoSmall = RoundedCornerShape(2.dp)
-        val photoBig = RoundedCornerShape(10.dp)
-    }
+    val search = RoundedCornerShape(28.dp)
+    val card = RoundedCornerShape(28.dp)
+    val photoSmall = RoundedCornerShape(2.dp)
+    val photoBig = RoundedCornerShape(10.dp)
+}

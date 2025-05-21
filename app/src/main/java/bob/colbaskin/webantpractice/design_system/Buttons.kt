@@ -7,6 +7,7 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
@@ -23,6 +24,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,7 +47,7 @@ fun FilledButton(
 
     Button(
         onClick = onClick,
-        modifier = modifier,
+        modifier = modifier.height(40.dp),
         shape = CustomTheme.shapes.button,
         colors = ButtonDefaults.buttonColors(
             containerColor = when {
@@ -94,7 +97,7 @@ fun CustomOutlinedButton(
 
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier,
+        modifier = modifier.height(40.dp),
         shape = CustomTheme.shapes.button,
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = when {
@@ -150,7 +153,7 @@ fun CustomTextButton(
 
     TextButton(
         onClick = onClick,
-        modifier = modifier,
+        modifier = modifier.height(40.dp),
         shape = CustomTheme.shapes.button,
         colors = ButtonDefaults.textButtonColors(
             contentColor = when {
@@ -229,8 +232,47 @@ fun FABButton(
 }
 
 @Composable
-fun TabButton() {
-    // TODO: Implement
+fun TabButton(
+    @StringRes text: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = true
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed = interactionSource.collectIsPressedAsState().value
+    val lineColor = when {
+        isPressed -> CustomTheme.colors.main
+        isSelected -> CustomTheme.colors.main
+        !isSelected -> CustomTheme.colors.gray
+        else -> CustomTheme.colors.black
+    }
+
+    TextButton(
+        onClick = onClick,
+        modifier = modifier
+            .height(40.dp)
+            .drawBehind {
+                val strokeWidth = 1.dp.toPx()
+                val y = size.height - strokeWidth - 9
+                drawLine(
+                    color = lineColor,
+                    start = Offset(0f, y),
+                    end = Offset(size.width, y),
+                    strokeWidth = strokeWidth
+                )
+            },
+        colors = ButtonDefaults.textButtonColors(
+            contentColor = when {
+                isPressed -> CustomTheme.colors.main
+                isSelected -> CustomTheme.colors.black
+                !isSelected -> CustomTheme.colors.gray
+                else -> CustomTheme.colors.black
+            },
+        ),
+        interactionSource = interactionSource
+    ) {
+        Text(text = stringResource(text))
+    }
 }
 
 @Preview(showBackground = true)
@@ -244,12 +286,14 @@ fun ButtonsPreview() {
                 enabled = true,
                 isLoading = false
             )
+            Spacer(modifier = Modifier.size(20.dp))
             CustomOutlinedButton(
                 text = R.string.sign_in,
                 onClick = { },
                 enabled = true,
                 isLoading = false
             )
+            Spacer(modifier = Modifier.size(20.dp))
             CustomTextButton(
                 text = R.string.sign_in,
                 onClick = { },
@@ -262,7 +306,17 @@ fun ButtonsPreview() {
                 enabled = true
             )
             Spacer(modifier = Modifier.size(20.dp))
-            TabButton()
+            TabButton(
+                text = R.string.sign_up,
+                onClick = { },
+                isSelected = true
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            TabButton(
+                text = R.string.sign_up,
+                onClick = { },
+                isSelected = false
+            )
         }
     }
 }
