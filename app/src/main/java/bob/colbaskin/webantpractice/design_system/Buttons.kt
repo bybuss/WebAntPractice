@@ -198,7 +198,7 @@ fun FABButton(
     val isPressed = interactionSource.collectIsPressedAsState().value
 
     FloatingActionButton(
-        onClick = { if (enabled) onClick else {} },
+        onClick = { if (enabled) onClick },
         modifier = modifier,
         shape = CustomTheme.shapes.FAB,
         containerColor = when {
