@@ -1,7 +1,6 @@
 package bob.colbaskin.webantpractice.design_system
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import bob.colbaskin.webantpractice.R
 import bob.colbaskin.webantpractice.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.design_system.theme.WebAntPracticeTheme
+import bob.colbaskin.webantpractice.design_system.utils.clickableWithoutRipple
 
 @Composable
 fun CustomCheckbox(
@@ -39,13 +39,10 @@ fun CustomCheckbox(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
-        modifier = modifier
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null
-            ) {
-                onCheckedChange(!checked)
-            }
+        modifier = modifier.clickableWithoutRipple(
+            interactionSource = interactionSource,
+            onClick = { onCheckedChange(!checked) }
+        )
     ) {
         Checkbox(
             checked = checked,
