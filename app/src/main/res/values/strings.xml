@@ -28,6 +28,7 @@
     <string name="error_email">Invalid email address</string>
     <string name="error_password">Password must be at least 8 characters</string>
     <string name="error_empty_field">This field cannot be empty</string>
+    <string name="toast_photo_successfully">Photo uploaded successfully</string>
 
     <string name="welcome">Welcome to Gallery!</string>
     <string name="create_account">Create an account</string>

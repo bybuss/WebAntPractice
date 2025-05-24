@@ -1,5 +1,8 @@
 package bob.colbaskin.webantpractice.design_system
 
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,7 +15,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,6 +22,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -33,7 +37,6 @@ import bob.colbaskin.webantpractice.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.design_system.theme.WebAntPracticeTheme
 import bob.colbaskin.webantpractice.design_system.utils.clickableWithoutRipple
 import bob.colbaskin.webantpractice.design_system.utils.convertMillisToDate
-import bob.colbaskin.webantpractice.design_system.utils.toDate
 
 enum class TextFieldType {
     UserName,
@@ -49,7 +52,7 @@ fun CustomTextField(
     text: String? = null,
     type: TextFieldType,
     selectedDate: Long? = null,
-    onValueChange: (String) -> Unit,
+    onValueChange: (String) -> Unit = {},
     onDateSelected: (Long?) -> Unit = {},
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -58,11 +61,6 @@ fun CustomTextField(
     val interactionSource = remember { MutableInteractionSource() }
     var showPassword by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
-    var internalText by remember { mutableStateOf("") }
-
-    LaunchedEffect(selectedDate, text) {
-        internalText = selectedDate?.let { convertMillisToDate(it) } ?: text ?: ""
-    }
 
     if (showDatePicker) {
         Popup(
@@ -70,8 +68,8 @@ fun CustomTextField(
             alignment = Alignment.TopStart
         ) {
             DatePickerModal(
-                onDateSelected = { dateMillis ->
-                    onDateSelected(dateMillis)
+                onDateSelected = { date ->
+                    onDateSelected(date)
                     showDatePicker = false
                 },
                 onDismiss = { showDatePicker = false }
@@ -80,20 +78,25 @@ fun CustomTextField(
     }
 
     OutlinedTextField(
-        value =  internalText,
-        onValueChange = {
-            internalText = it
-            if (type == TextFieldType.Birthday) {
-                onDateSelected(it.toDate().time)
-                onValueChange(it)
-            } else {
-                onValueChange(it)
-            }
-        },
+        value =  selectedDate?.let { convertMillisToDate(it) } ?: text ?: "",
+        onValueChange = onValueChange,
         isError = isError,
         shape = CustomTheme.shapes.textField,
-        modifier = modifier.fillMaxWidth(),
+        modifier = if (type == TextFieldType.Birthday) {
+            modifier
+                .fillMaxWidth()
+                .pointerInput(Unit) {
+                    awaitEachGesture {
+                        awaitFirstDown(pass = PointerEventPass.Initial)
+                        val up = waitForUpOrCancellation(pass = PointerEventPass.Initial)
+                        if (up != null) showDatePicker = true
+                    }
+                }
+        } else {
+            modifier.fillMaxWidth()
+        },
         enabled = enabled,
+        readOnly = type == TextFieldType.Birthday,
         textStyle = CustomTheme.typography.p,
         placeholder = {
             Text(
@@ -136,13 +139,7 @@ fun CustomTextField(
                     modifier = if (type == TextFieldType.Password) {
                         Modifier.clickableWithoutRipple(
                             interactionSource = interactionSource,
-                            onClick = { !showPassword },
-                            enabled = enabled
-                        )
-                    } else if (type == TextFieldType.Birthday) {
-                        Modifier.clickableWithoutRipple(
-                            interactionSource = interactionSource,
-                            onClick = { !showDatePicker },
+                            onClick = { showPassword = !showPassword },
                             enabled = enabled
                         )
                     } else {
@@ -242,7 +239,6 @@ private fun UserNamePreview() {
 @Composable
 private fun BirthdayPreview() {
     var selectedDate by remember { mutableStateOf<Long?>(null) }
-    var text by remember { mutableStateOf("") }
 
     WebAntPracticeTheme {
         Column(Modifier.padding(16.dp)) {
@@ -255,7 +251,6 @@ private fun BirthdayPreview() {
                 CustomTextField(
                     text = text,
                     type = TextFieldType.Birthday,
-                    onValueChange = {},
                     enabled = enabled,
                     isError = isError
                 )
@@ -264,10 +259,7 @@ private fun BirthdayPreview() {
             CustomTextField(
                 selectedDate = selectedDate,
                 type = TextFieldType.Birthday,
-                onValueChange = { text = it },
-                onDateSelected = { dateMillis ->
-                    selectedDate = dateMillis
-                },
+                onDateSelected = { newDate -> selectedDate = newDate },
                 enabled = true,
                 isError = false
             )
