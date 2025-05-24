@@ -23,7 +23,7 @@
     <string name="placeholder_email">Email</string>
     <string name="placeholder_password">Password</string>
     <string name="placeholder_empty"> </string>
-    <string name="error_user_name">Username must be 3-20 characters long</string>
+    <string name="error_user_name">Username must be 3–20 characters long</string>
     <string name="error_birthday">Invalid date format</string>
     <string name="error_phone_number">Invalid phone number format</string>
     <string name="error_email">Invalid email address</string>
@@ -35,10 +35,13 @@
     <string name="create_account">Create an account</string>
     <string name="have_account">I already have an account</string>
 
-    <string name="ok">OK</string>
-    <string name="exit">Exit</string>
-    <string name="delete">Delete</string>
-    <string name="cancel">Cancel</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_exit">Exit</string>
+    <string name="dialog_delete">Delete</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_confirmation">Confirmation</string>
+    <string name="dialog_exit_data_lost">Are you sure you want to exit? The entered data will be lost</string>
+
 
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>

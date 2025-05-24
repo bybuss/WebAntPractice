@@ -1,5 +1,7 @@
 package bob.colbaskin.webantpractice.design_system
 
+import androidx.annotation.StringRes
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
@@ -17,9 +19,58 @@ import bob.colbaskin.webantpractice.design_system.theme.WebAntPracticeTheme
 import bob.colbaskin.webantpractice.design_system.utils.getColors
 
 @Composable
-fun Dialog() {
-    // TODO implement
+fun Dialog(
+    @StringRes dialogTitle: Int,
+    @StringRes dialogText: Int,
+    @StringRes actionLabel1: Int,
+    @StringRes actionLabel2: Int,
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit,
+) {
+    AlertDialog(
+        title = {
+            Text(
+                text = stringResource(dialogTitle),
+                style = MaterialTheme.typography.headlineSmall,
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(dialogText),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        },
+        onDismissRequest = {
+            onDismissRequest()
+        },
+        confirmButton = {
+            TextButton(onClick = { onConfirmation() }) {
+                Text(
+                    text = stringResource(actionLabel1),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = CustomTheme.colors.main
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+
+                }
+            ) {
+                Text(
+                    text = stringResource(actionLabel2),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = CustomTheme.colors.main
+                )
+            }
+        },
+        containerColor = CustomTheme.colors.white,
+        titleContentColor = CustomTheme.colors.black,
+        textContentColor = CustomTheme.colors.black
+    )
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +90,7 @@ fun DatePickerModal(
                 }
             ) {
                 Text(
-                    text = stringResource(R.string.ok),
+                    text = stringResource(R.string.dialog_ok),
                     style = MaterialTheme.typography.labelLarge,
                     color = CustomTheme.colors.main
                 )
@@ -48,7 +99,7 @@ fun DatePickerModal(
         dismissButton = {
             TextButton(onClick = onDismiss) {
                 Text(
-                    text = stringResource(R.string.cancel),
+                    text = stringResource(R.string.dialog_cancel),
                     style = MaterialTheme.typography.labelLarge,
                     color = CustomTheme.colors.main
                 )
@@ -69,9 +120,24 @@ fun DatePickerModal(
 @Composable
 private fun DatePickerModalPreview() {
     WebAntPracticeTheme {
-        DatePickerModal(
-            onDateSelected = {},
-            onDismiss = {}
+            DatePickerModal(
+                onDateSelected = {},
+                onDismiss = {}
+            )
+        }
+}
+
+@Preview
+@Composable
+private fun DialogPreview() {
+    WebAntPracticeTheme {
+        Dialog(
+            dialogTitle = R.string.dialog_confirmation,
+            dialogText = R.string.dialog_exit_data_lost,
+            actionLabel1 = R.string.dialog_exit,
+            actionLabel2 = R.string.dialog_cancel,
+            onDismissRequest = {},
+            onConfirmation = {}
         )
     }
 }
