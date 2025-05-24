@@ -21,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
@@ -37,6 +36,7 @@ import bob.colbaskin.webantpractice.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.design_system.theme.WebAntPracticeTheme
 import bob.colbaskin.webantpractice.design_system.utils.clickableWithoutRipple
 import bob.colbaskin.webantpractice.design_system.utils.convertMillisToDate
+import bob.colbaskin.webantpractice.design_system.utils.getColors
 
 enum class TextFieldType {
     UserName,
@@ -49,12 +49,12 @@ enum class TextFieldType {
 
 @Composable
 fun CustomTextField(
+    modifier: Modifier = Modifier,
     text: String? = null,
     type: TextFieldType,
     selectedDate: Long? = null,
     onValueChange: (String) -> Unit = {},
     onDateSelected: (Long?) -> Unit = {},
-    modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isError: Boolean = false,
 ) {
@@ -176,38 +176,7 @@ fun CustomTextField(
                 )
             )
         },
-        colors = TextFieldDefaults.colors(
-            focusedTextColor = CustomTheme.colors.black,
-            unfocusedTextColor = CustomTheme.colors.gray,
-            disabledTextColor = CustomTheme.colors.grayLight,
-            errorTextColor = CustomTheme.colors.black,
-
-            focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent,
-            disabledContainerColor = Color.Transparent,
-            errorContainerColor = Color.Transparent,
-
-            cursorColor = CustomTheme.colors.black,
-            errorCursorColor = CustomTheme.colors.black,
-
-            focusedIndicatorColor = CustomTheme.colors.gray,
-            unfocusedIndicatorColor = CustomTheme.colors.gray,
-            disabledIndicatorColor = CustomTheme.colors.grayLight,
-            errorIndicatorColor = CustomTheme.colors.errorRed,
-
-            focusedTrailingIconColor = CustomTheme.colors.gray,
-            unfocusedTrailingIconColor = CustomTheme.colors.gray,
-            disabledTrailingIconColor = CustomTheme.colors.grayLight,
-            errorTrailingIconColor = CustomTheme.colors.errorRed,
-
-            focusedPlaceholderColor = CustomTheme.colors.gray,
-            unfocusedPlaceholderColor = CustomTheme.colors.gray,
-            disabledPlaceholderColor = CustomTheme.colors.grayLight,
-            errorPlaceholderColor = CustomTheme.colors.errorRed,
-
-            disabledSupportingTextColor = CustomTheme.colors.errorRed,
-            errorSupportingTextColor = CustomTheme.colors.errorRed,
-        )
+        colors = TextFieldDefaults.getColors()
     )
 }
 

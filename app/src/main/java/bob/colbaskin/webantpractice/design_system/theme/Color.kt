@@ -11,7 +11,8 @@ data class AppColors(
     val main: Color,
     val gradient: List<Color>,
     val errorRed: Color,
-    val blue: Color
+    val blue: Color,
+    val snackbarContainer: Color
 )
 
 val LocalColors = compositionLocalOf { lightColors }
@@ -24,7 +25,8 @@ val lightColors = AppColors(
     main = Color(0xFFCF497E),
     gradient = listOf(Color(0xFFE69633), Color(0xFFCF497E)),
     errorRed = Color(0xFFED3E3E),
-    blue = Color(0xFF409EFF)
+    blue = Color(0xFF409EFF),
+    snackbarContainer = Color(0xFF717171)
 )
 
 val darkColors = AppColors(
@@ -35,5 +37,6 @@ val darkColors = AppColors(
     main = Color(0xFFCF497E),
     gradient = listOf(Color(0xFFE69633), Color(0xFFCF497E)),
     errorRed = Color(0xFFED3E3E),
-    blue = Color(0xFF409EFF)
+    blue = Color(0xFF409EFF),
+    snackbarContainer = Color(0xFF717171)
 )
