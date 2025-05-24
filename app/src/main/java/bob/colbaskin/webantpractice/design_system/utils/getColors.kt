@@ -1,10 +1,12 @@
 package bob.colbaskin.webantpractice.design_system.utils
 
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import bob.colbaskin.webantpractice.design_system.TextButtonType
 import bob.colbaskin.webantpractice.design_system.theme.CustomTheme
 
 @Composable
@@ -74,4 +76,27 @@ fun DatePickerDefaults.getColors() = colors(
     dayInSelectionRangeContainerColor = CustomTheme.colors.main,
     dividerColor = CustomTheme.colors.black,
     dateTextFieldColors = TextFieldDefaults.getColors()
+)
+
+@Composable
+fun ButtonDefaults.getTextButtonColors(
+    type: TextButtonType,
+    enabled: Boolean = true,
+    isLoading: Boolean = false,
+    isSelected: Boolean = false,
+    isPressed: Boolean = false
+) = textButtonColors(
+    contentColor = when (type) {
+      TextButtonType.Default -> {
+          when {
+              isLoading -> CustomTheme.colors.black
+              !enabled -> CustomTheme.colors.grayLight
+              isPressed -> CustomTheme.colors.main
+              !isSelected -> CustomTheme.colors.gray
+              else -> CustomTheme.colors.black
+          }
+      }
+      TextButtonType.Modal -> CustomTheme.colors.main
+    },
+    disabledContentColor = CustomTheme.colors.gray
 )

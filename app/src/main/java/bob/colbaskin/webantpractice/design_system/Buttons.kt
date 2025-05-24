@@ -16,6 +16,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -33,6 +34,12 @@ import androidx.compose.ui.unit.dp
 import bob.colbaskin.webantpractice.R
 import bob.colbaskin.webantpractice.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.design_system.theme.WebAntPracticeTheme
+import bob.colbaskin.webantpractice.design_system.utils.getTextButtonColors
+
+enum class TextButtonType {
+    Default,
+    Modal
+}
 
 @Composable
 fun FilledButton(
@@ -145,24 +152,24 @@ fun CustomTextButton(
     @StringRes text: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
     enabled: Boolean = true,
-    isLoading: Boolean = false
+    isSelected: Boolean = false,
+    type: TextButtonType = TextButtonType.Default,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
     val isPressed = interactionSource.collectIsPressedAsState().value
 
     TextButton(
         onClick = onClick,
         modifier = modifier.height(40.dp),
         shape = CustomTheme.shapes.button,
-        colors = ButtonDefaults.textButtonColors(
-            contentColor = when {
-                isLoading -> CustomTheme.colors.black
-                !enabled -> CustomTheme.colors.grayLight
-                isPressed -> CustomTheme.colors.main
-                else -> CustomTheme.colors.black
-            },
-            disabledContentColor = CustomTheme.colors.gray
+        colors = ButtonDefaults.getTextButtonColors(
+            type = type,
+            isLoading = isLoading,
+            isSelected = isSelected,
+            isPressed = isPressed,
+            enabled = enabled
         ),
         enabled = enabled && !isLoading,
         interactionSource = interactionSource
@@ -174,7 +181,10 @@ fun CustomTextButton(
         ) {
             Text(
                 text = stringResource(text),
-                style = CustomTheme.typography.h4,
+                style = when (type) {
+                    TextButtonType.Default -> CustomTheme.typography.h4
+                    TextButtonType.Modal -> MaterialTheme.typography.labelLarge
+                },
                 modifier = Modifier.alpha(if (isLoading) 0f else 1f)
             )
             if (isLoading) {
@@ -247,10 +257,11 @@ fun TabButton(
         else -> CustomTheme.colors.black
     }
 
-    TextButton(
+    CustomTextButton(
+        text = text,
         onClick = onClick,
+        isSelected = isSelected,
         modifier = modifier
-            .height(40.dp)
             .drawBehind {
                 val strokeWidth = 1.dp.toPx()
                 val y = size.height - strokeWidth - 9
@@ -261,18 +272,8 @@ fun TabButton(
                     strokeWidth = strokeWidth
                 )
             },
-        colors = ButtonDefaults.textButtonColors(
-            contentColor = when {
-                isPressed -> CustomTheme.colors.main
-                isSelected -> CustomTheme.colors.black
-                !isSelected -> CustomTheme.colors.gray
-                else -> CustomTheme.colors.black
-            },
-        ),
         interactionSource = interactionSource
-    ) {
-        Text(text = stringResource(text))
-    }
+    )
 }
 
 @Preview(showBackground = true)

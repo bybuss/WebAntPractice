@@ -8,9 +8,9 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import bob.colbaskin.webantpractice.R
@@ -28,6 +28,10 @@ fun Dialog(
     onConfirmation: () -> Unit,
 ) {
     AlertDialog(
+        containerColor = CustomTheme.colors.white,
+        titleContentColor = CustomTheme.colors.black,
+        textContentColor = CustomTheme.colors.black,
+        onDismissRequest = onDismissRequest,
         title = {
             Text(
                 text = stringResource(dialogTitle),
@@ -40,34 +44,20 @@ fun Dialog(
                 style = MaterialTheme.typography.bodyMedium,
             )
         },
-        onDismissRequest = {
-            onDismissRequest()
-        },
         confirmButton = {
-            TextButton(onClick = { onConfirmation() }) {
-                Text(
-                    text = stringResource(actionLabel1),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = CustomTheme.colors.main
-                )
-            }
+            CustomTextButton(
+                text = actionLabel1,
+                type = TextButtonType.Modal,
+                onClick = onConfirmation,
+            )
         },
         dismissButton = {
-            TextButton(
-                onClick = {
-
-                }
-            ) {
-                Text(
-                    text = stringResource(actionLabel2),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = CustomTheme.colors.main
-                )
-            }
-        },
-        containerColor = CustomTheme.colors.white,
-        titleContentColor = CustomTheme.colors.black,
-        textContentColor = CustomTheme.colors.black
+            CustomTextButton(
+                text = actionLabel2,
+                type = TextButtonType.Modal,
+                onClick = onDismissRequest,
+            )
+        }
     )
 }
 
@@ -76,38 +66,32 @@ fun Dialog(
 @Composable
 fun DatePickerModal(
     onDateSelected: (Long?) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val datePickerState = rememberDatePickerState()
 
     DatePickerDialog(
         onDismissRequest = onDismiss,
+        modifier = modifier,
+        colors = DatePickerDefaults.colors(containerColor = CustomTheme.colors.white),
         confirmButton = {
-            TextButton(
+            CustomTextButton(
+                text = R.string.dialog_ok,
+                type = TextButtonType.Modal,
                 onClick = {
                     onDateSelected(datePickerState.selectedDateMillis)
                     onDismiss()
-                }
-            ) {
-                Text(
-                    text = stringResource(R.string.dialog_ok),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = CustomTheme.colors.main
-                )
-            }
+                },
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(
-                    text = stringResource(R.string.dialog_cancel),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = CustomTheme.colors.main
-                )
-            }
-        },
-        colors = DatePickerDefaults.colors(
-            containerColor = CustomTheme.colors.white,
-        )
+            CustomTextButton(
+                text = R.string.dialog_cancel,
+                type = TextButtonType.Modal,
+                onClick = onDismiss,
+            )
+        }
     ) {
         DatePicker(
             state = datePickerState,
