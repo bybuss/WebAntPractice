@@ -11,6 +11,8 @@
     <string name="email_logo_description">Email logo</string>
     <string name="password_logo_description">Password logo</string>
     <string name="info_logo_description">Information logo</string>
+    <string name="search_logo_description">Search loupe logo</string>
+    <string name="close_logo_description">Close logo</string>
 
     <string name="loading">Loading…</string>
     <string name="error_title">Sorry!</string>
@@ -42,6 +44,7 @@
     <string name="dialog_confirmation">Confirmation</string>
     <string name="dialog_exit_data_lost">Are you sure you want to exit? The entered data will be lost</string>
 
+    <string name="search_placeholder">Search</string>
 
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>

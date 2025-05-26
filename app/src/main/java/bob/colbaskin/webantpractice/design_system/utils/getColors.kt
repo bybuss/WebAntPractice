@@ -10,7 +10,7 @@ import bob.colbaskin.webantpractice.design_system.TextButtonType
 import bob.colbaskin.webantpractice.design_system.theme.CustomTheme
 
 @Composable
-fun TextFieldDefaults.getColors() = colors(
+fun TextFieldDefaults.getOutlinedColors() = colors(
     focusedTextColor = CustomTheme.colors.black,
     unfocusedTextColor = CustomTheme.colors.gray,
     disabledTextColor = CustomTheme.colors.grayLight,
@@ -34,6 +34,11 @@ fun TextFieldDefaults.getColors() = colors(
     disabledIndicatorColor = CustomTheme.colors.grayLight,
     errorIndicatorColor = CustomTheme.colors.errorRed,
 
+    focusedLeadingIconColor = CustomTheme.colors.gray,
+    unfocusedLeadingIconColor = CustomTheme.colors.gray,
+    disabledLeadingIconColor = CustomTheme.colors.grayLight,
+    errorLeadingIconColor = CustomTheme.colors.errorRed,
+
     focusedTrailingIconColor = CustomTheme.colors.gray,
     unfocusedTrailingIconColor = CustomTheme.colors.gray,
     disabledTrailingIconColor = CustomTheme.colors.grayLight,
@@ -42,6 +47,50 @@ fun TextFieldDefaults.getColors() = colors(
     focusedPlaceholderColor = CustomTheme.colors.gray,
     unfocusedPlaceholderColor = CustomTheme.colors.gray,
     disabledPlaceholderColor = CustomTheme.colors.grayLight,
+    errorPlaceholderColor = CustomTheme.colors.errorRed,
+
+    disabledSupportingTextColor = CustomTheme.colors.errorRed,
+    errorSupportingTextColor = CustomTheme.colors.errorRed,
+)
+
+@Composable
+fun TextFieldDefaults.getColors() = colors(
+    focusedTextColor = CustomTheme.colors.black,
+    unfocusedTextColor = CustomTheme.colors.graySecondary,
+    disabledTextColor = CustomTheme.colors.graySecondary,
+    errorTextColor = CustomTheme.colors.black,
+
+    focusedContainerColor = CustomTheme.colors.graySecondary,
+    unfocusedContainerColor = CustomTheme.colors.graySecondary,
+    disabledContainerColor = CustomTheme.colors.graySecondary,
+    errorContainerColor = CustomTheme.colors.graySecondary,
+
+    focusedLabelColor = CustomTheme.colors.gray,
+    unfocusedLabelColor = CustomTheme.colors.gray,
+    disabledLabelColor = CustomTheme.colors.graySecondary,
+    errorLabelColor = CustomTheme.colors.errorRed,
+
+    cursorColor = CustomTheme.colors.black,
+    errorCursorColor = CustomTheme.colors.black,
+
+    focusedIndicatorColor = CustomTheme.colors.black,
+    unfocusedIndicatorColor = CustomTheme.colors.graySecondary,
+    disabledIndicatorColor = CustomTheme.colors.graySecondary,
+    errorIndicatorColor = CustomTheme.colors.errorRed,
+
+    focusedLeadingIconColor = CustomTheme.colors.graySecondary,
+    unfocusedLeadingIconColor = CustomTheme.colors.graySecondary,
+    disabledLeadingIconColor = CustomTheme.colors.graySecondary,
+    errorLeadingIconColor = CustomTheme.colors.graySecondary,
+
+    focusedTrailingIconColor = CustomTheme.colors.graySecondary,
+    unfocusedTrailingIconColor = CustomTheme.colors.graySecondary,
+    disabledTrailingIconColor = CustomTheme.colors.graySecondary,
+    errorTrailingIconColor = CustomTheme.colors.graySecondary,
+
+    focusedPlaceholderColor = CustomTheme.colors.graySecondary,
+    unfocusedPlaceholderColor = CustomTheme.colors.graySecondary,
+    disabledPlaceholderColor = CustomTheme.colors.graySecondary,
     errorPlaceholderColor = CustomTheme.colors.errorRed,
 
     disabledSupportingTextColor = CustomTheme.colors.errorRed,
@@ -75,7 +124,7 @@ fun DatePickerDefaults.getColors() = colors(
     dayInSelectionRangeContentColor = CustomTheme.colors.white,
     dayInSelectionRangeContainerColor = CustomTheme.colors.main,
     dividerColor = CustomTheme.colors.black,
-    dateTextFieldColors = TextFieldDefaults.getColors()
+    dateTextFieldColors = TextFieldDefaults.getOutlinedColors()
 )
 
 @Composable

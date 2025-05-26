@@ -36,7 +36,7 @@ import bob.colbaskin.webantpractice.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.design_system.theme.WebAntPracticeTheme
 import bob.colbaskin.webantpractice.design_system.utils.clickableWithoutRipple
 import bob.colbaskin.webantpractice.design_system.utils.convertMillisToDate
-import bob.colbaskin.webantpractice.design_system.utils.getColors
+import bob.colbaskin.webantpractice.design_system.utils.getOutlinedColors
 
 enum class TextFieldType {
     UserName,
@@ -176,7 +176,7 @@ fun CustomTextField(
                 )
             )
         },
-        colors = TextFieldDefaults.getColors()
+        colors = TextFieldDefaults.getOutlinedColors()
     )
 }
 

@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 data class AppColors(
     val black: Color,
     val gray: Color,
+    val graySecondary: Color,
     val grayLight: Color,
     val white: Color,
     val main: Color,
@@ -20,6 +21,7 @@ val LocalColors = compositionLocalOf { lightColors }
 val lightColors = AppColors(
     black = Color(0xFF1D1D1D),
     gray = Color(0xFFBCBCBC),
+    graySecondary = Color(0xFF7a7a7e),
     grayLight = Color(0xFFEEEEEF),
     white = Color(0xFFFFFFFF),
     main = Color(0xFFCF497E),
@@ -32,6 +34,7 @@ val lightColors = AppColors(
 val darkColors = AppColors(
     black = Color(0xFF1D1D1D),
     gray = Color(0xFFBCBCBC),
+    graySecondary = Color(0xFF7a7a7e),
     grayLight = Color(0xFFEEEEEF),
     white = Color(0xFFFFFFFF),
     main = Color(0xFFCF497E),
