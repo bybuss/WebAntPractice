@@ -25,9 +25,12 @@ import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
@@ -55,6 +58,7 @@ fun CustomTextField(
     selectedDate: Long? = null,
     onValueChange: (String) -> Unit = {},
     onDateSelected: (Long?) -> Unit = {},
+    isRequired: Boolean = false,
     enabled: Boolean = true,
     isError: Boolean = false,
 ) {
@@ -100,16 +104,29 @@ fun CustomTextField(
         textStyle = CustomTheme.typography.p,
         placeholder = {
             Text(
-                text = stringResource(
-                    id = when (type) {
-                        TextFieldType.UserName -> R.string.placeholder_user_name
-                        TextFieldType.Birthday -> R.string.placeholder_birthday
-                        TextFieldType.PhoneNumber -> R.string.placeholder_phone_number
-                        TextFieldType.Email -> R.string.placeholder_email
-                        TextFieldType.Password -> R.string.placeholder_password
-                        TextFieldType.Empty -> R.string.placeholder_empty
+                text = buildAnnotatedString {
+                    append(
+                        stringResource(
+                            id = when (type) {
+                                TextFieldType.UserName -> R.string.placeholder_user_name
+                                TextFieldType.Birthday -> R.string.placeholder_birthday
+                                TextFieldType.PhoneNumber -> R.string.placeholder_phone_number
+                                TextFieldType.Email -> R.string.placeholder_email
+                                TextFieldType.Password -> R.string.placeholder_password
+                                TextFieldType.Empty -> R.string.placeholder_empty
+                            }
+                        )
+                    )
+                    if (isRequired) {
+                        withStyle(
+                            style = SpanStyle(
+                                color = CustomTheme.colors.main
+                            )
+                        ) {
+                            append(" *")
+                        }
                     }
-                )
+                }
             )
         },
         trailingIcon = {
@@ -200,6 +217,11 @@ private fun UserNamePreview() {
                 )
                 Spacer(Modifier.height(8.dp))
             }
+            CustomTextField(
+                text = "",
+                type = TextFieldType.UserName,
+                isRequired = true,
+            )
         }
     }
 }
