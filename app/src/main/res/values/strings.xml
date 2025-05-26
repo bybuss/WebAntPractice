@@ -13,6 +13,7 @@
     <string name="info_logo_description">Information logo</string>
     <string name="search_logo_description">Search loupe logo</string>
     <string name="close_logo_description">Close logo</string>
+    <string name="more_vert_logo_description">3 vertical dots logo</string>
 
     <string name="loading">Loading…</string>
     <string name="error_title">Sorry!</string>
