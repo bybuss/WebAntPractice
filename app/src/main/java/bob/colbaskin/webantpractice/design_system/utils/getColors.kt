@@ -57,7 +57,7 @@ fun TextFieldDefaults.getOutlinedColors() = colors(
 fun TextFieldDefaults.getColors() = colors(
     focusedTextColor = CustomTheme.colors.black,
     unfocusedTextColor = CustomTheme.colors.graySecondary,
-    disabledTextColor = CustomTheme.colors.graySecondary,
+    disabledTextColor = CustomTheme.colors.graySearchDisabled,
     errorTextColor = CustomTheme.colors.black,
 
     focusedContainerColor = CustomTheme.colors.graySecondary,
@@ -67,7 +67,7 @@ fun TextFieldDefaults.getColors() = colors(
 
     focusedLabelColor = CustomTheme.colors.gray,
     unfocusedLabelColor = CustomTheme.colors.gray,
-    disabledLabelColor = CustomTheme.colors.graySecondary,
+    disabledLabelColor = CustomTheme.colors.graySearchDisabled,
     errorLabelColor = CustomTheme.colors.errorRed,
 
     cursorColor = CustomTheme.colors.black,
@@ -75,22 +75,22 @@ fun TextFieldDefaults.getColors() = colors(
 
     focusedIndicatorColor = CustomTheme.colors.black,
     unfocusedIndicatorColor = CustomTheme.colors.graySecondary,
-    disabledIndicatorColor = CustomTheme.colors.graySecondary,
+    disabledIndicatorColor = CustomTheme.colors.graySearchDisabled,
     errorIndicatorColor = CustomTheme.colors.errorRed,
 
     focusedLeadingIconColor = CustomTheme.colors.graySecondary,
     unfocusedLeadingIconColor = CustomTheme.colors.graySecondary,
-    disabledLeadingIconColor = CustomTheme.colors.graySecondary,
+    disabledLeadingIconColor = CustomTheme.colors.graySearchDisabled,
     errorLeadingIconColor = CustomTheme.colors.graySecondary,
 
     focusedTrailingIconColor = CustomTheme.colors.graySecondary,
     unfocusedTrailingIconColor = CustomTheme.colors.graySecondary,
-    disabledTrailingIconColor = CustomTheme.colors.graySecondary,
+    disabledTrailingIconColor = CustomTheme.colors.graySearchDisabled,
     errorTrailingIconColor = CustomTheme.colors.graySecondary,
 
     focusedPlaceholderColor = CustomTheme.colors.graySecondary,
     unfocusedPlaceholderColor = CustomTheme.colors.graySecondary,
-    disabledPlaceholderColor = CustomTheme.colors.graySecondary,
+    disabledPlaceholderColor = CustomTheme.colors.graySearchDisabled,
     errorPlaceholderColor = CustomTheme.colors.errorRed,
 
     disabledSupportingTextColor = CustomTheme.colors.errorRed,

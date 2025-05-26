@@ -1,9 +1,9 @@
 package bob.colbaskin.webantpractice.design_system
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -52,11 +52,13 @@ fun Search(
 
     Box(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+            .heightIn(max = 375.dp)
             .semantics { isTraversalGroup = true }
     ) {
         SearchBar(
-            modifier = Modifier
+            windowInsets = WindowInsets(0.dp),
+                    modifier = Modifier
                 .align(Alignment.TopCenter)
                 .semantics { traversalIndex = 0f },
             inputField = {
@@ -107,7 +109,7 @@ fun Search(
                 dividerColor = CustomTheme.colors.graySecondary
             )
         ) {
-            LazyColumn(modifier = Modifier.background(color = CustomTheme.colors.white)) {
+            LazyColumn {
                 items(items = searchResults, key = { UUID.randomUUID() }) { resultText ->
                     ListItem(
                         headlineContent = { Text(text = resultText) },
