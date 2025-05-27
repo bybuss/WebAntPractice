@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import bob.colbaskin.webantpractice.R
@@ -38,7 +39,7 @@ import bob.colbaskin.webantpractice.design_system.utils.getTextButtonColors
 
 enum class TextButtonType {
     Default,
-    Modal
+    Pink
 }
 
 @Composable
@@ -152,6 +153,7 @@ fun CustomTextButton(
     @StringRes text: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    textStyle: TextStyle = CustomTheme.typography.h4,
     isLoading: Boolean = false,
     enabled: Boolean = true,
     isSelected: Boolean = false,
@@ -181,9 +183,10 @@ fun CustomTextButton(
         ) {
             Text(
                 text = stringResource(text),
-                style = when (type) {
-                    TextButtonType.Default -> CustomTheme.typography.h4
-                    TextButtonType.Modal -> MaterialTheme.typography.labelLarge
+                style = when  {
+                    type == TextButtonType.Default -> CustomTheme.typography.h4
+                    type == TextButtonType.Pink -> MaterialTheme.typography.labelLarge
+                    else -> textStyle
                 },
                 modifier = Modifier.alpha(if (isLoading) 0f else 1f)
             )

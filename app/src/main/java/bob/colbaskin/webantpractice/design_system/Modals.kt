@@ -95,7 +95,7 @@ fun Dialog(
                 if (type == DialogType.Default) {
                     CustomTextButton(
                         text = label,
-                        type = TextButtonType.Modal,
+                        type = TextButtonType.Pink,
                         onClick = onConfirmation,
                     )
                 } else {
@@ -112,7 +112,7 @@ fun Dialog(
                 actionLabel2?.let { label ->
                     CustomTextButton(
                         text = label,
-                        type = TextButtonType.Modal,
+                        type = TextButtonType.Pink,
                         onClick = onDismissRequest,
                     )
                 }
@@ -137,7 +137,7 @@ fun DatePickerModal(
         confirmButton = {
             CustomTextButton(
                 text = R.string.dialog_ok,
-                type = TextButtonType.Modal,
+                type = TextButtonType.Pink,
                 onClick = {
                     onDateSelected(datePickerState.selectedDateMillis)
                     onDismiss()
@@ -147,7 +147,7 @@ fun DatePickerModal(
         dismissButton = {
             CustomTextButton(
                 text = R.string.dialog_cancel,
-                type = TextButtonType.Modal,
+                type = TextButtonType.Pink,
                 onClick = onDismiss,
             )
         }

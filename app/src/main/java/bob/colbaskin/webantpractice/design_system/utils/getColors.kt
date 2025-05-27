@@ -145,7 +145,7 @@ fun ButtonDefaults.getTextButtonColors(
               else -> CustomTheme.colors.black
           }
       }
-      TextButtonType.Modal -> CustomTheme.colors.main
+      TextButtonType.Pink -> CustomTheme.colors.main
     },
     disabledContentColor = CustomTheme.colors.gray
 )
