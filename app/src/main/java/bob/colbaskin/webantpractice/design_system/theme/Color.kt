@@ -14,6 +14,7 @@ data class AppColors(
     val gradient: List<Color>,
     val errorRed: Color,
     val blue: Color,
+    val green: Color,
     val snackbarContainer: Color
 )
 
@@ -30,6 +31,7 @@ val lightColors = AppColors(
     gradient = listOf(Color(0xFFE69633), Color(0xFFCF497E)),
     errorRed = Color(0xFFED3E3E),
     blue = Color(0xFF409EFF),
+    green = Color(0xFF1ab46b),
     snackbarContainer = Color(0xFF717171)
 )
 
@@ -44,5 +46,6 @@ val darkColors = AppColors(
     gradient = listOf(Color(0xFFE69633), Color(0xFFCF497E)),
     errorRed = Color(0xFFED3E3E),
     blue = Color(0xFF409EFF),
+    green = Color(0xFF1ab46b),
     snackbarContainer = Color(0xFF717171)
 )

@@ -4,16 +4,17 @@
 
     <string name="webant_logo_description">Logo WebAnt</string>
     <string name="add_new_logo">Plus logo</string>
-    <string name="webant_error_logo">Error WebAnt logo</string>
-    <string name="user_name_logo_description">User Name logo</string>
-    <string name="birthday_logo_description">Birthday logo</string>
-    <string name="phone_number_logo_description">Phone Number logo</string>
-    <string name="email_logo_description">Email logo</string>
-    <string name="password_logo_description">Password logo</string>
-    <string name="info_logo_description">Information logo</string>
-    <string name="search_logo_description">Search loupe logo</string>
-    <string name="close_logo_description">Close logo</string>
-    <string name="more_vert_logo_description">3 vertical dots logo</string>
+    <string name="webant_error_logo">Error WebAnt icon</string>
+    <string name="user_name_logo_description">User Name icon</string>
+    <string name="birthday_logo_description">Birthday icon</string>
+    <string name="phone_number_logo_description">Phone Number icon</string>
+    <string name="email_logo_description">Email icon</string>
+    <string name="password_logo_description">Password icon</string>
+    <string name="info_logo_description">Information icon</string>
+    <string name="search_logo_description">Search loupe icon</string>
+    <string name="close_logo_description">Close icon</string>
+    <string name="more_vert_logo_description">3 vertical dots icon</string>
+    <string name="check_circle_filled_logo_description">Filed check circle icon</string>
 
     <string name="loading">Loading…</string>
     <string name="error_title">Sorry!</string>
