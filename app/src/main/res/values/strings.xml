@@ -50,4 +50,7 @@
 
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
+
+    <string name="nav_photos">Photos</string>
+    <string name="nav_albums">Albums</string>
 </resources>
