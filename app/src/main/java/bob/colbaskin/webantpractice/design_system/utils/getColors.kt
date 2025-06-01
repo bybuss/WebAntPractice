@@ -141,6 +141,13 @@ fun ButtonDefaults.getTextButtonColors(
               isLoading -> CustomTheme.colors.black
               !enabled -> CustomTheme.colors.grayLight
               isPressed -> CustomTheme.colors.main
+              else -> CustomTheme.colors.black
+          }
+      }
+      TextButtonType.Tab -> {
+          when {
+              !enabled -> CustomTheme.colors.grayLight
+              isPressed -> CustomTheme.colors.main
               !isSelected -> CustomTheme.colors.gray
               else -> CustomTheme.colors.black
           }

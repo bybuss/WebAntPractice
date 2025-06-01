@@ -39,6 +39,7 @@ import bob.colbaskin.webantpractice.design_system.utils.getTextButtonColors
 
 enum class TextButtonType {
     Default,
+    Tab,
     Pink
 }
 
@@ -211,7 +212,7 @@ fun FABButton(
     val isPressed = interactionSource.collectIsPressedAsState().value
 
     FloatingActionButton(
-        onClick = { if (enabled) onClick },
+        onClick = { if (enabled) onClick() },
         modifier = modifier,
         shape = CustomTheme.shapes.FAB,
         containerColor = when {
@@ -261,6 +262,7 @@ fun TabButton(
     }
 
     CustomTextButton(
+        type = TextButtonType.Tab,
         text = text,
         onClick = onClick,
         isSelected = isSelected,
