@@ -58,7 +58,7 @@ fun Search(
     ) {
         SearchBar(
             windowInsets = WindowInsets(0.dp),
-                    modifier = Modifier
+            modifier = Modifier
                 .align(Alignment.TopCenter)
                 .semantics { traversalIndex = 0f },
             inputField = {
@@ -90,7 +90,12 @@ fun Search(
                     },
                     trailingIcon = {
                         if (textFieldState.text.isNotEmpty()) {
-                            IconButton(onClick = { textFieldState.clearText() }) {
+                            IconButton(
+                                onClick = {
+                                    textFieldState.clearText()
+                                    onSearch(textFieldState.text.toString())
+                                }
+                            ) {
                                 Icon(
                                     painter = painterResource(R.drawable.close),
                                     contentDescription = stringResource(R.string.close_logo_description),

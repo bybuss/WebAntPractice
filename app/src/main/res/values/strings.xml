@@ -2,6 +2,7 @@
     <string name="app_name">WebAntPractice</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
 
+    <string name="void_logo_description"/>
     <string name="webant_logo_description">Logo WebAnt</string>
     <string name="add_new_logo">Plus logo</string>
     <string name="webant_error_logo">Error WebAnt icon</string>
@@ -15,6 +16,9 @@
     <string name="close_logo_description">Close icon</string>
     <string name="more_vert_logo_description">3 vertical dots icon</string>
     <string name="check_circle_filled_logo_description">Filed check circle icon</string>
+    <string name="check_mark_logo_description">Check mark icon</string>
+    <string name="back_arrow_logo_description">Back arrow icon</string>
+    <string name="settings_logo_description">Settings icon</string>
 
     <string name="loading">Loading…</string>
     <string name="error_title">Sorry!</string>
@@ -50,6 +54,8 @@
 
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
+
+    <string name="all_photos_top_bar_title">All photos</string>
 
     <string name="nav_photos">Photos</string>
     <string name="nav_albums">Albums</string>
