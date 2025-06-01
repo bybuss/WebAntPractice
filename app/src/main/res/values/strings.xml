@@ -1,4 +1,62 @@
 <resources>
     <string name="app_name">WebAntPractice</string>
-    <string name="webant_logo_description">Логотип WebAnt</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
+    <string name="void_logo_description"/>
+    <string name="webant_logo_description">Logo WebAnt</string>
+    <string name="add_new_logo">Plus logo</string>
+    <string name="webant_error_logo">Error WebAnt icon</string>
+    <string name="user_name_logo_description">User Name icon</string>
+    <string name="birthday_logo_description">Birthday icon</string>
+    <string name="phone_number_logo_description">Phone Number icon</string>
+    <string name="email_logo_description">Email icon</string>
+    <string name="password_logo_description">Password icon</string>
+    <string name="info_logo_description">Information icon</string>
+    <string name="search_logo_description">Search loupe icon</string>
+    <string name="close_logo_description">Close icon</string>
+    <string name="more_vert_logo_description">3 vertical dots icon</string>
+    <string name="check_circle_filled_logo_description">Filed check circle icon</string>
+    <string name="check_mark_logo_description">Check mark icon</string>
+    <string name="back_arrow_logo_description">Back arrow icon</string>
+    <string name="settings_logo_description">Settings icon</string>
+
+    <string name="loading">Loading…</string>
+    <string name="error_title">Sorry!</string>
+    <string name="error_text">There is no pictures.\nPleace come back later.</string>
+    <string name="checkbox_new">New</string>
+    <string name="checkbox_popular">Popular</string>
+    <string name="placeholder_user_name">User Name</string>
+    <string name="placeholder_birthday">Birthday</string>
+    <string name="placeholder_phone_number">Phone Number</string>
+    <string name="placeholder_email">Email</string>
+    <string name="placeholder_password">Password</string>
+    <string name="placeholder_empty"> </string>
+    <string name="error_user_name">Username must be 3–20 characters long</string>
+    <string name="error_birthday">Invalid date format</string>
+    <string name="error_phone_number">Invalid phone number format</string>
+    <string name="error_email">Invalid email address</string>
+    <string name="error_password">Password must be at least 8 characters</string>
+    <string name="error_empty_field">This field cannot be empty</string>
+    <string name="toast_photo_successfully">Photo uploaded successfully</string>
+
+    <string name="welcome">Welcome to Gallery!</string>
+    <string name="create_account">Create an account</string>
+    <string name="have_account">I already have an account</string>
+
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_exit">Exit</string>
+    <string name="dialog_delete">Delete</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_confirmation">Confirmation</string>
+    <string name="dialog_exit_data_lost">Are you sure you want to exit? The entered data will be lost</string>
+
+    <string name="search_placeholder">Search</string>
+
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+
+    <string name="all_photos_top_bar_title">All photos</string>
+
+    <string name="nav_photos">Photos</string>
+    <string name="nav_albums">Albums</string>
 </resources>
