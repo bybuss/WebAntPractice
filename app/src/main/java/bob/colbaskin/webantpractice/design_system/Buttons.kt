@@ -186,6 +186,7 @@ fun CustomTextButton(
                 text = stringResource(text),
                 style = when  {
                     type == TextButtonType.Default -> CustomTheme.typography.h4
+                    type == TextButtonType.Tab -> CustomTheme.typography.h4
                     type == TextButtonType.Pink -> MaterialTheme.typography.labelLarge
                     else -> textStyle
                 },
