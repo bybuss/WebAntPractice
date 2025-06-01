@@ -1,5 +1,6 @@
 package bob.colbaskin.webantpractice.design_system
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -16,6 +17,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -27,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -280,6 +284,41 @@ fun TabButton(
             },
         interactionSource = interactionSource
     )
+}
+
+@Composable
+fun CustomIconButton(
+    modifier: Modifier = Modifier,
+    @DrawableRes painterId: Int,
+    @StringRes contentDescriptionId: Int?,
+    enabled: Boolean = true,
+    defaultIconColor: Color = CustomTheme.colors.graySecondary,
+    clickedIconColor: Color = CustomTheme.colors.main,
+    onClick: () -> Unit,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed = interactionSource.collectIsPressedAsState().value
+
+    IconButton(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Color.Transparent,
+            contentColor = when {
+                isPressed -> clickedIconColor
+                else -> defaultIconColor
+            },
+            disabledContainerColor = Color.Transparent, // CustomTheme.colors.grayLight
+            disabledContentColor = CustomTheme.colors.gray
+        ),
+        interactionSource = interactionSource
+    ) {
+        Icon(
+            painter = painterResource(painterId),
+            contentDescription = contentDescriptionId?.let { stringResource(it) } ,
+        )
+    }
 }
 
 @Preview(showBackground = true)
