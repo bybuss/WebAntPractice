@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.design_system.utils
+package bob.colbaskin.webantpractice.common.design_system.utils
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

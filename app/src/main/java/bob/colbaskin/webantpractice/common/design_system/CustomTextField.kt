@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.design_system
+package bob.colbaskin.webantpractice.common.design_system
 
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -35,11 +35,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import bob.colbaskin.webantpractice.R
-import bob.colbaskin.webantpractice.design_system.theme.CustomTheme
-import bob.colbaskin.webantpractice.design_system.theme.WebAntPracticeTheme
-import bob.colbaskin.webantpractice.design_system.utils.clickableWithoutRipple
-import bob.colbaskin.webantpractice.design_system.utils.convertMillisToDate
-import bob.colbaskin.webantpractice.design_system.utils.getOutlinedColors
+import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
+import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
+import bob.colbaskin.webantpractice.common.design_system.utils.clickableWithoutRipple
+import bob.colbaskin.webantpractice.common.design_system.utils.convertMillisToDate
+import bob.colbaskin.webantpractice.common.design_system.utils.getOutlinedColors
 
 enum class TextFieldType {
     UserName,
