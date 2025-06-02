@@ -13,8 +13,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import bob.colbaskin.webantpractice.design_system.FABButton
-import bob.colbaskin.webantpractice.design_system.theme.WebAntPracticeTheme
+import bob.colbaskin.webantpractice.common.design_system.FABButton
+import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
