@@ -1,39 +1,30 @@
 package bob.colbaskin.webantpractice.common.user.local
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
-import androidx.datastore.core.IOException
 import androidx.datastore.dataStore
 import bob.colbaskin.webantpractice.common.user.models.AuthConfig
-import bob.colbaskin.webantpractice.common.user.models.OnBoardingConfig
+import bob.colbaskin.webantpractice.common.user.models.OnboardingConfig
+import bob.colbaskin.webantpractice.common.user.models.UserPreferences
+import bob.colbaskin.webantpractice.common.user.toData
 import bob.colbaskin.webantpractice.datastore.AuthStatus
 import bob.colbaskin.webantpractice.datastore.OnboardingStatus
 import bob.colbaskin.webantpractice.datastore.UserPreferencesProto
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 
-private const val USER_PREFERENCES_FILE_NAME = "user_prefs.pb"
-private val TAG = "UserPreferences"
+private const val USER_PREFERENCES_FILE_NAME = "user_preferences.pb"
+private const val TAG = "UserPreferences"
 
 val Context.userPreferencesStore: DataStore<UserPreferencesProto> by dataStore(
     fileName = USER_PREFERENCES_FILE_NAME,
     serializer = UserPreferencesSerializer
 )
 
-class UserDataStore(
-    private val context: Context
-) {
+class UserDataStore(context: Context) {
     private val dataStore: DataStore<UserPreferencesProto> = context.userPreferencesStore
-    val userPreferencesFlow: Flow<UserPreferencesProto> = dataStore.data
-        .catch { exception ->
-            if (exception is IOException) {
-                Log.e(TAG, "Error reading preferences", exception)
-                emit(UserPreferencesProto.getDefaultInstance())
-            } else {
-                throw exception
-            }
-        }
+
+    fun getUserPreferences(): Flow<UserPreferences> = dataStore.data.map { it.toData() }
 
     suspend fun saveAuthStatus(status: AuthConfig) {
         dataStore.updateData { prefs ->
@@ -45,19 +36,19 @@ class UserDataStore(
             }.build()
         }
     }
-    suspend fun saveOnBoardingStatus(status: OnBoardingConfig) {
+    suspend fun saveOnboardingStatus(status: OnboardingConfig) {
         dataStore.updateData { prefs ->
             prefs.toBuilder().apply {
                 onboardingStatus = when (status) {
-                    OnBoardingConfig.NOT_STARTED -> OnboardingStatus.NOT_STARTED
-                    OnBoardingConfig.IN_PROGRESS -> OnboardingStatus.IN_PROGRESS
-                    OnBoardingConfig.COMPLETED -> OnboardingStatus.COMPLETED
+                    OnboardingConfig.NOT_STARTED -> OnboardingStatus.NOT_STARTED
+                    OnboardingConfig.IN_PROGRESS -> OnboardingStatus.IN_PROGRESS
+                    OnboardingConfig.COMPLETED -> OnboardingStatus.COMPLETED
                 }
             }.build()
         }
     }
 
-    suspend fun saveUserData(
+    suspend fun saveUser(
         userId: Int,
         username: String,
         birthDateMs: Long,

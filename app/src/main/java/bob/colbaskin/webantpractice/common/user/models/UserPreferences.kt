@@ -1,7 +1,7 @@
 package bob.colbaskin.webantpractice.common.user.models
 
 data class UserPreferences(
-    val onBoardingStatus: OnBoardingConfig,
+    val onboardingStatus: OnboardingConfig,
     val authStatus: AuthConfig,
 
     val userId: Int,
@@ -11,14 +11,3 @@ data class UserPreferences(
     val email: String,
     val avatarUrl: String,
 )
-
-fun UserPreferences.toDomain(): User {
-    return User(
-        id = this.userId,
-        email = this.email,
-        userProfilePhoto = this.avatarUrl,
-        birthday = this.birthDateMs,
-        displayName = this.username,
-        phone = this.phone
-    )
-}
