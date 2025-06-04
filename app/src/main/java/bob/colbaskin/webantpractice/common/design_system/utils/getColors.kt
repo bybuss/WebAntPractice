@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.design_system.utils
+package bob.colbaskin.webantpractice.common.design_system.utils
 
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePickerDefaults
@@ -6,8 +6,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import bob.colbaskin.webantpractice.design_system.TextButtonType
-import bob.colbaskin.webantpractice.design_system.theme.CustomTheme
+import bob.colbaskin.webantpractice.common.design_system.TextButtonType
+import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
 
 @Composable
 fun TextFieldDefaults.getOutlinedColors() = colors(

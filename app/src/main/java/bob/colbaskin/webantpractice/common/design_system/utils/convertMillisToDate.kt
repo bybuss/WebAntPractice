@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.design_system.utils
+package bob.colbaskin.webantpractice.common.design_system.utils
 
 import java.text.SimpleDateFormat
 import java.util.Date

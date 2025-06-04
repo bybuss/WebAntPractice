@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.design_system.theme
+package bob.colbaskin.webantpractice.common.design_system.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.ripple.RippleAlpha

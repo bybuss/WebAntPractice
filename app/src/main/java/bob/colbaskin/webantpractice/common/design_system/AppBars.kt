@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.design_system
+package bob.colbaskin.webantpractice.common.design_system
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -39,8 +39,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import bob.colbaskin.webantpractice.R
-import bob.colbaskin.webantpractice.design_system.theme.CustomTheme
-import bob.colbaskin.webantpractice.design_system.theme.WebAntPracticeTheme
+import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
+import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
 import bob.colbaskin.webantpractice.navigation.Destinations
 
 @OptIn(ExperimentalMaterial3Api::class)

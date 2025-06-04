@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.design_system
+package bob.colbaskin.webantpractice.common.design_system
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -25,9 +25,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import bob.colbaskin.webantpractice.R
-import bob.colbaskin.webantpractice.design_system.theme.CustomTheme
-import bob.colbaskin.webantpractice.design_system.theme.WebAntPracticeTheme
-import bob.colbaskin.webantpractice.design_system.utils.getColors
+import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
+import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
+import bob.colbaskin.webantpractice.common.design_system.utils.getColors
 
 enum class DialogType {
     Default,
