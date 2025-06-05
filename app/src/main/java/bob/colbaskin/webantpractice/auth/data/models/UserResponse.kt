@@ -1,8 +1,8 @@
 package bob.colbaskin.webantpractice.auth.data.models
 
 import bob.colbaskin.webantpractice.common.user_prefs.domain.models.User
-import bob.colbaskin.webantpractice.utils.extractIdFromIri
-import bob.colbaskin.webantpractice.utils.parseToMillis
+import bob.colbaskin.webantpractice.common.utils.extractIdFromIri
+import bob.colbaskin.webantpractice.common.utils.parseToMillis
 import kotlinx.serialization.SerialName
 
 data class UserResponse(
