@@ -1,9 +1,9 @@
-package bob.colbaskin.webantpractice.common.user
+package bob.colbaskin.webantpractice.common.user_prefs.data
 
-import bob.colbaskin.webantpractice.common.user.models.AuthConfig
-import bob.colbaskin.webantpractice.common.user.models.OnboardingConfig
-import bob.colbaskin.webantpractice.common.user.models.User
-import bob.colbaskin.webantpractice.common.user.models.UserPreferences
+import bob.colbaskin.webantpractice.common.user_prefs.data.models.AuthConfig
+import bob.colbaskin.webantpractice.common.user_prefs.data.models.OnboardingConfig
+import bob.colbaskin.webantpractice.common.user_prefs.data.models.UserPreferences
+import bob.colbaskin.webantpractice.common.user_prefs.domain.models.User
 import bob.colbaskin.webantpractice.datastore.AuthStatus
 import bob.colbaskin.webantpractice.datastore.OnboardingStatus
 import bob.colbaskin.webantpractice.datastore.UserPreferencesProto

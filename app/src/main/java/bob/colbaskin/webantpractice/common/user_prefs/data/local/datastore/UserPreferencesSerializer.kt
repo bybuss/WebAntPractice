@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.common.user.local
+package bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer

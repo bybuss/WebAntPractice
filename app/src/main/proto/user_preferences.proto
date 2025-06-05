@@ -15,5 +15,5 @@ message UserPreferencesProto {
   int64 birth_date_ms = 5;
   string phone = 6;
   string email = 7;
-  string avatar_url = 8;
+  optional string avatar_url = 8;
 }

@@ -1,10 +1,11 @@
-package bob.colbaskin.webantpractice.common.user.local
+package bob.colbaskin.webantpractice.common.user_prefs.data
 
-import bob.colbaskin.webantpractice.common.user.models.AuthConfig
-import bob.colbaskin.webantpractice.common.user.models.OnboardingConfig
-import bob.colbaskin.webantpractice.common.user.models.User
-import bob.colbaskin.webantpractice.common.user.models.UserPreferences
-import bob.colbaskin.webantpractice.common.user.toDomain
+import bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore.UserDataStore
+import bob.colbaskin.webantpractice.common.user_prefs.data.models.AuthConfig
+import bob.colbaskin.webantpractice.common.user_prefs.data.models.OnboardingConfig
+import bob.colbaskin.webantpractice.common.user_prefs.data.models.UserPreferences
+import bob.colbaskin.webantpractice.common.user_prefs.domain.UserPreferencesRepository
+import bob.colbaskin.webantpractice.common.user_prefs.domain.models.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -35,7 +36,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun saveUsername(username: String) = dataStore.saveUsername(username)
 
-    override suspend fun saveAvatarUrl(avatarUrl: String) = dataStore.saveAvatarUrl(avatarUrl)
+    override suspend fun saveAvatarUrl(avatarUrl: String?) = dataStore.saveAvatarUrl(avatarUrl)
 
     override suspend fun saveBirthDateMs(birthDateMs: Long) = dataStore.saveBirthDateMs(birthDateMs)
 

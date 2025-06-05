@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.common.user.models
+package bob.colbaskin.webantpractice.common.user_prefs.data.models
 
 data class UserPreferences(
     val onboardingStatus: OnboardingConfig,
@@ -9,5 +9,5 @@ data class UserPreferences(
     val birthDateMs: Long,
     val phone: String,
     val email: String,
-    val avatarUrl: String,
+    val avatarUrl: String?,
 )
