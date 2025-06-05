@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.utils
+package bob.colbaskin.webantpractice.common.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.ImageBitmap
