@@ -1,8 +1,8 @@
 package bob.colbaskin.webantpractice.di
 
 import android.content.Context
-import bob.colbaskin.webantpractice.common.user.local.UserDataStore
-import bob.colbaskin.webantpractice.common.user.local.UserPreferencesSerializer
+import bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore.UserDataStore
+import bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore.UserPreferencesSerializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

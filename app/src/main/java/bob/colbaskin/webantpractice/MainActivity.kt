@@ -14,7 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import bob.colbaskin.webantpractice.common.MainViewModel
 import bob.colbaskin.webantpractice.common.UiState
 import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
-import bob.colbaskin.webantpractice.common.user.models.UserPreferences
+import bob.colbaskin.webantpractice.common.user_prefs.data.models.UserPreferences
 import bob.colbaskin.webantpractice.navigation.AppNavHost
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
