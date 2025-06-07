@@ -1,7 +1,6 @@
 package bob.colbaskin.webantpractice.common.design_system
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -49,7 +48,7 @@ enum class TextButtonType {
 
 @Composable
 fun FilledButton(
-    @StringRes text: Int,
+    text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -81,7 +80,7 @@ fun FilledButton(
             modifier = Modifier.wrapContentSize()
         ) {
                Text(
-                text = stringResource(text),
+                text = text,
                 style = CustomTheme.typography.h4,
                 modifier = Modifier.alpha(if (isLoading) 0f else 1f)
             )
@@ -99,7 +98,7 @@ fun FilledButton(
 
 @Composable
 fun CustomOutlinedButton(
-    @StringRes text: Int,
+    text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -138,7 +137,7 @@ fun CustomOutlinedButton(
             modifier = Modifier.wrapContentSize()
         ) {
             Text(
-                text = stringResource(text),
+                text = text,
                 style = CustomTheme.typography.h4,
                 modifier = Modifier.alpha(if (isLoading) 0f else 1f)
             )
@@ -155,7 +154,7 @@ fun CustomOutlinedButton(
 
 @Composable
 fun CustomTextButton(
-    @StringRes text: Int,
+    text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = CustomTheme.typography.h4,
@@ -187,8 +186,8 @@ fun CustomTextButton(
                 .wrapContentSize()
         ) {
             Text(
-                text = stringResource(text),
-                style = when  {
+                text = text,
+                style = when {
                     type == TextButtonType.Default -> CustomTheme.typography.h4
                     type == TextButtonType.Tab -> CustomTheme.typography.h4
                     type == TextButtonType.Pink -> MaterialTheme.typography.labelLarge
@@ -252,7 +251,7 @@ fun FABButton(
 
 @Composable
 fun TabButton(
-    @StringRes text: Int,
+    text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isSelected: Boolean = true
@@ -290,7 +289,7 @@ fun TabButton(
 fun CustomIconButton(
     modifier: Modifier = Modifier,
     @DrawableRes painterId: Int,
-    @StringRes contentDescriptionId: Int?,
+    contentDescriptionId: String?,
     enabled: Boolean = true,
     defaultIconColor: Color = CustomTheme.colors.graySecondary,
     clickedIconColor: Color = CustomTheme.colors.main,
@@ -309,14 +308,14 @@ fun CustomIconButton(
                 isPressed -> clickedIconColor
                 else -> defaultIconColor
             },
-            disabledContainerColor = Color.Transparent, // CustomTheme.colors.grayLight
+            disabledContainerColor = Color.Transparent,
             disabledContentColor = CustomTheme.colors.gray
         ),
         interactionSource = interactionSource
     ) {
         Icon(
             painter = painterResource(painterId),
-            contentDescription = contentDescriptionId?.let { stringResource(it) } ,
+            contentDescription = contentDescriptionId,
         )
     }
 }
@@ -327,28 +326,28 @@ fun ButtonsPreview() {
     WebAntPracticeTheme {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             FilledButton(
-                text = R.string.sign_up,
+                text = stringResource(R.string.sign_up),
                 onClick = { },
                 enabled = true,
                 isLoading = false
             )
             Spacer(modifier = Modifier.size(10.dp))
             FilledButton(
-                text = R.string.sign_up,
+                text = stringResource(R.string.sign_up),
                 onClick = { },
                 enabled = true,
                 isLoading = true
             )
             Spacer(modifier = Modifier.size(20.dp))
             CustomOutlinedButton(
-                text = R.string.sign_in,
+                text = stringResource(R.string.sign_in),
                 onClick = { },
                 enabled = true,
                 isLoading = false
             )
             Spacer(modifier = Modifier.size(20.dp))
             CustomTextButton(
-                text = R.string.sign_in,
+                text = stringResource(R.string.sign_in),
                 onClick = { },
                 enabled = true,
                 isLoading = false
@@ -360,13 +359,13 @@ fun ButtonsPreview() {
             )
             Spacer(modifier = Modifier.size(20.dp))
             TabButton(
-                text = R.string.sign_up,
+                text = stringResource(R.string.sign_up),
                 onClick = { },
                 isSelected = true
             )
             Spacer(modifier = Modifier.size(10.dp))
             TabButton(
-                text = R.string.sign_up,
+                text = stringResource(R.string.sign_up),
                 onClick = { },
                 isSelected = false
             )

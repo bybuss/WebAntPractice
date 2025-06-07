@@ -1,7 +1,6 @@
 package bob.colbaskin.webantpractice.common.design_system
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -37,11 +36,11 @@ enum class DialogType {
 @Composable
 fun Dialog(
     type: DialogType = DialogType.Default,
-    @StringRes dialogTitle: Int,
-    @StringRes dialogText: Int,
+    dialogTitle: String,
+    dialogText: String,
     @DrawableRes icon: Int? = R.drawable.check_circle_filled,
-    @StringRes actionLabel1: Int? = null,
-    @StringRes actionLabel2: Int? = null,
+    actionLabel1: String? = null,
+    actionLabel2: String? = null,
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit,
 ) {
@@ -68,7 +67,7 @@ fun Dialog(
                     }
                 }
                 Text(
-                    text = stringResource(dialogTitle),
+                    text = dialogTitle,
                     style = MaterialTheme.typography.headlineSmall,
                 )
                 if (type == DialogType.WithIcon) {
@@ -86,7 +85,7 @@ fun Dialog(
         },
         text = {
             Text(
-                text = stringResource(dialogText),
+                text = dialogText,
                 style = MaterialTheme.typography.bodyMedium,
             )
         },
@@ -136,7 +135,7 @@ fun DatePickerModal(
         colors = DatePickerDefaults.colors(containerColor = CustomTheme.colors.white),
         confirmButton = {
             CustomTextButton(
-                text = R.string.dialog_ok,
+                text = stringResource(R.string.dialog_ok),
                 type = TextButtonType.Pink,
                 onClick = {
                     onDateSelected(datePickerState.selectedDateMillis)
@@ -146,7 +145,7 @@ fun DatePickerModal(
         },
         dismissButton = {
             CustomTextButton(
-                text = R.string.dialog_cancel,
+                text = stringResource(R.string.dialog_cancel),
                 type = TextButtonType.Pink,
                 onClick = onDismiss,
             )
@@ -184,9 +183,9 @@ private fun DialogPreview() {
         )*/
         Dialog(
             type = DialogType.WithIcon,
-            dialogTitle = R.string.dialog_confirmation,
-            dialogText = R.string.dialog_exit_data_lost,
-            actionLabel1 = R.string.dialog_confirmation,
+            dialogTitle = stringResource(R.string.dialog_confirmation),
+            dialogText = stringResource(R.string.dialog_exit_data_lost),
+            actionLabel1 = stringResource(R.string.dialog_confirmation),
             onDismissRequest = {},
             onConfirmation = {}
         )
