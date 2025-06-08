@@ -23,6 +23,18 @@
     <string name="loading">Loading…</string>
     <string name="error_title">Sorry!</string>
     <string name="error_text">There is no pictures.\nPleace come back later.</string>
+    <string name="network_error_title">Connection Problem!</string>
+    <string name="network_error_text">Unable to connect to the server. \nPlease check your internet connection.</string>
+    <string name="timeout_error_title">Request Timeout!</string>
+    <string name="timeout_error_text">The request took too long. \nPlease try again in a better network environment.</string>
+    <string name="authorization_error_title">Session Expired!</string>
+    <string name="authorization_error_text">Your login session has expired. \nPlease sign in again.</string>
+    <string name="generic_error_title">Something Went Wrong!</string>
+    <string name="generic_error_text">An unexpected error occurred. \nOur team has been notified.</string>
+    <string name="server_error_title">System Error!</string>
+    <string name="server_error_text">Server is temporarily unavailable. \nPlease try again later.</string>
+
+
     <string name="checkbox_new">New</string>
     <string name="checkbox_popular">Popular</string>
     <string name="placeholder_user_name">User Name</string>
@@ -30,16 +42,18 @@
     <string name="placeholder_phone_number">Phone Number</string>
     <string name="placeholder_email">Email</string>
     <string name="placeholder_password">Password</string>
+    <string name="placeholder_confirm_password">Confirm password</string>
     <string name="placeholder_empty"> </string>
     <string name="error_user_name">Username must be 3–20 characters long</string>
     <string name="error_birthday">Invalid date format</string>
     <string name="error_phone_number">Invalid phone number format</string>
     <string name="error_email">Invalid email address</string>
     <string name="error_password">Password must be at least 8 characters</string>
+    <string name="error_confirm_password">Passwords don`t match</string>
     <string name="error_empty_field">This field cannot be empty</string>
     <string name="toast_photo_successfully">Photo uploaded successfully</string>
 
-    <string name="welcome">Welcome to Gallery!</string>
+    <string name="welcome_to_gallery">Welcome to Gallery!</string>
     <string name="create_account">Create an account</string>
     <string name="have_account">I already have an account</string>
 
@@ -57,6 +71,7 @@
 
     <string name="all_photos_top_bar_title">All photos</string>
 
-    <string name="nav_photos">Photos</string>
-    <string name="nav_albums">Albums</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_all_photos">All Photos</string>
+    <string name="nav_profile">Profile</string>
 </resources>

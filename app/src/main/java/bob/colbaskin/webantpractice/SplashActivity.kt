@@ -37,7 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
-import bob.colbaskin.webantpractice.utils.calculateImageScaleToFullscreen
+import bob.colbaskin.webantpractice.common.utils.calculateImageScaleToFullscreen
 import kotlinx.coroutines.delay
 
 

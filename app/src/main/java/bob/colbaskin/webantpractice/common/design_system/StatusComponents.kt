@@ -1,6 +1,5 @@
 package bob.colbaskin.webantpractice.common.design_system
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -58,7 +57,7 @@ fun LoadingIndicator() {
 }
 
 @Composable
-fun ErrorIndicator(@StringRes title: Int, @StringRes text: Int) {
+fun ErrorIndicator(title: String, text: String) {
     Box(contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
@@ -67,14 +66,14 @@ fun ErrorIndicator(@StringRes title: Int, @StringRes text: Int) {
             )
             Spacer(modifier = Modifier.size(8.dp))
             Text(
-                text = stringResource(title),
+                text = title,
                 style = CustomTheme.typography.p,
                 color = CustomTheme.colors.gray,
                 modifier = Modifier
             )
             Spacer(modifier = Modifier.size(8.dp))
             Text(
-                text = stringResource(text),
+                text = text,
                 style = CustomTheme.typography.caption,
                 color = CustomTheme.colors.gray,
                 textAlign = TextAlign.Center,
@@ -142,8 +141,8 @@ private fun LoadingIndicatorPreview() {
             LoadingIndicator()
             Spacer(modifier = Modifier.size(20.dp))
             ErrorIndicator(
-                title = R.string.error_title,
-                text = R.string.error_text
+                title = stringResource(R.string.error_title),
+                text = stringResource(R.string.error_text)
             )
             Spacer(modifier = Modifier.size(20.dp))
             Box(modifier = Modifier.size(360.dp, 200.dp)) {

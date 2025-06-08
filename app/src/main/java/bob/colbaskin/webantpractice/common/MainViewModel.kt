@@ -2,8 +2,8 @@ package bob.colbaskin.webantpractice.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import bob.colbaskin.webantpractice.common.user.local.UserPreferencesRepository
-import bob.colbaskin.webantpractice.common.user.models.UserPreferences
+import bob.colbaskin.webantpractice.common.user_prefs.domain.UserPreferencesRepository
+import bob.colbaskin.webantpractice.common.user_prefs.data.models.UserPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

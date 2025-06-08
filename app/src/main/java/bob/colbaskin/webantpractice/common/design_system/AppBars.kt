@@ -1,6 +1,5 @@
 package bob.colbaskin.webantpractice.common.design_system
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -46,7 +45,7 @@ import bob.colbaskin.webantpractice.navigation.Destinations
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BackTextSearchTopAppBar(
-    @StringRes title: Int,
+    title: String,
     onBackClick: () -> Unit,
     searchTextFieldState: TextFieldState,
     onSearch: (String) -> Unit,
@@ -57,7 +56,7 @@ fun BackTextSearchTopAppBar(
         TopAppBar(
             title = {
                 Text(
-                    text = stringResource(title),
+                    text = title,
                     style = MaterialTheme.typography.titleLarge,
                     color = CustomTheme.colors.black
                 )
@@ -65,7 +64,7 @@ fun BackTextSearchTopAppBar(
             navigationIcon = {
                 CustomIconButton(
                     painterId = R.drawable.back,
-                    contentDescriptionId = R.string.back_arrow_logo_description,
+                    contentDescriptionId = stringResource(R.string.back_arrow_logo_description),
                     onClick = onBackClick
                 )
             },
@@ -108,7 +107,7 @@ fun SearchOnlyTopAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CenteredTextTopAppBar(
-    @StringRes title: Int,
+    title: String,
     modifier: Modifier = Modifier
 ) {
     Box {
@@ -116,7 +115,7 @@ fun CenteredTextTopAppBar(
             modifier = modifier,
             title = {
                 Text(
-                    text = stringResource(title),
+                    text = title,
                     style = MaterialTheme.typography.titleLarge
                 )
             },
@@ -138,7 +137,7 @@ fun CenteredTextTopAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BackTextTopAppBar(
-    @StringRes title: Int,
+    title: String,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -147,14 +146,14 @@ fun BackTextTopAppBar(
             modifier = modifier,
             title = {
                 Text(
-                    text = stringResource(title),
+                    text = title,
                     style = MaterialTheme.typography.titleLarge
                 )
             },
             navigationIcon = {
                 CustomIconButton(
                     painterId = R.drawable.back,
-                    contentDescriptionId = R.string.back_arrow_logo_description,
+                    contentDescriptionId = stringResource(R.string.back_arrow_logo_description),
                     onClick = onBackClick
                 )
             },
@@ -177,8 +176,8 @@ fun BackTextTopAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextWithActionTopAppBar(
-    @StringRes title: Int,
-    @StringRes actionButtonLabel: Int,
+    title: String,
+    actionButtonLabel: String,
     onActionClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -187,7 +186,7 @@ fun TextWithActionTopAppBar(
             modifier = modifier,
             title = {
                 Text(
-                    text = stringResource(title),
+                    text = title,
                     style = MaterialTheme.typography.titleLarge
                 )
             },
@@ -221,7 +220,7 @@ fun BackOnlyTopAppBar(
             navigationIcon = {
                 CustomIconButton(
                     painterId = R.drawable.back,
-                    contentDescriptionId = R.string.back_arrow_logo_description,
+                    contentDescriptionId = stringResource(R.string.back_arrow_logo_description),
                     onClick = onBackClick
                 )
             },
@@ -254,14 +253,14 @@ fun BackWithMenuTopAppBar(
             navigationIcon = {
                 CustomIconButton(
                     painterId = R.drawable.back,
-                    contentDescriptionId = R.string.back_arrow_logo_description,
+                    contentDescriptionId = stringResource(R.string.back_arrow_logo_description),
                     onClick = onBackClick
                 )
             },
             actions = {
                 CustomIconButton(
                     painterId = R.drawable.more_vert,
-                    contentDescriptionId = R.string.more_vert_logo_description,
+                    contentDescriptionId = stringResource(R.string.more_vert_logo_description),
                     onClick = onMenuClick
                 )
             },
@@ -285,7 +284,7 @@ fun BackWithMenuTopAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CloseTextCheckTopAppBar(
-    @StringRes title: Int,
+    title: String,
     onCloseClick: () -> Unit,
     onCheckClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -294,21 +293,21 @@ fun CloseTextCheckTopAppBar(
         modifier = modifier,
         title = {
             Text(
-                text = stringResource(title),
+                text = title,
                 style = MaterialTheme.typography.titleLarge
             )
         },
         navigationIcon = {
             CustomIconButton(
                 painterId = R.drawable.close,
-                contentDescriptionId = R.string.close_logo_description,
+                contentDescriptionId = stringResource(R.string.close_logo_description),
                 onClick = onCloseClick
             )
         },
         actions = {
             CustomIconButton(
                 painterId = R.drawable.status_bar_check_mark,
-                contentDescriptionId = R.string.check_circle_filled_logo_description,
+                contentDescriptionId = stringResource(R.string.check_circle_filled_logo_description),
                 onClick = onCheckClick
             )
         },
@@ -333,7 +332,7 @@ fun SettingsTopAppBar(
         actions = {
             CustomIconButton(
                 painterId = R.drawable.settings,
-                contentDescriptionId = R.string.settings_logo_description,
+                contentDescriptionId = stringResource(R.string.settings_logo_description),
                 onClick = onSettingsClick
             )
         },
@@ -345,29 +344,17 @@ fun SettingsTopAppBar(
     )
 }
 
-enum class BottomBarType {
-    MAIN,
-    Photos
-}
-
 @Composable
 fun BottomBar(
     modifier: Modifier = Modifier,
-    type: BottomBarType = BottomBarType.MAIN,
     navController: NavHostController
 ) {
     val currentDestination = navController.currentBackStackEntryAsState().value?.destination
-    val items: List<Destinations> = when (type) {
-        BottomBarType.MAIN -> listOf(
+    val items: List<Destinations> = listOf(
             Destinations.HOME,
-            Destinations.ALLPHOTOS,
+            Destinations.ALL_PHOTOS,
             Destinations.PROFILE
-        )
-        BottomBarType.Photos -> listOf(
-            Destinations.PHOTOS,
-            Destinations.ALBUMS
-        )
-    }
+    )
 
     NavigationBar(
         containerColor = CustomTheme.colors.white,
@@ -395,13 +382,10 @@ fun BottomBar(
                 icon = {
                     Icon(
                         painter = painterResource(destination.icon),
-                        contentDescription = destination.label?.let { stringResource(it) }
+                        contentDescription = stringResource(destination.label)
                     )
                 },
                 modifier = Modifier,
-                label = { destination.label?.let { label ->
-                    Text(text = stringResource(label))
-                } },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = CustomTheme.colors.main,
                     selectedTextColor = CustomTheme.colors.main,
@@ -419,13 +403,13 @@ fun BottomBar(
 
 @Preview(showBackground = true)
 @Composable
-fun BackTextSearchPreview() {
+private fun BackTextSearchPreview() {
     val textState = rememberTextFieldState("")
     var results by remember { mutableStateOf(listOf<String>()) }
 
     WebAntPracticeTheme {
         BackTextSearchTopAppBar(
-            title = R.string.all_photos_top_bar_title,
+            title = stringResource(R.string.all_photos_top_bar_title),
             onBackClick = {},
             searchTextFieldState = textState,
             onSearch = { query ->
@@ -441,7 +425,7 @@ fun BackTextSearchPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun SearchOnlyPreview() {
+private fun SearchOnlyPreview() {
     val textState = rememberTextFieldState("")
     var results by remember { mutableStateOf(listOf<String>()) }
 
@@ -461,16 +445,18 @@ fun SearchOnlyPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun CenteredTextPreview() {
-    WebAntPracticeTheme { CenteredTextTopAppBar(title = R.string.all_photos_top_bar_title) }
+private fun CenteredTextPreview() {
+    WebAntPracticeTheme {
+        CenteredTextTopAppBar(title = stringResource(R.string.all_photos_top_bar_title))
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BackTextPreview() {
+private fun BackTextPreview() {
     WebAntPracticeTheme {
         BackTextTopAppBar(
-            title = R.string.all_photos_top_bar_title,
+            title = stringResource(R.string.all_photos_top_bar_title),
             onBackClick = {}
         )
     }
@@ -478,11 +464,11 @@ fun BackTextPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun TextWithActionPreview() {
+private fun TextWithActionPreview() {
     WebAntPracticeTheme {
         TextWithActionTopAppBar(
-            title = R.string.all_photos_top_bar_title,
-            actionButtonLabel = R.string.sign_in,
+            title = stringResource(R.string.all_photos_top_bar_title),
+            actionButtonLabel = stringResource(R.string.sign_in),
             onActionClick = {}
         )
     }
@@ -490,7 +476,7 @@ fun TextWithActionPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun BackOnlyPreview() {
+private fun BackOnlyPreview() {
     WebAntPracticeTheme {
         BackOnlyTopAppBar({})
     }
@@ -498,7 +484,7 @@ fun BackOnlyPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun BackWithMenuPreview() {
+private fun BackWithMenuPreview() {
     WebAntPracticeTheme {
         BackWithMenuTopAppBar({}, {})
     }
@@ -506,10 +492,10 @@ fun BackWithMenuPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun CloseTextCheckPreview() {
+private fun CloseTextCheckPreview() {
     WebAntPracticeTheme {
         CloseTextCheckTopAppBar(
-            title = R.string.all_photos_top_bar_title,
+            title = stringResource(R.string.all_photos_top_bar_title),
             onCloseClick = {},
             onCheckClick = {}
         )
@@ -518,7 +504,7 @@ fun CloseTextCheckPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun SettingsPreview() {
+private fun SettingsPreview() {
     WebAntPracticeTheme {
         SettingsTopAppBar({})
     }
@@ -527,10 +513,5 @@ fun SettingsPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun BottomBarPreview() {
-    WebAntPracticeTheme {
-        BottomBar(
-            type = BottomBarType.Photos,
-            navController = rememberNavController()
-        )
-    }
+    WebAntPracticeTheme { BottomBar(navController = rememberNavController()) }
 }

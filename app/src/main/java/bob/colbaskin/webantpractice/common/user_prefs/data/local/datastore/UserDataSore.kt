@@ -1,15 +1,17 @@
-package bob.colbaskin.webantpractice.common.user.local
+package bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import bob.colbaskin.webantpractice.common.user.models.AuthConfig
-import bob.colbaskin.webantpractice.common.user.models.OnboardingConfig
-import bob.colbaskin.webantpractice.common.user.models.UserPreferences
-import bob.colbaskin.webantpractice.common.user.toData
+import bob.colbaskin.webantpractice.common.user_prefs.data.models.AuthConfig
+import bob.colbaskin.webantpractice.common.user_prefs.data.models.OnboardingConfig
+import bob.colbaskin.webantpractice.common.user_prefs.data.models.UserPreferences
+import bob.colbaskin.webantpractice.common.user_prefs.data.toData
 import bob.colbaskin.webantpractice.datastore.AuthStatus
 import bob.colbaskin.webantpractice.datastore.OnboardingStatus
 import bob.colbaskin.webantpractice.datastore.UserPreferencesProto
+import bob.colbaskin.webantpractice.datastore.copy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -27,24 +29,26 @@ class UserDataStore(context: Context) {
     fun getUserPreferences(): Flow<UserPreferences> = dataStore.data.map { it.toData() }
 
     suspend fun saveAuthStatus(status: AuthConfig) {
+        Log.d(TAG, "saveAuthStatus: $status")
         dataStore.updateData { prefs ->
-            prefs.toBuilder().apply {
+            prefs.copy {
                 authStatus = when (status) {
                     AuthConfig.NOT_AUTHENTICATED -> AuthStatus.NOT_AUTHENTICATED
                     AuthConfig.AUTHENTICATED -> AuthStatus.AUTHENTICATED
                 }
-            }.build()
+            }
         }
     }
     suspend fun saveOnboardingStatus(status: OnboardingConfig) {
+        Log.d(TAG, "saveOnboardingStatus: $status")
         dataStore.updateData { prefs ->
-            prefs.toBuilder().apply {
-                onboardingStatus = when (status) {
+            prefs.copy {
+                onboardingStatus  = when (status) {
                     OnboardingConfig.NOT_STARTED -> OnboardingStatus.NOT_STARTED
                     OnboardingConfig.IN_PROGRESS -> OnboardingStatus.IN_PROGRESS
                     OnboardingConfig.COMPLETED -> OnboardingStatus.COMPLETED
                 }
-            }.build()
+            }
         }
     }
 
@@ -54,8 +58,9 @@ class UserDataStore(context: Context) {
         birthDateMs: Long,
         phone: String,
         email: String,
-        avatarUrl: String
+        avatarUrl: String? = null
     ) {
+        Log.d(TAG, "saveUser: $userId, $username, $birthDateMs, $phone, $email, $avatarUrl")
         dataStore.updateData { prefs ->
             prefs.toBuilder().apply {
                 this.userId = userId
@@ -69,13 +74,15 @@ class UserDataStore(context: Context) {
     }
 
     suspend fun saveUsername(username: String) {
+        Log.d(TAG, "saveUsername: $username")
         dataStore.updateData { prefs ->
             prefs.toBuilder().apply {
                 this.username = username
             }.build()
         }
     }
-    suspend fun saveAvatarUrl(avatarUrl: String) {
+    suspend fun saveAvatarUrl(avatarUrl: String?) {
+        Log.d(TAG, "saveAvatarUrl: $avatarUrl")
         dataStore.updateData { prefs ->
             prefs.toBuilder().apply {
                 this.avatarUrl = avatarUrl
@@ -83,6 +90,7 @@ class UserDataStore(context: Context) {
         }
     }
     suspend fun saveBirthDateMs(birthDateMs: Long) {
+        Log.d(TAG, "saveBirthDateMs: $birthDateMs")
         dataStore.updateData { prefs ->
             prefs.toBuilder().apply {
                 this.birthDateMs = birthDateMs
@@ -90,6 +98,7 @@ class UserDataStore(context: Context) {
         }
     }
     suspend fun savePhone(phone: String) {
+        Log.d(TAG, "savePhone: $phone")
         dataStore.updateData { prefs ->
             prefs.toBuilder().apply {
                 this.phone = phone
@@ -97,6 +106,7 @@ class UserDataStore(context: Context) {
         }
     }
     suspend fun saveEmail(email: String) {
+        Log.d(TAG, "saveEmail: $email")
         dataStore.updateData { prefs ->
             prefs.toBuilder().apply {
                 this.email = email

@@ -1,6 +1,5 @@
 package bob.colbaskin.webantpractice.common.design_system
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +27,7 @@ import bob.colbaskin.webantpractice.common.design_system.utils.clickableWithoutR
 
 @Composable
 fun CustomCheckbox(
-    @StringRes text: Int,
+    text: String,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
@@ -57,7 +56,7 @@ fun CustomCheckbox(
             interactionSource = interactionSource
         )
         Text(
-            text = stringResource(text),
+            text = text,
             style = if (checked) CustomTheme.typography.h4 else CustomTheme.typography.p,
             color = when {
                 isPressed -> CustomTheme.colors.main
@@ -76,13 +75,13 @@ private fun CustomCheckboxPreview() {
 
         Column {
             CustomCheckbox(
-                text = R.string.checkbox_new,
+                text = stringResource(R.string.checkbox_new),
                 checked = checked1,
                 onCheckedChange = { checked1 = it }
             )
             Spacer(modifier = Modifier.height(20.dp))
             CustomCheckbox(
-                text = R.string.checkbox_popular,
+                text = stringResource(R.string.checkbox_popular),
                 checked = checked2,
                 onCheckedChange = { checked2 = it }
             )

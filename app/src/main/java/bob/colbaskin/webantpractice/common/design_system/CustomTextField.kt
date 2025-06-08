@@ -47,6 +47,7 @@ enum class TextFieldType {
     PhoneNumber,
     Email,
     Password,
+    ConfirmPassword,
     Empty
 }
 
@@ -113,6 +114,7 @@ fun CustomTextField(
                                 TextFieldType.PhoneNumber -> R.string.placeholder_phone_number
                                 TextFieldType.Email -> R.string.placeholder_email
                                 TextFieldType.Password -> R.string.placeholder_password
+                                TextFieldType.ConfirmPassword -> R.string.placeholder_confirm_password
                                 TextFieldType.Empty -> R.string.placeholder_empty
                             }
                         )
@@ -137,7 +139,7 @@ fun CustomTextField(
                             TextFieldType.UserName -> R.drawable.person
                             TextFieldType.Birthday -> R.drawable.calendar
                             TextFieldType.PhoneNumber -> R.drawable.phone
-                            TextFieldType.Password -> {
+                            TextFieldType.Password, TextFieldType.ConfirmPassword -> {
                                 if (showPassword) R.drawable.eye_on
                                 else R.drawable.eye_off
                             }
@@ -149,11 +151,16 @@ fun CustomTextField(
                             TextFieldType.UserName -> R.string.user_name_logo_description
                             TextFieldType.Birthday -> R.string.birthday_logo_description
                             TextFieldType.PhoneNumber -> R.string.phone_number_logo_description
-                            TextFieldType.Password -> R.string.password_logo_description
+                            TextFieldType.Password, TextFieldType.ConfirmPassword -> {
+                                R.string.password_logo_description
+                            }
                             else -> R.string.email_logo_description
                         }
                     ),
-                    modifier = if (type == TextFieldType.Password) {
+                    modifier = if (
+                        type == TextFieldType.Password ||
+                        type == TextFieldType.ConfirmPassword
+                    ) {
                         Modifier.clickableWithoutRipple(
                             interactionSource = interactionSource,
                             onClick = { showPassword = !showPassword },
@@ -167,6 +174,7 @@ fun CustomTextField(
         },
         visualTransformation = when {
             type == TextFieldType.Password && !showPassword -> PasswordVisualTransformation()
+            type == TextFieldType.ConfirmPassword && !showPassword -> PasswordVisualTransformation()
             else -> VisualTransformation.None
         },
         keyboardOptions = KeyboardOptions(
@@ -175,7 +183,7 @@ fun CustomTextField(
                 TextFieldType.Birthday -> KeyboardType.Number
                 TextFieldType.PhoneNumber -> KeyboardType.Phone
                 TextFieldType.Email -> KeyboardType.Email
-                TextFieldType.Password -> KeyboardType.Password
+                TextFieldType.Password, TextFieldType.ConfirmPassword -> KeyboardType.Password
                 TextFieldType.Empty -> KeyboardType.Text
             }
         ),
@@ -188,6 +196,7 @@ fun CustomTextField(
                         TextFieldType.PhoneNumber -> R.string.error_phone_number
                         TextFieldType.Email -> R.string.error_email
                         TextFieldType.Password -> R.string.error_password
+                        TextFieldType.ConfirmPassword -> R.string.error_confirm_password
                         TextFieldType.Empty -> R.string.error_empty_field
                     }
                 )

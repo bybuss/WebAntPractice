@@ -12,6 +12,8 @@ plugins {
 
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+
+    alias(libs.plugins.secretsPlugin)
 }
 
 android {
@@ -46,6 +48,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -71,10 +74,6 @@ androidComponents {
             }
         }
     }
-}
-
-hilt {
-    enableAggregatingTask = false
 }
 
 dependencies {
@@ -107,4 +106,12 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
+
+    implementation(libs.androidx.work.runtime)
+
+    implementation(libs.retrofit)
+    implementation(libs.okhttp)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.logging.interceptor)
+    implementation(libs.persistentcookiejar)
 }

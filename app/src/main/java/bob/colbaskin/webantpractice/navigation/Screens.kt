@@ -7,10 +7,10 @@ sealed interface Screens {
     data object Welcome: Screens
 
     @Serializable
-    data object Login: Screens
+    data object SignIn: Screens
 
     @Serializable
-    data object Register: Screens
+    data object SignUp: Screens
 
     @Serializable
     data object Home: Screens
@@ -20,10 +20,4 @@ sealed interface Screens {
 
     @Serializable
     data object Profile: Screens
-
-    @Serializable
-    data object Photos: Screens
-
-    @Serializable
-    data object Albums: Screens
 }
