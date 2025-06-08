@@ -1,5 +1,6 @@
 package bob.colbaskin.webantpractice.di
 
+import android.content.Context
 import bob.colbaskin.webantpractice.auth.data.AuthRepositoryImpl
 import bob.colbaskin.webantpractice.auth.domain.AuthApiService
 import bob.colbaskin.webantpractice.auth.domain.AuthRepository
@@ -9,6 +10,7 @@ import bob.colbaskin.webantpractice.common.user_prefs.data.UserPreferencesReposi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -31,7 +33,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(authApi: AuthApiService): AuthRepository {
-        return AuthRepositoryImpl(authApi)
+    fun provideAuthRepository(
+        @ApplicationContext context: Context,
+        authApi: AuthApiService,
+        dataStore: UserPreferencesRepository
+    ): AuthRepository {
+        return AuthRepositoryImpl(context, authApi, dataStore)
     }
 }
