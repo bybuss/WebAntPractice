@@ -20,7 +20,7 @@ interface AuthRepository {
 
     suspend fun register(
         email: String,
-        birthday: String,
+        birthday: Long,
         displayName: String,
         phone: String,
         plainPassword: String

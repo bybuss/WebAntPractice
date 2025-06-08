@@ -7,14 +7,15 @@ import bob.colbaskin.webantpractice.auth.domain.AuthApiService
 import bob.colbaskin.webantpractice.auth.domain.AuthRepository
 import bob.colbaskin.webantpractice.common.user_prefs.domain.models.User
 import bob.colbaskin.webantpractice.common.Result
-import bob.colbaskin.webantpractice.common.user_prefs.data.UserPreferencesRepositoryImpl
+import bob.colbaskin.webantpractice.common.user_prefs.domain.UserPreferencesRepository
+import bob.colbaskin.webantpractice.common.utils.formatFromMillis
 import bob.colbaskin.webantpractice.common.utils.safeApiCall
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val context: Context,
     private val authApi: AuthApiService,
-    private val dataStore: UserPreferencesRepositoryImpl
+    private val dataStore: UserPreferencesRepository
 ): AuthRepository {
 
     override suspend fun login(
@@ -43,7 +44,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun register(
         email: String,
-        birthday: String,
+        birthday: Long,
         displayName: String,
         phone: String,
         plainPassword: String
@@ -52,7 +53,7 @@ class AuthRepositoryImpl @Inject constructor(
             apiCall = {
                 authApi.register(
                     email = email,
-                    birthday = birthday,
+                    birthday = birthday.formatFromMillis(),
                     displayName = displayName,
                     phone = phone,
                     plainPassword = plainPassword
