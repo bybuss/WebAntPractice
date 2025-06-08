@@ -78,14 +78,12 @@ private fun SignInScreen(
                 CustomTextField(
                     text = state.email,
                     type = TextFieldType.Email,
-                    onValueChange = { onAction(SignInAction.UpdateEmail(it)) },
-                    isRequired = true
+                    onValueChange = { onAction(SignInAction.UpdateEmail(it)) }
                 )
                 CustomTextField(
                     text = state.password,
                     type = TextFieldType.Password,
-                    onValueChange = { onAction(SignInAction.UpdatePassword(it)) },
-                    isRequired = true
+                    onValueChange = { onAction(SignInAction.UpdatePassword(it)) }
                 )
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
