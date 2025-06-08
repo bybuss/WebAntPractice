@@ -403,7 +403,7 @@ fun BottomBar(
 
 @Preview(showBackground = true)
 @Composable
-fun BackTextSearchPreview() {
+private fun BackTextSearchPreview() {
     val textState = rememberTextFieldState("")
     var results by remember { mutableStateOf(listOf<String>()) }
 
@@ -425,7 +425,7 @@ fun BackTextSearchPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun SearchOnlyPreview() {
+private fun SearchOnlyPreview() {
     val textState = rememberTextFieldState("")
     var results by remember { mutableStateOf(listOf<String>()) }
 
@@ -445,7 +445,7 @@ fun SearchOnlyPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun CenteredTextPreview() {
+private fun CenteredTextPreview() {
     WebAntPracticeTheme {
         CenteredTextTopAppBar(title = stringResource(R.string.all_photos_top_bar_title))
     }
@@ -453,7 +453,7 @@ fun CenteredTextPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun BackTextPreview() {
+private fun BackTextPreview() {
     WebAntPracticeTheme {
         BackTextTopAppBar(
             title = stringResource(R.string.all_photos_top_bar_title),
@@ -464,7 +464,7 @@ fun BackTextPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun TextWithActionPreview() {
+private fun TextWithActionPreview() {
     WebAntPracticeTheme {
         TextWithActionTopAppBar(
             title = stringResource(R.string.all_photos_top_bar_title),
@@ -476,7 +476,7 @@ fun TextWithActionPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun BackOnlyPreview() {
+private fun BackOnlyPreview() {
     WebAntPracticeTheme {
         BackOnlyTopAppBar({})
     }
@@ -484,7 +484,7 @@ fun BackOnlyPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun BackWithMenuPreview() {
+private fun BackWithMenuPreview() {
     WebAntPracticeTheme {
         BackWithMenuTopAppBar({}, {})
     }
@@ -492,7 +492,7 @@ fun BackWithMenuPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun CloseTextCheckPreview() {
+private fun CloseTextCheckPreview() {
     WebAntPracticeTheme {
         CloseTextCheckTopAppBar(
             title = stringResource(R.string.all_photos_top_bar_title),
@@ -504,7 +504,7 @@ fun CloseTextCheckPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun SettingsPreview() {
+private fun SettingsPreview() {
     WebAntPracticeTheme {
         SettingsTopAppBar({})
     }

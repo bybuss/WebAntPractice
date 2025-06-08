@@ -322,7 +322,7 @@ fun CustomIconButton(
 
 @Preview(showBackground = true)
 @Composable
-fun ButtonsPreview() {
+private fun ButtonsPreview() {
     WebAntPracticeTheme {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             FilledButton(
