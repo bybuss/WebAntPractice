@@ -6,33 +6,22 @@ import bob.colbaskin.webantpractice.R
 
 enum class Destinations(
     @DrawableRes val icon: Int,
-    @StringRes val label: Int? = null,
+    @StringRes val label: Int,
     val screen: Screens
 ) {
     HOME(
         icon = R.drawable.home,
-        label = null,
+        label = R.string.nav_home,
         screen = Screens.Home
     ),
-    ALLPHOTOS(
+    ALL_PHOTOS(
         icon = R.drawable.camera,
-        label = null,
+        label = R.string.nav_all_photos,
         screen = Screens.AllPhotos
     ),
     PROFILE(
         icon = R.drawable.profile,
-        label = null,
+        label = R.string.nav_profile,
         screen = Screens.Profile
-    ),
-
-    PHOTOS(
-        icon = R.drawable.photo,
-        label = R.string.nav_photos,
-        screen = Screens.Photos
-    ),
-    ALBUMS(
-        icon = R.drawable.folder,
-        label = R.string.nav_albums,
-        screen = Screens.Albums
-    ),
+    )
 }

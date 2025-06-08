@@ -11,6 +11,7 @@ import bob.colbaskin.webantpractice.common.user_prefs.data.toData
 import bob.colbaskin.webantpractice.datastore.AuthStatus
 import bob.colbaskin.webantpractice.datastore.OnboardingStatus
 import bob.colbaskin.webantpractice.datastore.UserPreferencesProto
+import bob.colbaskin.webantpractice.datastore.copy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -30,24 +31,24 @@ class UserDataStore(context: Context) {
     suspend fun saveAuthStatus(status: AuthConfig) {
         Log.d(TAG, "saveAuthStatus: $status")
         dataStore.updateData { prefs ->
-            prefs.toBuilder().apply {
-                UserPreferencesProto.Builder.setAuthStatus = when (status) {
+            prefs.copy {
+                authStatus = when (status) {
                     AuthConfig.NOT_AUTHENTICATED -> AuthStatus.NOT_AUTHENTICATED
                     AuthConfig.AUTHENTICATED -> AuthStatus.AUTHENTICATED
                 }
-            }.build()
+            }
         }
     }
     suspend fun saveOnboardingStatus(status: OnboardingConfig) {
         Log.d(TAG, "saveOnboardingStatus: $status")
         dataStore.updateData { prefs ->
-            prefs.toBuilder().apply {
-                UserPreferencesProto.Builder.setOnboardingStatus = when (status) {
+            prefs.copy {
+                onboardingStatus  = when (status) {
                     OnboardingConfig.NOT_STARTED -> OnboardingStatus.NOT_STARTED
                     OnboardingConfig.IN_PROGRESS -> OnboardingStatus.IN_PROGRESS
                     OnboardingConfig.COMPLETED -> OnboardingStatus.COMPLETED
                 }
-            }.build()
+            }
         }
     }
 

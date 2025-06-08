@@ -107,7 +107,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
 
-//    implementation(libs.kotlin.reflect)
+    implementation(libs.androidx.work.runtime)
+
     implementation(libs.retrofit)
     implementation(libs.okhttp)
     implementation(libs.retrofit2.kotlinx.serialization.converter)

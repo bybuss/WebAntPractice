@@ -42,16 +42,18 @@
     <string name="placeholder_phone_number">Phone Number</string>
     <string name="placeholder_email">Email</string>
     <string name="placeholder_password">Password</string>
+    <string name="placeholder_confirm_password">Confirm password</string>
     <string name="placeholder_empty"> </string>
     <string name="error_user_name">Username must be 3–20 characters long</string>
     <string name="error_birthday">Invalid date format</string>
     <string name="error_phone_number">Invalid phone number format</string>
     <string name="error_email">Invalid email address</string>
     <string name="error_password">Password must be at least 8 characters</string>
+    <string name="error_confirm_password">Passwords don`t match</string>
     <string name="error_empty_field">This field cannot be empty</string>
     <string name="toast_photo_successfully">Photo uploaded successfully</string>
 
-    <string name="welcome">Welcome to Gallery!</string>
+    <string name="welcome_to_gallery">Welcome to Gallery!</string>
     <string name="create_account">Create an account</string>
     <string name="have_account">I already have an account</string>
 
@@ -69,6 +71,7 @@
 
     <string name="all_photos_top_bar_title">All photos</string>
 
-    <string name="nav_photos">Photos</string>
-    <string name="nav_albums">Albums</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_all_photos">All Photos</string>
+    <string name="nav_profile">Profile</string>
 </resources>
