@@ -4,8 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,6 +52,7 @@ private fun SignInScreen(
     onAction: (SignInAction) -> Unit,
 ) {
     val lineColor = CustomTheme.colors.main
+    val scrollState = rememberScrollState()
 
     Box(
         contentAlignment = Alignment.Center,
@@ -58,7 +62,10 @@ private fun SignInScreen(
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(60.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .verticalScroll(scrollState)
+                .imePadding()
         ) {
             Text(
                 text = stringResource(R.string.sign_in),
