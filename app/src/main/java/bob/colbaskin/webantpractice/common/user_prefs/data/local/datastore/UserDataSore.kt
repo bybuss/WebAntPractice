@@ -45,7 +45,6 @@ class UserDataStore(context: Context) {
             prefs.copy {
                 onboardingStatus  = when (status) {
                     OnboardingConfig.NOT_STARTED -> OnboardingStatus.NOT_STARTED
-                    OnboardingConfig.IN_PROGRESS -> OnboardingStatus.IN_PROGRESS
                     OnboardingConfig.COMPLETED -> OnboardingStatus.COMPLETED
                 }
             }
