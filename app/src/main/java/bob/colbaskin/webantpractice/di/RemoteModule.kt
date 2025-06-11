@@ -3,17 +3,22 @@ package bob.colbaskin.webantpractice.di
 import android.content.Context
 import android.util.Log
 import bob.colbaskin.webantpractice.BuildConfig
+import bob.colbaskin.webantpractice.auth.domain.token.RefreshTokenRepository
+import bob.colbaskin.webantpractice.di.token.TokenAuthenticator
+import bob.colbaskin.webantpractice.di.token.TokenInterceptor
+import bob.colbaskin.webantpractice.di.token.TokenManager
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import dagger.Lazy
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -33,7 +38,29 @@ object RemoteModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
+    fun provideTokenInterceptor(tokenManager: TokenManager): TokenInterceptor {
+        return TokenInterceptor(tokenManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTokenAuthenticator(
+        tokenManager: TokenManager,
+        refreshTokenRepository: Lazy<RefreshTokenRepository>
+    ): TokenAuthenticator {
+        return TokenAuthenticator(
+            tokenManager = tokenManager,
+            refreshTokenRepository = refreshTokenRepository
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(
+        @ApplicationContext context: Context,
+        tokenInterceptor: TokenInterceptor,
+        tokenAuthenticator: TokenAuthenticator
+    ): OkHttpClient {
         val cookieJar = PersistentCookieJar(
             SetCookieCache(),
             SharedPrefsCookiePersistor(context)
@@ -41,22 +68,19 @@ object RemoteModule {
 
         return OkHttpClient.Builder()
             .cookieJar(cookieJar)
-            .addInterceptor(HttpLoggingInterceptor())
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                setLevel(HttpLoggingInterceptor.Level.BODY)
+            })
+            .addInterceptor(tokenInterceptor)
             .addInterceptor { chain ->
                 val request = chain.request()
                 Log.d("Cookies", "Sending cookies: ${request.headers["Cookie"]}")
-
                 val response = chain.proceed(request)
-
                 Log.d("Cookies", "Received cookies: ${response.headers["Set-Cookie"]}")
                 response
             }
+            .authenticator(tokenAuthenticator)
             .build()
-    }
-
-    private val jsonConfig = Json {
-        ignoreUnknownKeys = true
-        explicitNulls = false
     }
 
     @Provides
@@ -65,10 +89,14 @@ object RemoteModule {
         @Named("apiUrl") apiUrl: String,
         okHttpClient: OkHttpClient
     ): Retrofit {
+        val jsonConfig = Json {
+            ignoreUnknownKeys = true
+        }
+
         return Retrofit.Builder()
             .baseUrl(apiUrl)
             .client(okHttpClient)
-            .addConverterFactory(Json.asConverterFactory("application/ld+json".toMediaType()))
+            .addConverterFactory(jsonConfig.asConverterFactory("application/ld+json".toMediaType()))
             .build()
     }
 }
