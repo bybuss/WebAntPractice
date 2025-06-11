@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.map
 private const val USER_PREFERENCES_FILE_NAME = "user_preferences.pb"
 private const val TAG = "UserPreferences"
 
-val Context.userPreferencesStore: DataStore<UserPreferencesProto> by dataStore(
+private val Context.userPreferencesStore: DataStore<UserPreferencesProto> by dataStore(
     fileName = USER_PREFERENCES_FILE_NAME,
     serializer = UserPreferencesSerializer
 )

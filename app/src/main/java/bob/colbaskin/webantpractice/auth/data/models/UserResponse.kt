@@ -4,7 +4,9 @@ import bob.colbaskin.webantpractice.common.user_prefs.domain.models.User
 import bob.colbaskin.webantpractice.common.utils.extractIdFromIri
 import bob.colbaskin.webantpractice.common.utils.parseToMillis
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UserResponse(
     @SerialName("@id") val id: String,
     val birthday: String,
