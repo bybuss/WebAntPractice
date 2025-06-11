@@ -16,8 +16,23 @@ sealed interface Screens {
     data object Home: Screens
 
     @Serializable
-    data object AllPhotos: Screens
+    data object AddPhoto: Screens
 
     @Serializable
     data object Profile: Screens
+
+    @Serializable
+    data class ViewingPhoto(val id: String): Screens
+
+    @Serializable
+    data class EditingPhoto(val id: String): Screens
+
+    @Serializable
+    data object AddPhotoData: Screens
+
+    @Serializable
+    data object Settings: Screens
+
+    @Serializable
+    data object ChangePassword: Screens
 }

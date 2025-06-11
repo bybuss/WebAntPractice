@@ -11,6 +11,7 @@ composeBom = "2025.06.00"
 
 # Navigation
 navigationCompose = "2.9.0"
+
 # Kotlin serialization
 kotlinxSerializationJson = "1.8.0"
 jetbrainsKotlinJvm = "2.0.0"
@@ -60,6 +61,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 
 # Navigation
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+
+# Serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 # Datastore
@@ -91,7 +94,7 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
-# Kotlin serialization
+# Serialization
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
