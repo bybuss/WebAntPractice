@@ -29,6 +29,7 @@ fun AppNavHost(uiState: UiState.Success<UserPreferences>) {
     val currentGraph = currentDestination?.parent?.route
     val isBottomBarVisible = currentGraph == Graphs.Main::class.simpleName
     val currentScreen: Screens? = currentDestination?.getCurrentScreen()
+    val initialOnboardingStatus = remember { uiState.data.onboardingStatus }
 
     Scaffold (
         topBar = {
@@ -48,7 +49,7 @@ fun AppNavHost(uiState: UiState.Success<UserPreferences>) {
             navController = navController,
             modifier = Modifier.padding(innerPadding)
         ) {
-            onboardingGraph(navController, uiState.data.onboardingStatus, snackbarHostState)
+            onboardingGraph(navController, initialOnboardingStatus, snackbarHostState)
             mainGraph(navController)
             detailedGraph(navController)
         }
