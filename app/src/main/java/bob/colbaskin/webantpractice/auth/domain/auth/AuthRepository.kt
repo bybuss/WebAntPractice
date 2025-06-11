@@ -1,22 +1,11 @@
-package bob.colbaskin.webantpractice.auth.domain
+package bob.colbaskin.webantpractice.auth.domain.auth
 
 import bob.colbaskin.webantpractice.common.Result
 import bob.colbaskin.webantpractice.common.user_prefs.domain.models.User
 
 interface AuthRepository {
 
-    suspend fun login(
-        username: String,
-        password: String,
-        clientId: String,
-        clientSecret: String
-    )
-
-    suspend fun refresh(
-        refreshToken: String,
-        clientId: String,
-        clientSecret: String? = null
-    )
+    suspend fun login(username: String, password: String): Result<Unit>
 
     suspend fun register(
         email: String,
