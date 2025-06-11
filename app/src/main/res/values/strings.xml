@@ -33,7 +33,10 @@
     <string name="generic_error_text">An unexpected error occurred. \nOur team has been notified.</string>
     <string name="server_error_title">System Error!</string>
     <string name="server_error_text">Server is temporarily unavailable. \nPlease try again later.</string>
-
+    <string name="fields_error_title">Неправильно введена почта!</string>
+    <string name="fields_error_text">Пожалуйста, введите почту корректно или проверьте другие поля.</string>
+    <string name="user_credentials_error_title">Такого пользователя несуществует!</string>
+    <string name="user_credentials_error_text">Пожалуйста, проверьте ваши данные.</string>
 
     <string name="checkbox_new">New</string>
     <string name="checkbox_popular">Popular</string>
@@ -66,12 +69,19 @@
 
     <string name="search_placeholder">Search</string>
 
+    <string name="dropdown_edit_item">Edit</string>
+    <string name="top_bar_title_edit_photo">Edit photo</string>
+    <string name="top_bar_title_new_photo">New photo</string>
+    <string name="top_bar_title_settings">Settings</string>
+    <string name="top_bar_title_new_password">New password</string>
+    <string name="top_bar_title_all_photos">All photos</string>
+
+    <string name="next">Next</string>
+
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
 
-    <string name="all_photos_top_bar_title">All photos</string>
-
     <string name="nav_home">Home</string>
-    <string name="nav_all_photos">All Photos</string>
+    <string name="nav_add_photo">Add photo</string>
     <string name="nav_profile">Profile</string>
 </resources>
