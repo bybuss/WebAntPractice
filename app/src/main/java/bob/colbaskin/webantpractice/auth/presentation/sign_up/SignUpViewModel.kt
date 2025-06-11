@@ -5,10 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import bob.colbaskin.webantpractice.auth.domain.AuthRepository
+import bob.colbaskin.webantpractice.auth.domain.auth.AuthRepository
+import bob.colbaskin.webantpractice.common.UiState
+import bob.colbaskin.webantpractice.common.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+private const val TAG = "Auth"
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
@@ -34,15 +38,19 @@ class SignUpViewModel @Inject constructor(
     private fun register() {
         state = state.copy(isLoading = true)
         viewModelScope.launch {
-            authRepository.register(
+            val response = authRepository.register(
                 email = state.email,
                 birthday = state.birthday ?: 0L,
                 displayName = state.username,
                 phone = state.phone,
                 plainPassword = state.password
+            ).toUiState()
+
+            state = state.copy(
+                authState = response,
+                isLoading = false
             )
         }
-        state = state.copy(isLoading = false)
     }
 
     private fun updateUsername(username: String) {
