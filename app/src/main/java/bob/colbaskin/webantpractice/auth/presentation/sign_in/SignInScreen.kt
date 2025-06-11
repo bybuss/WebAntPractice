@@ -9,8 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -21,24 +25,46 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import bob.colbaskin.webantpractice.R
+import bob.colbaskin.webantpractice.common.UiState
 import bob.colbaskin.webantpractice.common.design_system.CustomTextButton
 import bob.colbaskin.webantpractice.common.design_system.CustomTextField
 import bob.colbaskin.webantpractice.common.design_system.FilledButton
 import bob.colbaskin.webantpractice.common.design_system.TextFieldType
 import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
+import bob.colbaskin.webantpractice.navigation.Graphs
+import bob.colbaskin.webantpractice.navigation.Screens
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignInScreenRoot(
     navController: NavHostController,
+    snackbarHostState: SnackbarHostState,
     viewModel: SignInViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state
+    val authState = state.authState
+    val scope = rememberCoroutineScope()
+
     SignInScreen(
-        state = viewModel.state,
+        state = state,
         onAction = { action ->
             when (action) {
-                SignInAction.SignIn -> { /*navController.navigate(Screens.Home)*/ }
-                SignInAction.SignUp -> { /*navController.navigate(Screens.SignUp)*/ }
+                SignInAction.SignIn -> {
+                    when (authState) {
+                        is UiState.Success -> { navController.navigate(Graphs.Main) }
+                        is UiState.Error -> {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    authState.title,
+                                    duration = SnackbarDuration.Short
+                                )
+                            }
+                        }
+                        else -> {}
+                    }
+                }
+                SignInAction.SignUp -> { navController.navigate(Screens.SignUp) }
                 else -> Unit
             }
             viewModel.onAction(action)
@@ -96,13 +122,13 @@ private fun SignInScreen(
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 FilledButton(
                     text = stringResource(R.string.sign_in),
-                    onClick = { onAction(SignInAction.SignUp) },
+                    onClick = { onAction(SignInAction.SignIn) },
                     isLoading = state.isLoading,
                     modifier = Modifier.width(163.dp)
                 )
                 CustomTextButton(
                     text = stringResource(R.string.sign_up),
-                    onClick = { onAction(SignInAction.SignIn) },
+                    onClick = { onAction(SignInAction.SignUp) },
                     modifier = Modifier.width(163.dp)
                 )
             }
