@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import bob.colbaskin.webantpractice.auth.domain.auth.AuthRepository
-import bob.colbaskin.webantpractice.common.UiState
 import bob.colbaskin.webantpractice.common.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

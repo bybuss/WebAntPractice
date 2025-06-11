@@ -6,8 +6,6 @@ import kotlinx.coroutines.TimeoutCancellationException
 import retrofit2.HttpException
 import java.io.IOException
 import bob.colbaskin.webantpractice.R
-import bob.colbaskin.webantpractice.auth.data.models.ApiErrorResponse
-import kotlinx.serialization.json.Json
 
 suspend inline fun <reified  T, reified  R> safeApiCall(
     apiCall: suspend () -> T,
