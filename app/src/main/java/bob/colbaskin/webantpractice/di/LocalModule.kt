@@ -3,6 +3,7 @@ package bob.colbaskin.webantpractice.di
 import android.content.Context
 import bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore.UserDataStore
 import bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore.UserPreferencesSerializer
+import bob.colbaskin.webantpractice.di.token.TokenManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,5 +25,11 @@ object LocalModule {
     @Singleton
     fun provideUserDataStore(@ApplicationContext context: Context): UserDataStore {
         return UserDataStore(context = context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTokenManager(@ApplicationContext context: Context): TokenManager {
+        return TokenManager(context = context)
     }
 }
