@@ -1,19 +1,15 @@
 package bob.colbaskin.webantpractice.auth.presentation.sign_in
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import bob.colbaskin.webantpractice.auth.domain.auth.AuthRepository
-import bob.colbaskin.webantpractice.common.UiState
 import bob.colbaskin.webantpractice.common.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-private const val TAG = "Auth"
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(

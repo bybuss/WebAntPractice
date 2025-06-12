@@ -137,7 +137,7 @@ private fun SignUpScreen(
                         onAction(SignUpAction.UpdateEmail(newValue))
                     },
                     isRequired = true,
-                    isError = state.isEmailValid
+                    isError = !state.isEmailValid
                 )
                 CustomTextField(
                     text = state.password,
@@ -146,7 +146,7 @@ private fun SignUpScreen(
                         onAction(SignUpAction.UpdatePassword(newValue))
                     },
                     isRequired = true,
-                    isError = state.isPasswordEquals
+                    isError = !state.isPasswordEquals
                 )
                 CustomTextField(
                     text = state.confirmPassword,
@@ -155,7 +155,7 @@ private fun SignUpScreen(
                         onAction(SignUpAction.UpdateConfirmPassword(newValue))
                     },
                     isRequired = true,
-                    isError = state.isPasswordEquals
+                    isError = !state.isPasswordEquals
                 )
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {

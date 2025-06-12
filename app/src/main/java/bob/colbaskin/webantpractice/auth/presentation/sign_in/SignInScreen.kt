@@ -111,7 +111,8 @@ private fun SignInScreen(
                 CustomTextField(
                     text = state.email,
                     type = TextFieldType.Email,
-                    onValueChange = { onAction(SignInAction.UpdateEmail(it)) }
+                    onValueChange = { onAction(SignInAction.UpdateEmail(it)) },
+                    isError = !state.isEmailValid
                 )
                 CustomTextField(
                     text = state.password,

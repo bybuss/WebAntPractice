@@ -33,8 +33,8 @@
     <string name="generic_error_text">An unexpected error occurred. \nOur team has been notified.</string>
     <string name="server_error_title">System Error!</string>
     <string name="server_error_text">Server is temporarily unavailable. \nPlease try again later.</string>
-    <string name="fields_error_title">Неправильно введена почта!</string>
-    <string name="fields_error_text">Пожалуйста, введите почту корректно или проверьте другие поля.</string>
+    <string name="fields_error_title">Неправильно заполнены поля!</string>
+    <string name="fields_error_text">Пожалуйста, введите данные корректно.</string>
     <string name="user_credentials_error_title">Такого пользователя несуществует!</string>
     <string name="user_credentials_error_text">Пожалуйста, проверьте ваши данные.</string>
 
@@ -51,7 +51,7 @@
     <string name="error_birthday">Invalid date format</string>
     <string name="error_phone_number">Invalid phone number format</string>
     <string name="error_email">Invalid email address</string>
-    <string name="error_password">Password must be at least 8 characters</string>
+    <string name="error_password">Passwords don`t match</string>
     <string name="error_confirm_password">Passwords don`t match</string>
     <string name="error_empty_field">This field cannot be empty</string>
     <string name="toast_photo_successfully">Photo uploaded successfully</string>
