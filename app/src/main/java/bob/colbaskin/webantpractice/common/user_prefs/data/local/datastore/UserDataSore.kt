@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.map
 private const val USER_PREFERENCES_FILE_NAME = "user_preferences.pb"
 private const val TAG = "UserPreferences"
 
-val Context.userPreferencesStore: DataStore<UserPreferencesProto> by dataStore(
+private val Context.userPreferencesStore: DataStore<UserPreferencesProto> by dataStore(
     fileName = USER_PREFERENCES_FILE_NAME,
     serializer = UserPreferencesSerializer
 )
@@ -45,7 +45,6 @@ class UserDataStore(context: Context) {
             prefs.copy {
                 onboardingStatus  = when (status) {
                     OnboardingConfig.NOT_STARTED -> OnboardingStatus.NOT_STARTED
-                    OnboardingConfig.IN_PROGRESS -> OnboardingStatus.IN_PROGRESS
                     OnboardingConfig.COMPLETED -> OnboardingStatus.COMPLETED
                 }
             }

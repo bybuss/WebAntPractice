@@ -352,7 +352,7 @@ fun BottomBar(
     val currentDestination = navController.currentBackStackEntryAsState().value?.destination
     val items: List<Destinations> = listOf(
             Destinations.HOME,
-            Destinations.ALL_PHOTOS,
+            Destinations.ADD_PHOTO,
             Destinations.PROFILE
     )
 
@@ -409,7 +409,7 @@ private fun BackTextSearchPreview() {
 
     WebAntPracticeTheme {
         BackTextSearchTopAppBar(
-            title = stringResource(R.string.all_photos_top_bar_title),
+            title = stringResource(R.string.top_bar_title_all_photos),
             onBackClick = {},
             searchTextFieldState = textState,
             onSearch = { query ->
@@ -447,7 +447,7 @@ private fun SearchOnlyPreview() {
 @Composable
 private fun CenteredTextPreview() {
     WebAntPracticeTheme {
-        CenteredTextTopAppBar(title = stringResource(R.string.all_photos_top_bar_title))
+        CenteredTextTopAppBar(title = stringResource(R.string.top_bar_title_all_photos))
     }
 }
 
@@ -456,7 +456,7 @@ private fun CenteredTextPreview() {
 private fun BackTextPreview() {
     WebAntPracticeTheme {
         BackTextTopAppBar(
-            title = stringResource(R.string.all_photos_top_bar_title),
+            title = stringResource(R.string.top_bar_title_all_photos),
             onBackClick = {}
         )
     }
@@ -467,7 +467,7 @@ private fun BackTextPreview() {
 private fun TextWithActionPreview() {
     WebAntPracticeTheme {
         TextWithActionTopAppBar(
-            title = stringResource(R.string.all_photos_top_bar_title),
+            title = stringResource(R.string.top_bar_title_all_photos),
             actionButtonLabel = stringResource(R.string.sign_in),
             onActionClick = {}
         )
@@ -495,7 +495,7 @@ private fun BackWithMenuPreview() {
 private fun CloseTextCheckPreview() {
     WebAntPracticeTheme {
         CloseTextCheckTopAppBar(
-            title = stringResource(R.string.all_photos_top_bar_title),
+            title = stringResource(R.string.top_bar_title_all_photos),
             onCloseClick = {},
             onCheckClick = {}
         )

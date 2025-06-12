@@ -14,10 +14,10 @@ enum class Destinations(
         label = R.string.nav_home,
         screen = Screens.Home
     ),
-    ALL_PHOTOS(
+    ADD_PHOTO(
         icon = R.drawable.camera,
-        label = R.string.nav_all_photos,
-        screen = Screens.AllPhotos
+        label = R.string.nav_add_photo,
+        screen = Screens.AddPhoto
     ),
     PROFILE(
         icon = R.drawable.profile,

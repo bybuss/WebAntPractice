@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import bob.colbaskin.webantpractice.R
 import bob.colbaskin.webantpractice.common.design_system.CustomOutlinedButton
@@ -25,12 +26,27 @@ import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeThe
 import bob.colbaskin.webantpractice.navigation.Screens
 
 @Composable
-fun WelcomeScreenRoot(navController: NavHostController) {
+fun WelcomeScreenRoot(
+    navController: NavHostController,
+    viewModel: WelcomeViewModel = hiltViewModel()
+) {
     WelcomeScreen { action ->
         when (action) {
-            WelcomeAction.CreateAccount -> { navController.navigate(Screens.SignUp) }
-            WelcomeAction.HaveAccount -> { navController.navigate(Screens.SignIn) }
+            WelcomeAction.CreateAccount -> {
+                viewModel.onAction(WelcomeAction.OnboardingComplete)
+                navController.navigate(Screens.SignUp) {
+                    popUpTo(Screens.Welcome) { inclusive = true }
+                }
+            }
+            WelcomeAction.HaveAccount -> {
+                viewModel.onAction(WelcomeAction.OnboardingComplete)
+                navController.navigate(Screens.SignIn) {
+                    popUpTo(Screens.Welcome) { inclusive = true }
+                }
+            }
+            else -> Unit
         }
+        viewModel.onAction(action)
     }
 }
 

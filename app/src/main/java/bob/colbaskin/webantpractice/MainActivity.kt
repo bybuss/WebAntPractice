@@ -11,11 +11,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.compose.rememberNavController
-import bob.colbaskin.webantpractice.auth.presentation.sign_in.SignInScreenRoot
 import bob.colbaskin.webantpractice.common.MainViewModel
 import bob.colbaskin.webantpractice.common.UiState
+import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
 import bob.colbaskin.webantpractice.common.user_prefs.data.models.UserPreferences
+import bob.colbaskin.webantpractice.navigation.AppNavHost
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -40,14 +40,11 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
-           /* WebAntPracticeTheme {
+            WebAntPracticeTheme {
                 if (uiState is UiState.Success<UserPreferences>) {
                     AppNavHost(uiState = uiState as UiState.Success<UserPreferences>)
                 }
-            }*/
-
-            SignInScreenRoot(navController)
+            }
         }
     }
 }
