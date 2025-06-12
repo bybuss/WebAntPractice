@@ -31,6 +31,7 @@ import bob.colbaskin.webantpractice.common.design_system.FilledButton
 import bob.colbaskin.webantpractice.common.design_system.TextFieldType
 import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
+import bob.colbaskin.webantpractice.navigation.Graphs
 import bob.colbaskin.webantpractice.navigation.Screens
 import kotlinx.coroutines.launch
 
@@ -50,7 +51,7 @@ fun SignUpScreenRoot(
             when (action) {
                 SignUpAction.SignUp -> {
                     when (authState) {
-                        is UiState.Success -> { navController.navigate(Screens.Home) }
+                        is UiState.Success -> { navController.navigate(Graphs.Main) }
                         is UiState.Error -> {
                             scope.launch {
                                 snackbarHostState.showSnackbar(
