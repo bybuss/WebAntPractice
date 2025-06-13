@@ -40,12 +40,6 @@ import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
 import bob.colbaskin.webantpractice.common.design_system.utils.getTextButtonColors
 
-enum class TextButtonType {
-    Default,
-    Tab,
-    Pink
-}
-
 @Composable
 fun FilledButton(
     text: String,
@@ -152,6 +146,12 @@ fun CustomOutlinedButton(
     }
 }
 
+enum class TextButtonType {
+    Default,
+    Tab,
+    Pink
+}
+
 @Composable
 fun CustomTextButton(
     text: String,
@@ -189,7 +189,7 @@ fun CustomTextButton(
                 text = text,
                 style = when {
                     type == TextButtonType.Default -> CustomTheme.typography.h4
-                    type == TextButtonType.Tab -> CustomTheme.typography.h4
+                    type == TextButtonType.Tab -> CustomTheme.typography.h3
                     type == TextButtonType.Pink -> MaterialTheme.typography.labelLarge
                     else -> textStyle
                 },
@@ -272,7 +272,7 @@ fun TabButton(
         isSelected = isSelected,
         modifier = modifier
             .drawBehind {
-                val strokeWidth = 1.dp.toPx()
+                val strokeWidth = 2.dp.toPx()
                 val y = size.height - strokeWidth - 9
                 drawLine(
                     color = lineColor,
@@ -280,7 +280,8 @@ fun TabButton(
                     end = Offset(size.width, y),
                     strokeWidth = strokeWidth
                 )
-            },
+            }
+            .height(40.dp),
         interactionSource = interactionSource
     )
 }

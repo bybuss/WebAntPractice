@@ -11,13 +11,15 @@ import bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore.UserD
 import bob.colbaskin.webantpractice.common.user_prefs.domain.UserPreferencesRepository
 import bob.colbaskin.webantpractice.common.user_prefs.data.UserPreferencesRepositoryImpl
 import bob.colbaskin.webantpractice.di.token.TokenManager
+import bob.colbaskin.webantpractice.home.data.PhotosRepositoryImpl
+import bob.colbaskin.webantpractice.home.domain.PhotosApiService
+import bob.colbaskin.webantpractice.home.domain.PhotosRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -69,6 +71,24 @@ object RepositoryModule {
             context = context,
             refreshTokenApi = refreshTokenApi,
             tokenManager = tokenManager
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providePhotosApiService(retrofit: Retrofit): PhotosApiService {
+        return retrofit.create(PhotosApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePhotosRepository(
+        @ApplicationContext context: Context,
+        photosApi: PhotosApiService,
+    ): PhotosRepository {
+        return PhotosRepositoryImpl(
+            context = context,
+            photosApi = photosApi,
         )
     }
 }

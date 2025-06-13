@@ -19,6 +19,7 @@
     <string name="check_mark_logo_description">Check mark icon</string>
     <string name="back_arrow_logo_description">Back arrow icon</string>
     <string name="settings_logo_description">Settings icon</string>
+    <string name="fetched_photo_description">Photo from api</string>
 
     <string name="loading">Loading…</string>
     <string name="error_title">Sorry!</string>
@@ -77,6 +78,8 @@
     <string name="top_bar_title_all_photos">All photos</string>
 
     <string name="next">Next</string>
+    <string name="tab_new">New</string>
+    <string name="tab_popular">Popular</string>
 
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>

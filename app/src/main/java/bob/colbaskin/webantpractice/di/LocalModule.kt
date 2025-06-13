@@ -32,4 +32,14 @@ object LocalModule {
     fun provideTokenManager(@ApplicationContext context: Context): TokenManager {
         return TokenManager(context = context)
     }
+
+//    @Provides
+//    @Singleton
+//    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+//        return Room.databaseBuilder(
+//            context,
+//            AppDatabase::class.java,
+//            "app_database"
+//        ).build()
+//    }
 }

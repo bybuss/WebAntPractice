@@ -17,6 +17,7 @@ class SignInViewModel @Inject constructor(
 ): ViewModel() {
 
     var state by mutableStateOf(SignInState())
+        private set
 
     fun onAction(action: SignInAction) {
         when (action) {

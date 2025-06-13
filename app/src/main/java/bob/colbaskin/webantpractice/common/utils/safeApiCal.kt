@@ -1,11 +1,14 @@
 package bob.colbaskin.webantpractice.common.utils
 
 import android.content.Context
+import android.util.Log
 import bob.colbaskin.webantpractice.common.Result
 import kotlinx.coroutines.TimeoutCancellationException
 import retrofit2.HttpException
 import java.io.IOException
 import bob.colbaskin.webantpractice.R
+
+const val TAG = "Error"
 
 suspend inline fun <reified  T, reified  R> safeApiCall(
     apiCall: suspend () -> T,
@@ -17,6 +20,7 @@ suspend inline fun <reified  T, reified  R> safeApiCall(
         val result = successHandler(response)
         Result.Success(data = result)
     } catch (e: Exception) {
+        Log.e(TAG, e.toString())
         when (e) {
             is IOException -> Result.Error(
                 title = context.getString(R.string.network_error_title),

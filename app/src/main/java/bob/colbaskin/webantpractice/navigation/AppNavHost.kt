@@ -82,9 +82,9 @@ private fun NavDestination.getCurrentScreen(): Screens? {
             else -> {
                 when {
                     segments.contains(Screens.ViewingPhoto::class.qualifiedName) ->
-                        Screens.ViewingPhoto(lastSegment ?: "")
+                        Screens.ViewingPhoto(lastSegment?.toIntOrNull() ?: 1)
                     segments.contains(Screens.EditingPhoto::class.qualifiedName) ->
-                        Screens.EditingPhoto(lastSegment ?: "")
+                        Screens.EditingPhoto(lastSegment?.toIntOrNull() ?: 1)
                     else -> null
                 }
             }
