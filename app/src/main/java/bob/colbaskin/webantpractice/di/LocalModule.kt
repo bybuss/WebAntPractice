@@ -1,9 +1,12 @@
 package bob.colbaskin.webantpractice.di
 
 import android.content.Context
+import androidx.room.Room
 import bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore.UserDataStore
 import bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore.UserPreferencesSerializer
 import bob.colbaskin.webantpractice.di.token.TokenManager
+import bob.colbaskin.webantpractice.home.data.local.room.AppDatabase
+import bob.colbaskin.webantpractice.home.data.local.room.PhotoDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,13 +36,17 @@ object LocalModule {
         return TokenManager(context = context)
     }
 
-//    @Provides
-//    @Singleton
-//    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-//        return Room.databaseBuilder(
-//            context,
-//            AppDatabase::class.java,
-//            "app_database"
-//        ).build()
-//    }
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "app_database"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun providePhotoDao(db: AppDatabase): PhotoDao = db.photoDao()
 }

@@ -1,14 +1,14 @@
 package bob.colbaskin.webantpractice.home.presentation.home
 
-import android.graphics.BitmapFactory
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import bob.colbaskin.webantpractice.common.Result
 import bob.colbaskin.webantpractice.common.UiState
+import bob.colbaskin.webantpractice.common.toUiState
 import bob.colbaskin.webantpractice.home.domain.PhotosRepository
 import bob.colbaskin.webantpractice.home.domain.models.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +19,10 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val photosRepository: PhotosRepository
 ): ViewModel() {
+
     var state by mutableStateOf(HomeState())
         private set
+    private val imageStates = mutableStateMapOf<String, UiState<ImageBitmap>>()
 
     init {
         loadPhotos(new = true, popular = false)
@@ -28,69 +30,37 @@ class HomeViewModel @Inject constructor(
 
     fun onAction(action: HomeAction) {
         when (action) {
-            is HomeAction.TabSelected -> updateSelectedIndex(action.index)
-            is HomeAction.LoadPhotos -> loadPhotos(action.new, action.popular)
+            is HomeAction.TabSelected -> handleTabSelected(action.index)
             else -> null
         }
     }
 
+    suspend fun loadImage(photo: Photo): UiState<ImageBitmap> {
+        return photosRepository.loadImage(photo).also { state ->
+            imageStates[photo.file.path] = state.toUiState()
+        }.toUiState()
+    }
+
+    fun getImageState(path: String): UiState<ImageBitmap> {
+        return imageStates[path] ?: UiState.Loading
+    }
+
     private fun loadPhotos(new: Boolean?, popular: Boolean?) {
         state = state.copy(photos = UiState.Loading)
-
         viewModelScope.launch {
-            val result = photosRepository.getPhotos(
-                page = 1,
-                itemsPerPage = 20,
-                order = null,
+            val flow = photosRepository.getPhotosStream(
                 new = new,
                 popular = popular
-            )
-
-            when (result) {
-                is Result.Success -> {
-                    val photosWithImages = result.data.map { it.copy(imageState = UiState.Loading) }
-                    state = state.copy(photos = UiState.Success(photosWithImages))
-                    loadImagesForPhotos(photosWithImages)
-                }
-                is Result.Error -> {
-                    state = state.copy(photos = UiState.Error(title = result.title, text = result.text))
-                }
-            }
+            ).toUiState()
+            state = state.copy(photos = flow)
         }
     }
 
-    private fun loadImagesForPhotos(photos: List<Photo>) {
-        photos.forEach { photo ->
-            viewModelScope.launch {
-                val imageResult = photosRepository.getFile(photo.file.path)
-                updatePhotoImageState(photo.id, imageResult)
-            }
+    private fun handleTabSelected(index: Int) {
+        state = state.copy(selectedIndex = index)
+        when (index) {
+            0 -> loadPhotos(new = true, popular = null)
+            1 -> loadPhotos(new = null, popular = true)
         }
-    }
-
-    private fun updatePhotoImageState(photoId: Int, result: Result<ByteArray>) {
-        val newState = when (result) {
-            is Result.Success -> {
-                val bitmap = BitmapFactory.decodeByteArray(result.data, 0, result.data.size)
-                bitmap?.asImageBitmap()?.let { UiState.Success(it) }
-                    ?: UiState.Error("Decoding Error", "Could not decode image")
-            }
-            is Result.Error -> UiState.Error(result.title, result.text)
-        }
-
-        state = state.let { currentState ->
-            if (currentState.photos is UiState.Success) {
-                val updatedPhotos = currentState.photos.data.map { photo ->
-                    if (photo.id == photoId) photo.copy(imageState = newState) else photo
-                }
-                currentState.copy(photos = UiState.Success(updatedPhotos))
-            } else {
-                currentState
-            }
-        }
-    }
-
-    private fun updateSelectedIndex(selectedIndex: Int) {
-        state = state.copy(selectedIndex = selectedIndex)
     }
 }

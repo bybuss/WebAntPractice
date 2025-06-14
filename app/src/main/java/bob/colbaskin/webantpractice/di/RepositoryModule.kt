@@ -11,7 +11,9 @@ import bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore.UserD
 import bob.colbaskin.webantpractice.common.user_prefs.domain.UserPreferencesRepository
 import bob.colbaskin.webantpractice.common.user_prefs.data.UserPreferencesRepositoryImpl
 import bob.colbaskin.webantpractice.di.token.TokenManager
+import bob.colbaskin.webantpractice.home.data.ImageStorage
 import bob.colbaskin.webantpractice.home.data.PhotosRepositoryImpl
+import bob.colbaskin.webantpractice.home.data.local.room.AppDatabase
 import bob.colbaskin.webantpractice.home.domain.PhotosApiService
 import bob.colbaskin.webantpractice.home.domain.PhotosRepository
 import dagger.Module
@@ -85,10 +87,14 @@ object RepositoryModule {
     fun providePhotosRepository(
         @ApplicationContext context: Context,
         photosApi: PhotosApiService,
+        imageStorage: ImageStorage,
+        db: AppDatabase
     ): PhotosRepository {
         return PhotosRepositoryImpl(
             context = context,
             photosApi = photosApi,
+            imageStorage = imageStorage,
+            db = db,
         )
     }
 }
