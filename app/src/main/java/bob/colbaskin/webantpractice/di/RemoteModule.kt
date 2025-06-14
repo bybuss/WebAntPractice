@@ -46,11 +46,11 @@ object RemoteModule {
     @Singleton
     fun provideTokenAuthenticator(
         tokenManager: TokenManager,
-        refreshTokenRepository: Lazy<RefreshTokenRepository>
+        refreshTokenRepository: RefreshTokenRepository
     ): TokenAuthenticator {
         return TokenAuthenticator(
-            tokenManager = tokenManager,
-            refreshTokenRepository = refreshTokenRepository
+            refreshTokenRepository = refreshTokenRepository,
+            tokenManager = tokenManager
         )
     }
 
@@ -59,7 +59,7 @@ object RemoteModule {
     fun provideOkHttpClient(
         @ApplicationContext context: Context,
         tokenInterceptor: TokenInterceptor,
-        tokenAuthenticator: TokenAuthenticator
+        tokenAuthenticator: Lazy<TokenAuthenticator>
     ): OkHttpClient {
         val cookieJar = PersistentCookieJar(
             SetCookieCache(),
@@ -79,7 +79,9 @@ object RemoteModule {
                 Log.d("Cookies", "Received cookies: ${response.headers["Set-Cookie"]}")
                 response
             }
-            .authenticator(tokenAuthenticator)
+            .authenticator { route, response ->
+                tokenAuthenticator.get().authenticate(route, response)
+            }
             .build()
     }
 
@@ -97,6 +99,7 @@ object RemoteModule {
             .baseUrl(apiUrl)
             .client(okHttpClient)
             .addConverterFactory(jsonConfig.asConverterFactory("application/ld+json".toMediaType()))
+            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
 }

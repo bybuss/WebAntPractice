@@ -8,40 +8,38 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
-import dagger.Lazy
 import javax.inject.Inject
 
 private const val TAG = "Auth"
 
 class TokenAuthenticator @Inject constructor(
-    private val tokenManager: TokenManager,
-    private val refreshTokenRepository: Lazy<RefreshTokenRepository>
-): Authenticator  {
+    private val refreshTokenRepository: RefreshTokenRepository,
+    private val tokenManager: TokenManager
+) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
-        Log.d(TAG, "Authentication required (HTTP ${response.code})")
-        val refreshToken = tokenManager.getRefreshToken() ?: return null
+        if (response.code == 401) {
+            Log.d(TAG, "Unauthorized. Attempting to refresh token")
 
-        return runBlocking {
-            try {
-                Log.d(TAG, "Attempting token refresh")
-                val result = refreshTokenRepository.get().refresh(refreshToken = refreshToken)
+            val refreshToken = tokenManager.getRefreshToken()
 
-                if (result is Result.Success) {
-                    Log.d(TAG, "Token refresh successful")
-                    tokenManager.getAccessToken()?.let { accessToken ->
-                        return@runBlocking response.request.newBuilder()
-                            .header("Authorization", "Bearer $accessToken")
-                            .build()
-                    }
+            if (!refreshToken.isNullOrEmpty()) {
+                val refreshResult = runBlocking {
+                    refreshTokenRepository.refresh(refreshToken)
+                }
+
+                if (refreshResult is Result.Success) {
+                    val newAccessToken = tokenManager.getAccessToken()
+
+                    return response.request.newBuilder()
+                        .header("Authorization", "Bearer $newAccessToken")
+                        .build()
                 } else {
                     Log.d(TAG, "Token refresh failed")
                 }
-                null
-            } catch (e: Exception) {
-                Log.e(TAG, "Token refresh error: ${e.message}")
-                null
             }
         }
+
+        return null
     }
 }
