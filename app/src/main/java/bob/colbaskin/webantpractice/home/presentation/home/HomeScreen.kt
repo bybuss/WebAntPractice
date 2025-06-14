@@ -75,7 +75,6 @@ fun HomeScreenRoot(
         Box(
             modifier = Modifier
                 .padding(innerPadding)
-                .padding(16.dp)
                 .fillMaxSize()
         ) {
             HomeScreen(
@@ -83,7 +82,7 @@ fun HomeScreenRoot(
                 onAction = { action ->
                     when (action) {
                         is HomeAction.ViewPhoto -> navController.navigate(
-                            Screens.ViewingPhoto(id = action.id.toString())
+                            Screens.ViewingPhoto(id = action.id)
                         )
                         else -> Unit
                     }
@@ -131,7 +130,11 @@ private fun PhotosGrid(
     photos: LazyPagingItems<Photo>,
     onAction: (HomeAction) -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier.fillMaxSize(),
@@ -154,11 +157,10 @@ private fun PhotosGrid(
                                 modifier = Modifier.fillMaxSize(),
                                 isIndicatorOnly = true
                             )
-
                             is UiState.Error -> ErrorPlaceholder()
                             is UiState.Success -> Image(
                                 bitmap = imageState.data,
-                                contentDescription = null,
+                                contentDescription = stringResource(R.string.fetched_photo_description),
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier.fillMaxSize()
                             )
@@ -171,8 +173,10 @@ private fun PhotosGrid(
             visible = photos.loadState.append == LoadState.Loading,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
-        ) { LoadingIndicator(isIndicatorOnly = true) }
+                .height(40.dp)
+        ) {
+            LoadingIndicator(isIndicatorOnly = true)
+        }
     }
 }
 

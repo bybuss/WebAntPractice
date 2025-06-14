@@ -2,6 +2,8 @@ package bob.colbaskin.webantpractice.home.data
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.util.Log
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -11,6 +13,8 @@ import bob.colbaskin.webantpractice.home.domain.models.Photo
 import bob.colbaskin.webantpractice.common.Result
 import bob.colbaskin.webantpractice.common.UiState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 
 private const val ITEMS_PER_PAGE = 20
@@ -37,7 +41,8 @@ class PhotoPagingSource(
                 is Result.Success -> {
                     val photos = response.data
 
-                    val photosWithImages = loadImagesForPhotos(photos)
+                    val photosWithImages = loadImagesAndNamesForPhotos(photos)
+                    Log.d("PhotoPagingSource", "Photos loaded: $photosWithImages")
 
                     LoadResult.Page(
                         data = photosWithImages,
@@ -54,29 +59,46 @@ class PhotoPagingSource(
         }
     }
 
-    private suspend fun loadImagesForPhotos(photos: List<Photo>): List<Photo> {
+    private suspend fun loadImagesAndNamesForPhotos(photos: List<Photo>): List<Photo> {
         return withContext(Dispatchers.IO) {
             photos.map { photo ->
-                val imageResult = photosRepository.getFile(photo.file.path)
+                async {
+                    val imageDeferred = async { photosRepository.getFile(photo.file.path) }
+                    val nameDeferred = async { photosRepository.getPhotoNameById(photo.id) }
 
-                val newState = when (imageResult) {
-                    is Result.Success -> {
-                        val bitmap = BitmapFactory.decodeByteArray(
-                            imageResult.data,
-                            0,
-                            imageResult.data.size
-                        )
-                        bitmap?.asImageBitmap()?.let { UiState.Success(it) }
-                            ?: UiState.Error(
-                                title = context.getString(R.string.error_title),
-                                text = context.getString(R.string.error_text)
-                            )
-                    }
-                    is Result.Error -> UiState.Error(imageResult.title, imageResult.text)
+                    val imageResult = imageDeferred.await()
+                    val nameResult = nameDeferred.await()
+
+                    val imageState = processImageResult(imageResult)
+                    val nameState = processNameResult(nameResult)
+
+                    photo.copy(
+                        imageState = imageState,
+                        name = nameState
+                    )
                 }
+            }.awaitAll()
+        }
+    }
 
-                photo.copy(imageState = newState)
+    private fun processImageResult(result: Result<ByteArray>): UiState<ImageBitmap> {
+        return when (result) {
+            is Result.Success -> {
+                val bitmap = BitmapFactory.decodeByteArray(result.data, 0, result.data.size)
+                bitmap?.asImageBitmap()?.let { UiState.Success(it) }
+                    ?: UiState.Error(
+                        title = context.getString(R.string.error_title),
+                        text = context.getString(R.string.error_text)
+                    )
             }
+            is Result.Error -> UiState.Error(result.title, result.text)
+        }
+    }
+
+    private fun processNameResult(result: Result<String>): UiState<String> {
+        return when (result) {
+            is Result.Success -> UiState.Success(result.data)
+            is Result.Error -> UiState.Error(result.title, result.text)
         }
     }
 
