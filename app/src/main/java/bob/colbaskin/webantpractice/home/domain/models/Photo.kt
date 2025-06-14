@@ -6,6 +6,7 @@ import bob.colbaskin.webantpractice.common.UiState
 data class Photo(
     val id: Int,
     val file: PhotoFile,
+    val name: String? = null,
     val new: Boolean,
     val popular: Boolean,
     val imageState: UiState<ImageBitmap> = UiState.Loading
