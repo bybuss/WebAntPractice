@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -243,9 +244,12 @@ fun BackOnlyTopAppBar(
 @Composable
 fun BackWithMenuTopAppBar(
     onBackClick: () -> Unit,
-    onMenuClick: () -> Unit,
-    modifier: Modifier = Modifier
+    menuItems: List<MenuItem>,
+    modifier: Modifier = Modifier,
+    menuModifier: Modifier = Modifier
 ) {
+    var expanded by remember { mutableStateOf(false) }
+
     Box {
         TopAppBar(
             modifier = modifier,
@@ -258,11 +262,20 @@ fun BackWithMenuTopAppBar(
                 )
             },
             actions = {
-                CustomIconButton(
-                    painterId = R.drawable.more_vert,
-                    contentDescriptionId = stringResource(R.string.more_vert_logo_description),
-                    onClick = onMenuClick
-                )
+                Box {
+                    CustomIconButton(
+                        painterId = R.drawable.more_vert,
+                        contentDescriptionId = stringResource(R.string.more_vert_logo_description),
+                        onClick = { expanded = true }
+                    )
+
+                    Dropdown(
+                        menuItemData = menuItems,
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                        modifier = menuModifier.wrapContentSize()
+                    )
+                }
             },
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = CustomTheme.colors.white,
@@ -486,7 +499,10 @@ private fun BackOnlyPreview() {
 @Composable
 private fun BackWithMenuPreview() {
     WebAntPracticeTheme {
-        BackWithMenuTopAppBar({}, {})
+        BackWithMenuTopAppBar(
+            { },
+            listOf(MenuItem("Menu Item") { })
+        )
     }
 }
 
