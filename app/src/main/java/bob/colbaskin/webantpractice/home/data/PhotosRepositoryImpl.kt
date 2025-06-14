@@ -4,9 +4,12 @@ import android.content.Context
 import android.util.Log
 import bob.colbaskin.webantpractice.common.Result
 import bob.colbaskin.webantpractice.common.utils.safeApiCall
+import bob.colbaskin.webantpractice.home.data.models.FullPhotoResponse
+import bob.colbaskin.webantpractice.home.data.models.PhotoNameOnlyResponse
 import bob.colbaskin.webantpractice.home.data.models.PhotosResponse
 import bob.colbaskin.webantpractice.home.domain.PhotosApiService
 import bob.colbaskin.webantpractice.home.domain.PhotosRepository
+import bob.colbaskin.webantpractice.home.domain.models.FullPhoto
 import bob.colbaskin.webantpractice.home.domain.models.Photo
 import javax.inject.Inject
 
@@ -49,6 +52,26 @@ class PhotosRepositoryImpl @Inject constructor(
         return safeApiCall(
             apiCall = { photosApi.getFile(path) },
             successHandler = { it.byteStream().readBytes() },
+            context = context
+        )
+    }
+
+    override suspend fun getPhotoNameById(id: Int): Result<String> {
+        Log.d(TAG, "Fetching photo name for id: $id")
+        return safeApiCall<PhotoNameOnlyResponse, String>(
+            apiCall = {
+                photosApi.getPhotoNameById(id)
+            },
+            successHandler = { it.name },
+            context = context
+        )
+    }
+
+    override suspend fun getPhotoById(id: Int): Result<FullPhoto> {
+        Log.d(TAG, "Fetching full photo for id: $id")
+        return safeApiCall<FullPhotoResponse, FullPhoto>(
+            apiCall = { photosApi.getPhotoById(id) },
+            successHandler = { it.toDomain() },
             context = context
         )
     }

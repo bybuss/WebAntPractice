@@ -38,6 +38,7 @@
     <string name="fields_error_text">Пожалуйста, введите данные корректно.</string>
     <string name="user_credentials_error_title">Такого пользователя несуществует!</string>
     <string name="user_credentials_error_text">Пожалуйста, проверьте ваши данные.</string>
+    <string name="null_error_title">Неудалось получить данные!</string>
 
     <string name="checkbox_new">New</string>
     <string name="checkbox_popular">Popular</string>

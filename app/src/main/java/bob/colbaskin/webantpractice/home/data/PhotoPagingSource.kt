@@ -13,6 +13,8 @@ import bob.colbaskin.webantpractice.common.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+private const val ITEMS_PER_PAGE = 20
+
 class PhotoPagingSource(
     private val context: Context,
     private val photosRepository: PhotosRepository,
@@ -25,7 +27,7 @@ class PhotoPagingSource(
         return try {
             val response = photosRepository.getPhotos(
                 page = page,
-                itemsPerPage = 20,
+                itemsPerPage = ITEMS_PER_PAGE,
                 order = null,
                 new = new,
                 popular = popular

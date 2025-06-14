@@ -1,5 +1,7 @@
 package bob.colbaskin.webantpractice.home.domain
 
+import bob.colbaskin.webantpractice.home.data.models.FullPhotoResponse
+import bob.colbaskin.webantpractice.home.data.models.PhotoNameOnlyResponse
 import bob.colbaskin.webantpractice.home.data.models.PhotosResponse
 import okhttp3.ResponseBody
 import retrofit2.http.GET
@@ -20,7 +22,12 @@ interface PhotosApiService {
 
     @GET("/get_file/{path}")
     @Streaming
-    suspend fun getFile(
-        @Path("path") path: String
-    ): ResponseBody
+    suspend fun getFile(@Path("path") path: String): ResponseBody
+
+    @GET("/photos/{id}")
+    suspend fun getPhotoNameById(@Path("id") id: Int): PhotoNameOnlyResponse
+
+    @GET("/photos/{id}")
+    suspend fun getPhotoById(@Path("id") id: Int): FullPhotoResponse
+
 }
