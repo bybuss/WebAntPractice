@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.flowOf
 
 data class HomeState(
     val selectedIndex: Int = 0,
-    val photoPager: Flow<PagingData<Photo>> = flowOf()
+    val photos: Map<Int, Flow<PagingData<Photo>>> = emptyMap()
 )

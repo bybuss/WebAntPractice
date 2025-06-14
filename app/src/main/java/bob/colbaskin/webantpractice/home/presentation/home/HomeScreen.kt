@@ -99,26 +99,30 @@ private fun HomeScreen(
     state: HomeState,
     onAction: (HomeAction) -> Unit
 ) {
-    val photos = state.photoPager.collectAsLazyPagingItems()
+    val photos = state.photos[state.selectedIndex]?.collectAsLazyPagingItems()
 
-    when {
-        photos.loadState.refresh == LoadState.Loading -> {
-            LoadingIndicator(modifier = Modifier.fillMaxSize())
+    if (photos == null) {
+        LoadingIndicator(modifier = Modifier.fillMaxSize())
+    } else {
+        when {
+            photos.loadState.refresh == LoadState.Loading -> {
+                LoadingIndicator(modifier = Modifier.fillMaxSize())
+            }
+            photos.loadState.refresh is LoadState.Error -> ErrorIndicator(
+                title = stringResource(R.string.error_title),
+                text = stringResource(R.string.error_text),
+                modifier = Modifier.fillMaxSize()
+            )
+            photos.itemCount > 0 -> PhotosGrid(
+                photos = photos,
+                onAction = onAction
+            )
+            else -> ErrorIndicator(
+                title = stringResource(R.string.error_title),
+                text = stringResource(R.string.error_text),
+                modifier = Modifier.fillMaxSize()
+            )
         }
-        photos.loadState.refresh is LoadState.Error -> ErrorIndicator(
-            title = stringResource(R.string.error_title),
-            text = stringResource(R.string.error_text),
-            modifier = Modifier.fillMaxSize()
-        )
-        photos.itemCount > 0 -> PhotosGrid(
-            photos = photos,
-            onAction = onAction
-        )
-        else -> ErrorIndicator(
-            title = stringResource(R.string.error_title),
-            text = stringResource(R.string.error_text),
-            modifier = Modifier.fillMaxSize()
-        )
     }
 }
 

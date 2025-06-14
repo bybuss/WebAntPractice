@@ -36,16 +36,26 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun updateSelectedIndex(selectedIndex: Int) {
-        state = state.copy(
-            selectedIndex = selectedIndex,
-            photoPager = Pager(PagingConfig(pageSize = 20)) {
+        val existingPager = state.photos[selectedIndex]
+        if (existingPager != null) {
+            state = state.copy(
+                selectedIndex = selectedIndex,
+                photos = state.photos
+            )
+        } else {
+            val newPager = Pager(PagingConfig(pageSize = 20)) {
                 PhotoPagingSource(
                     context = context,
                     photosRepository = photosRepository,
-                    new = selectedIndex == 0,
-                    popular = selectedIndex == 1
+                    new = if (selectedIndex == 0) true else null,
+                    popular = if (selectedIndex == 1) true else null
                 )
             }.flow.cachedIn(viewModelScope)
-        )
+
+            state = state.copy(
+                selectedIndex = selectedIndex,
+                photos = state.photos + (selectedIndex to newPager)
+            )
+        }
     }
 }
