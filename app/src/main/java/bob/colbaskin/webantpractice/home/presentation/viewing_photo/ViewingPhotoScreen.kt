@@ -10,8 +10,11 @@ import androidx.navigation.NavHostController
 fun ViewingPhotoScreenRoot(
     navController: NavHostController,
 ) {
+    val photoId: Int
+        = navController.currentBackStackEntry?.arguments?.getString("id")?.toIntOrNull() ?: -1
+
     Box(contentAlignment = Alignment.Center) {
-        Text(text = "ViewingPhotoScreen")
+        Text(text = "ViewingPhotoScreen: $photoId")
     }
 }
 

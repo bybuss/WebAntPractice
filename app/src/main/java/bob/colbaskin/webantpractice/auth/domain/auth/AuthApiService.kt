@@ -7,6 +7,7 @@ import bob.colbaskin.webantpractice.auth.data.models.UserResponse
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface AuthApiService {
@@ -23,4 +24,7 @@ interface AuthApiService {
 
     @POST("/users")
     suspend fun register(@Body body: RegisterRequestBody): UserResponse
+
+    @GET("/current")
+    suspend fun getCurrentUser(): UserResponse
 }

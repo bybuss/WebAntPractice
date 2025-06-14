@@ -83,7 +83,7 @@ fun HomeScreenRoot(
                 onAction = { action ->
                     when (action) {
                         is HomeAction.ViewPhoto -> navController.navigate(
-                            Screens.ViewingPhoto(id = action.id)
+                            Screens.ViewingPhoto(id = action.id.toString())
                         )
                         else -> Unit
                     }

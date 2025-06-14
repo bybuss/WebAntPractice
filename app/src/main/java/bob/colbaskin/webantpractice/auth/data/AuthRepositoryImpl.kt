@@ -47,6 +47,19 @@ class AuthRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun saveCurrentUser(): Result<Unit> {
+        Log.d(TAG, "Saving current user")
+        return safeApiCall<UserResponse, Unit>(
+            apiCall = { authApi.getCurrentUser() },
+            successHandler = { response ->
+                Log.d(TAG, "Successfully fetched user")
+                val user = response.toDomain()
+                userPreferences.saveUser(user)
+            },
+            context = context
+        )
+    }
+
     override suspend fun register(
         email: String,
         birthday: Long,

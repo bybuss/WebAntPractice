@@ -22,10 +22,10 @@ sealed interface Screens {
     data object Profile: Screens
 
     @Serializable
-    data class ViewingPhoto(val id: Int): Screens
+    data class ViewingPhoto(val id: String): Screens
 
     @Serializable
-    data class EditingPhoto(val id: Int): Screens
+    data class EditingPhoto(val id: String): Screens
 
     @Serializable
     data object AddPhotoData: Screens
