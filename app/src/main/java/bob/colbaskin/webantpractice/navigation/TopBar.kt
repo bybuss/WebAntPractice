@@ -36,28 +36,6 @@ fun TopBar(
                 searchResults = results
             )
         }
-        is Screens.ViewingPhoto -> {
-            var expanded by remember { mutableStateOf(false) }
-            val menuItems = listOf(stringResource(R.string.dropdown_edit_item))
-            BackWithMenuTopAppBar(
-                onBackClick = { navController.popBackStack() },
-                onMenuClick = {
-                    expanded = !expanded
-                }
-            )
-            Dropdown(
-                menuItemData = menuItems,
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                onItemClick = { navController.navigate(Screens.EditingPhoto(id = currentScreen.id)) }
-            )
-        }
-        is Screens.EditingPhoto -> {
-            BackTextTopAppBar(
-                title = stringResource(R.string.top_bar_title_edit_photo),
-                onBackClick = { navController.popBackStack() },
-            )
-        }
         Screens.AddPhoto -> {
             TextWithActionTopAppBar(
                 title = stringResource(R.string.top_bar_title_all_photos),
