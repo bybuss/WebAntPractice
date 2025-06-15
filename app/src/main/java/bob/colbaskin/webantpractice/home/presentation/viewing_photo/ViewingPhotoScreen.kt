@@ -130,7 +130,7 @@ private fun PhotoViewing(
                 modifier = Modifier
                     .graphicsLayer(scaleX = scale, scaleY = scale)
                     .transformable(state = transformState)
-                    .background(CustomTheme.colors.gray)
+                    .background(CustomTheme.colors.grayLight)
                     .height(360.dp),
                 contentAlignment = Alignment.Center
             ) {
