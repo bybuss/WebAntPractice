@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -39,8 +38,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import bob.colbaskin.webantpractice.R
+import bob.colbaskin.webantpractice.common.UiState
 import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
+import bob.colbaskin.webantpractice.home.domain.models.Photo
 import bob.colbaskin.webantpractice.navigation.Destinations
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,7 +51,7 @@ fun BackTextSearchTopAppBar(
     onBackClick: () -> Unit,
     searchTextFieldState: TextFieldState,
     onSearch: (String) -> Unit,
-    searchResults: List<String>,
+    searchResults: List<Photo?>,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.background(CustomTheme.colors.white)) {
@@ -87,7 +88,7 @@ fun BackTextSearchTopAppBar(
 fun SearchOnlyTopAppBar(
     searchTextFieldState: TextFieldState,
     onSearch: (String) -> Unit,
-    searchResults: List<String>,
+    searchResults: List<Photo?>,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -99,7 +100,12 @@ fun SearchOnlyTopAppBar(
         Search(
             textFieldState = searchTextFieldState,
             onSearch = onSearch,
-            searchResults = searchResults,
+            searchResults = searchResults.mapNotNull { photo ->
+                when (val nameState = photo?.name) {
+                    is UiState.Success -> nameState.data
+                    else -> null
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -411,48 +417,6 @@ fun BottomBar(
                 interactionSource = interactionSource
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun BackTextSearchPreview() {
-    val textState = rememberTextFieldState("")
-    var results by remember { mutableStateOf(listOf<String>()) }
-
-    WebAntPracticeTheme {
-        BackTextSearchTopAppBar(
-            title = stringResource(R.string.top_bar_title_all_photos),
-            onBackClick = {},
-            searchTextFieldState = textState,
-            onSearch = { query ->
-                results = if (query.isNotEmpty()) {
-                    listOf("Product 1", "Product 2", "Product 3")
-                        .filter { it.contains(query, ignoreCase = true) }
-                } else emptyList()
-            },
-            searchResults = results
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun SearchOnlyPreview() {
-    val textState = rememberTextFieldState("")
-    var results by remember { mutableStateOf(listOf<String>()) }
-
-    WebAntPracticeTheme {
-        SearchOnlyTopAppBar(
-            searchTextFieldState = textState,
-            onSearch = { query ->
-                results = if (query.isNotEmpty()) {
-                    listOf("Result 1", "Result 2", "Result 3")
-                        .filter { it.contains(query, ignoreCase = true) }
-                } else emptyList()
-            },
-            searchResults = results
-        )
     }
 }
 

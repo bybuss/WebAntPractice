@@ -123,6 +123,7 @@ fun Search(
                                 onClick = {
                                     textFieldState.edit { replace(0, length, resultText) }
                                     expanded = false
+                                    onSearch(resultText)
                                 }
                             )
                             .fillMaxWidth(),
