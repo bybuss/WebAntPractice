@@ -11,6 +11,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import bob.colbaskin.webantpractice.home.data.PhotoPagingSource
 import bob.colbaskin.webantpractice.home.domain.PhotosRepository
+import bob.colbaskin.webantpractice.home.domain.models.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -31,18 +32,20 @@ class HomeViewModel @Inject constructor(
     fun onAction(action: HomeAction) {
         when (action) {
             is HomeAction.TabSelected -> updateSelectedIndex(action.index)
+            is HomeAction.SearchQueryChanged -> onSearchQueryChanged(action.query)
+            is HomeAction.UpdateSearchResults -> updateSearchResultsState(action.photos)
             else -> null
         }
     }
 
     private fun updateSelectedIndex(selectedIndex: Int) {
-        val existingPager = state.photos[selectedIndex]
-        if (existingPager != null) {
-            state = state.copy(
-                selectedIndex = selectedIndex,
-                photos = state.photos
-            )
-        } else {
+        state = state.copy(
+            selectedIndex = selectedIndex,
+            searchQuery = "",
+            searchResults = emptyList()
+        )
+
+        if (state.photos[selectedIndex] == null) {
             val newPager = Pager(PagingConfig(pageSize = 20)) {
                 PhotoPagingSource(
                     context = context,
@@ -53,9 +56,20 @@ class HomeViewModel @Inject constructor(
             }.flow.cachedIn(viewModelScope)
 
             state = state.copy(
-                selectedIndex = selectedIndex,
                 photos = state.photos + (selectedIndex to newPager)
             )
         }
+    }
+
+    private fun onSearchQueryChanged(query: String) {
+        state = state.copy(searchQuery = query)
+
+        if (query.isEmpty()) {
+            state = state.copy(searchResults = emptyList())
+        }
+    }
+
+    private fun updateSearchResultsState(photos: List<Photo>) {
+        state = state.copy(searchResults = photos)
     }
 }

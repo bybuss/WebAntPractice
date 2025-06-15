@@ -1,6 +1,5 @@
 package bob.colbaskin.webantpractice.home.presentation.home
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,10 +13,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +37,7 @@ import bob.colbaskin.webantpractice.R
 import bob.colbaskin.webantpractice.common.UiState
 import bob.colbaskin.webantpractice.common.design_system.ErrorIndicator
 import bob.colbaskin.webantpractice.common.design_system.LoadingIndicator
+import bob.colbaskin.webantpractice.common.design_system.SearchOnlyTopAppBar
 import bob.colbaskin.webantpractice.common.design_system.TabButton
 import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.home.domain.models.Photo
@@ -49,23 +53,54 @@ fun HomeScreenRoot(
         stringResource(R.string.tab_new),
         stringResource(R.string.tab_popular),
     )
+    val photos = state.photos[state.selectedIndex]?.collectAsLazyPagingItems()
+    val searchResults: List<Photo> = remember(state.searchQuery) {
+        if (state.searchQuery.isEmpty()) {
+            emptyList()
+        } else {
+            photos?.itemSnapshotList?.mapNotNull { it }
+                ?.filter { photo ->
+                    photo.name.let { nameState ->
+                        when (nameState) {
+                            is UiState.Success -> nameState.data.contains(
+                                state.searchQuery, true
+                            )
+                            else -> false
+                        }
+                    }
+                } ?: emptyList()
+        }
+    }
+
+    LaunchedEffect(searchResults) {
+        viewModel.onAction(HomeAction.UpdateSearchResults(searchResults))
+    }
 
     Scaffold (
         topBar = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .height(40.dp)
-            ) {
-                tabs.forEachIndexed { index, title ->
-                    TabButton(
-                        text = title,
-                        onClick = { viewModel.onAction(HomeAction.TabSelected(index)) },
-                        modifier = Modifier.weight(1f),
-                        isSelected = index == state.selectedIndex
-                    )
+            Column {
+                SearchOnlyTopAppBar(
+                    searchTextFieldState = rememberTextFieldState(state.searchQuery),
+                    onSearch = { query -> viewModel.onAction(
+                        HomeAction.SearchQueryChanged(query)
+                    ) },
+                    searchResults = searchResults
+                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .height(40.dp)
+                ) {
+                    tabs.forEachIndexed { index, title ->
+                        TabButton(
+                            text = title,
+                            onClick = { viewModel.onAction(HomeAction.TabSelected(index)) },
+                            modifier = Modifier.weight(1f),
+                            isSelected = index == state.selectedIndex
+                        )
+                    }
                 }
             }
         },
@@ -100,34 +135,49 @@ private fun HomeScreen(
 ) {
     val photos = state.photos[state.selectedIndex]?.collectAsLazyPagingItems()
 
-    if (photos == null) {
-        LoadingIndicator(modifier = Modifier.fillMaxSize())
-    } else {
-        when {
-            photos.loadState.refresh == LoadState.Loading -> {
-                LoadingIndicator(modifier = Modifier.fillMaxSize())
+    when {
+        state.searchQuery.isNotEmpty() && state.searchResults.isNotEmpty() -> PhotosGrid(
+            type = PhotosType.SEARCH_RESULTS,
+            filteredPhotos = state.searchResults,
+            onAction = onAction
+        )
+        state.searchQuery.isNotEmpty() && state.searchResults.isEmpty() -> ErrorIndicator(
+            title = stringResource(R.string.error_title),
+            text = stringResource(R.string.error_text),
+            modifier = Modifier.fillMaxSize()
+        )
+        photos != null -> {
+            when {
+                photos.loadState.refresh == LoadState.Loading
+                    -> LoadingIndicator(modifier = Modifier.fillMaxSize())
+                photos.loadState.refresh is LoadState.Error -> ErrorIndicator(
+                    title = stringResource(R.string.error_title),
+                    text = stringResource(R.string.error_text),
+                    modifier = Modifier.fillMaxSize()
+                )
+                photos.itemCount > 0 ->
+                    PhotosGrid(type = PhotosType.ALL, photos = photos, onAction = onAction)
+                else -> ErrorIndicator(
+                    title = stringResource(R.string.error_title),
+                    text = stringResource(R.string.error_text),
+                    modifier = Modifier.fillMaxSize()
+                )
             }
-            photos.loadState.refresh is LoadState.Error -> ErrorIndicator(
-                title = stringResource(R.string.error_title),
-                text = stringResource(R.string.error_text),
-                modifier = Modifier.fillMaxSize()
-            )
-            photos.itemCount > 0 -> PhotosGrid(
-                photos = photos,
-                onAction = onAction
-            )
-            else -> ErrorIndicator(
-                title = stringResource(R.string.error_title),
-                text = stringResource(R.string.error_text),
-                modifier = Modifier.fillMaxSize()
-            )
         }
+        else -> LoadingIndicator(modifier = Modifier.fillMaxSize())
     }
+}
+
+enum class PhotosType {
+    ALL,
+    SEARCH_RESULTS
 }
 
 @Composable
 private fun PhotosGrid(
-    photos: LazyPagingItems<Photo>,
+    type: PhotosType,
+    photos: LazyPagingItems<Photo>? = null,
+    filteredPhotos: List<Photo>?  = null,
     onAction: (HomeAction) -> Unit
 ) {
     Column(
@@ -141,41 +191,57 @@ private fun PhotosGrid(
             horizontalArrangement = Arrangement.spacedBy(15.dp),
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
-            items(photos.itemCount) { index ->
-                val photo = photos[index]
-
-                photo?.let {
-                    Box(
-                        modifier = Modifier
-                            .size(156.dp)
-                            .clip(CustomTheme.shapes.photoBig)
-                            .background(CustomTheme.colors.grayLight)
-                            .clickable(onClick = { onAction(HomeAction.ViewPhoto(id = it.id)) })
-                    ) {
-                        when (val imageState = it.imageState) {
-                            is UiState.Loading -> LoadingIndicator(
-                                modifier = Modifier.fillMaxSize(),
-                                isIndicatorOnly = true
-                            )
-                            is UiState.Error -> ErrorPlaceholder()
-                            is UiState.Success -> Image(
-                                bitmap = imageState.data,
-                                contentDescription = stringResource(R.string.fetched_photo_description),
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxSize()
-                            )
+            when (type) {
+                PhotosType.SEARCH_RESULTS -> {
+                    filteredPhotos?.let { photos ->
+                        items(photos.size) { index ->
+                            PhotoItem(photos[index], onAction)
+                        }
+                    }
+                }
+                PhotosType.ALL -> {
+                    photos?.let { photoItems ->
+                        items(photoItems.itemCount) { index ->
+                            val photo = photoItems[index]
+                            photo?.let { PhotoItem(it, onAction) }
+                        }
+                        item(span = { GridItemSpan(2) }) {
+                            if (photos.loadState.append == LoadState.Loading) {
+                                LoadingIndicator(Modifier.fillMaxWidth().height(40.dp))
+                            }
                         }
                     }
                 }
             }
         }
-        AnimatedVisibility(
-            visible = photos.loadState.append == LoadState.Loading,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp)
-        ) {
-            LoadingIndicator(isIndicatorOnly = true)
+    }
+}
+
+@Composable
+private fun PhotoItem(photo: Photo, onAction: (HomeAction) -> Unit) {
+    Box(
+        modifier = Modifier
+            .size(156.dp)
+            .clip(CustomTheme.shapes.photoBig)
+            .background(CustomTheme.colors.grayLight)
+            .clickable(onClick = {
+                onAction(HomeAction.ViewPhoto(id = photo.id))
+            })
+    ) {
+        when (val imageState = photo.imageState) {
+            is UiState.Success -> Image(
+                bitmap = imageState.data,
+                contentDescription = stringResource(
+                    R.string.fetched_photo_description
+                ),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+            is UiState.Loading -> LoadingIndicator(
+                modifier = Modifier.fillMaxSize(),
+                isIndicatorOnly = true
+            )
+            is UiState.Error -> ErrorPlaceholder()
         }
     }
 }
