@@ -1,5 +1,6 @@
 package bob.colbaskin.webantpractice.home.presentation.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -206,7 +207,9 @@ private fun PhotosGrid(
                             photo?.let { PhotoItem(it, onAction) }
                         }
                         item(span = { GridItemSpan(2) }) {
-                            if (photos.loadState.append == LoadState.Loading) {
+                            AnimatedVisibility(
+                                visible = photos.loadState.append == LoadState.Loading
+                            ) {
                                 LoadingIndicator(Modifier.fillMaxWidth().height(40.dp))
                             }
                         }
