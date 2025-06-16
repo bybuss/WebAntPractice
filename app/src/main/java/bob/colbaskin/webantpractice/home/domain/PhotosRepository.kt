@@ -20,4 +20,14 @@ interface PhotosRepository {
     suspend fun getPhotoNameById(id: Int): Result<String>
 
     suspend fun getPhotoById(id: Int): Result<FullPhoto>
+
+    suspend fun updatePhoto(
+        id: Int,
+        fileId: Int,
+        userId: Int,
+        description: String,
+        name: String,
+        isNew: Boolean,
+        isPopular: Boolean
+    ): Result<FullPhoto>
 }

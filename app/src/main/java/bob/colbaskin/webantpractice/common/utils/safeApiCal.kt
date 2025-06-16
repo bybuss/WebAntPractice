@@ -43,6 +43,10 @@ suspend inline fun <reified  T, reified  R> safeApiCall(
                         title = context.getString(R.string.authorization_error_title),
                         text = context.getString(R.string.authorization_error_text)
                     )
+                    403 -> Result.Error(
+                        title = context.getString(R.string.forbidden_error_title),
+                        text = context.getString(R.string.forbidden_error_text)
+                    )
                     422 -> Result.Error(
                         title = context.getString(R.string.fields_error_title),
                         text = context.getString(R.string.fields_error_text)

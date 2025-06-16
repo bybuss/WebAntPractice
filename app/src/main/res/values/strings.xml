@@ -40,6 +40,8 @@
     <string name="user_credentials_error_text">Пожалуйста, проверьте ваши данные.</string>
     <string name="null_error_title">Неудалось получить данные!</string>
     <string name="no_results_found_error">No results found</string>
+    <string name="forbidden_error_title">Доступ запрещен!</string>
+    <string name="forbidden_error_text">У вас недостаточно прав для совершения данного дествия.</string>
 
     <string name="checkbox_new">New</string>
     <string name="checkbox_popular">Popular</string>
@@ -82,6 +84,7 @@
     <string name="next">Next</string>
     <string name="tab_new">New</string>
     <string name="tab_popular">Popular</string>
+    <string name="confirm_button">Confirm</string>
 
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>

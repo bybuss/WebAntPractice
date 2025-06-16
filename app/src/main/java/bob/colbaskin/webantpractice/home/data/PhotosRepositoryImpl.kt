@@ -7,6 +7,7 @@ import bob.colbaskin.webantpractice.common.utils.safeApiCall
 import bob.colbaskin.webantpractice.home.data.models.FullPhotoResponse
 import bob.colbaskin.webantpractice.home.data.models.PhotoNameOnlyResponse
 import bob.colbaskin.webantpractice.home.data.models.PhotosResponse
+import bob.colbaskin.webantpractice.home.data.models.UpdatePhotoBody
 import bob.colbaskin.webantpractice.home.domain.PhotosApiService
 import bob.colbaskin.webantpractice.home.domain.PhotosRepository
 import bob.colbaskin.webantpractice.home.domain.models.FullPhoto
@@ -71,6 +72,33 @@ class PhotosRepositoryImpl @Inject constructor(
         Log.d(TAG, "Fetching full photo for id: $id")
         return safeApiCall<FullPhotoResponse, FullPhoto>(
             apiCall = { photosApi.getPhotoById(id) },
+            successHandler = { it.toDomain() },
+            context = context
+        )
+    }
+
+    override suspend fun updatePhoto(
+        id: Int,
+        fileId: Int,
+        userId: Int,
+        description: String,
+        name: String,
+        isNew: Boolean,
+        isPopular: Boolean
+    ): Result<FullPhoto> {
+        Log.d(TAG, "Updating photo for id: $id")
+        return safeApiCall<FullPhotoResponse, FullPhoto>(
+            apiCall = { photosApi.updatePhoto(
+                id = id,
+                body = UpdatePhotoBody(
+                    file = "/files/$fileId",
+                    user = "/users/$userId",
+                    description = description,
+                    name = name,
+                    new = isNew,
+                    popular = isPopular
+                )
+            ) },
             successHandler = { it.toDomain() },
             context = context
         )
