@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,6 +38,7 @@ import kotlinx.coroutines.launch
 fun LoadingIndicator(
     modifier: Modifier = Modifier,
     isIndicatorOnly: Boolean = false,
+    color: Color = CustomTheme.colors.gray
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -44,7 +46,7 @@ fun LoadingIndicator(
     ) {
         Column {
             CircularProgressIndicator(
-                color = CustomTheme.colors.gray,
+                color = color,
                 modifier = Modifier
                     .size(40.dp)
                     .align(alignment = Alignment.CenterHorizontally)
