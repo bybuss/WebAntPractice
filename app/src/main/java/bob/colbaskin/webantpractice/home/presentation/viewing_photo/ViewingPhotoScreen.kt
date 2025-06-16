@@ -32,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import bob.colbaskin.webantpractice.R
@@ -100,17 +101,12 @@ private fun ViewingPhotoScreen(
             text = photoState.text,
             modifier = modifier.fillMaxSize()
         )
-        is UiState.Success -> {
-            PhotoViewing(
-                state = state,
-                modifier = modifier
-            )
-        }
+        is UiState.Success -> PhotoViewingContent(state, modifier)
     }
 }
 
 @Composable
-private fun PhotoViewing(
+private fun PhotoViewingContent(
     state: ViewingPhotoState,
     modifier: Modifier = Modifier
 ) {
@@ -120,6 +116,10 @@ private fun PhotoViewing(
     }
     val fullPhotoState = (state.fullPhoto as UiState.Success).data
 
+    LaunchedEffect(transformState.isTransformInProgress) {
+        if (!transformState.isTransformInProgress && scale > 1f || scale < 1f) scale = 1f
+    }
+
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -128,10 +128,9 @@ private fun PhotoViewing(
         item {
             Box(
                 modifier = Modifier
-                    .graphicsLayer(scaleX = scale, scaleY = scale)
-                    .transformable(state = transformState)
                     .background(CustomTheme.colors.grayLight)
-                    .height(360.dp),
+                    .height(240.dp)
+                    .zIndex(100f),
                 contentAlignment = Alignment.Center
             ) {
                 val imageState = fullPhotoState.imageState
@@ -141,7 +140,10 @@ private fun PhotoViewing(
                             bitmap = imageState.data,
                             contentDescription = stringResource(R.string.fetched_photo_description),
                             contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .graphicsLayer(scaleX = scale, scaleY = scale)
+                                .transformable(state = transformState)
                         )
                     }
                     else -> LoadingIndicator(
