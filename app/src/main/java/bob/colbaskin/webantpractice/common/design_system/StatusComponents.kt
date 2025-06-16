@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -34,31 +35,47 @@ import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeThe
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoadingIndicator() {
-    Box(contentAlignment = Alignment.Center) {
+fun LoadingIndicator(
+    modifier: Modifier = Modifier,
+    isIndicatorOnly: Boolean = false,
+    color: Color = CustomTheme.colors.gray
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+    ) {
         Column {
             CircularProgressIndicator(
-                color = CustomTheme.colors.gray,
+                color = color,
                 modifier = Modifier
                     .size(40.dp)
                     .align(alignment = Alignment.CenterHorizontally)
                 ,
                 strokeWidth = 2.dp
             )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = stringResource(R.string.loading),
-                style = CustomTheme.typography.p,
-                color = CustomTheme.colors.gray,
-                modifier = Modifier
-            )
+            if (!isIndicatorOnly) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = stringResource(R.string.loading),
+                    style = CustomTheme.typography.p,
+                    color = CustomTheme.colors.gray,
+                    modifier = Modifier
+                )
+            }
         }
     }
 }
 
 @Composable
-fun ErrorIndicator(title: String, text: String) {
-    Box(contentAlignment = Alignment.Center) {
+fun ErrorIndicator(
+    title: String,
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+    ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
                 painter = painterResource(R.drawable.webant_error_logo),

@@ -8,10 +8,15 @@ data class SignUpState(
     val birthday: Long? = null,
     val phone: String = "",
     val email: String = "",
-    val isEmailValid: Boolean = false,
     val password: String = "",
     val confirmPassword: String = "",
-    val isPasswordEquals: Boolean = false,
     val isLoading: Boolean = false,
     val authState: UiState<User> = UiState.Loading
-)
+) {
+    val isEmailValid: Boolean
+        get() = email.isNotEmpty() &&
+                android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
+    val isPasswordEquals: Boolean
+        get() = password == confirmPassword
+}

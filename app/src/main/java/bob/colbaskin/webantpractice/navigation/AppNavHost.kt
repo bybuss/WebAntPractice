@@ -54,7 +54,7 @@ fun AppNavHost(uiState: UiState.Success<UserPreferences>) {
         ) {
             onboardingGraph(navController, initialOnboardingStatus, snackbarHostState)
             mainGraph(navController)
-            detailedGraph(navController)
+            detailedGraph(navController, snackbarHostState)
         }
     }
 }
@@ -81,10 +81,14 @@ private fun NavDestination.getCurrentScreen(): Screens? {
             Screens.ChangePassword::class.qualifiedName -> Screens.ChangePassword
             else -> {
                 when {
-                    segments.contains(Screens.ViewingPhoto::class.qualifiedName) ->
-                        Screens.ViewingPhoto(lastSegment ?: "")
-                    segments.contains(Screens.EditingPhoto::class.qualifiedName) ->
-                        Screens.EditingPhoto(lastSegment ?: "")
+                    segments.size > 1 && segments[0] == "viewingPhoto" -> {
+                        val id = segments[1].toIntOrNull()
+                        Screens.ViewingPhoto(id ?: -1)
+                    }
+                    segments.size > 1 && segments[0] == "editingPhoto" -> {
+                        val id = segments[1].toIntOrNull()
+                        Screens.EditingPhoto(id ?: -1)
+                    }
                     else -> null
                 }
             }

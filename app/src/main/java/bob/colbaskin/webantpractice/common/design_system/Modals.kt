@@ -153,7 +153,7 @@ fun DatePickerModal(
     ) {
         DatePicker(
             state = datePickerState,
-            colors = DatePickerDefaults.getColors()
+            colors = DatePickerDefaults.getColors(TextFieldType.UserName)
         )
     }
 }

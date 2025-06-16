@@ -36,13 +36,16 @@ fun NavGraphBuilder.mainGraph(navController: NavHostController) {
     }
 }
 
-fun NavGraphBuilder.detailedGraph(navController: NavHostController) {
+fun NavGraphBuilder.detailedGraph(
+    navController: NavHostController,
+    snackbarHostState: SnackbarHostState
+) {
     navigation<Graphs.Detailed> (startDestination = Screens.Settings) {
         animatedTransition<Screens.ViewingPhoto> {
-            ViewingPhotoScreenRoot(navController)
+            ViewingPhotoScreenRoot(navController, snackbarHostState)
         }
         animatedTransition<Screens.EditingPhoto> {
-            EditingPhotoScreenRoot(navController)
+            EditingPhotoScreenRoot(navController, snackbarHostState)
         }
         animatedTransition<Screens.AddPhotoData> { AddPhotoScreenRoot(navController) }
         animatedTransition<Screens.Settings> { SettingsScreenRoot(navController) }

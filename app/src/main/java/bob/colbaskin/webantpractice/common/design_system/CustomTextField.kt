@@ -128,7 +128,8 @@ fun CustomTextField(
                             append(" *")
                         }
                     }
-                }
+                },
+                style = CustomTheme.typography.p
             )
         },
         trailingIcon = {
@@ -202,7 +203,7 @@ fun CustomTextField(
                 )
             )
         },
-        colors = TextFieldDefaults.getOutlinedColors()
+        colors = TextFieldDefaults.getOutlinedColors(type)
     )
 }
 

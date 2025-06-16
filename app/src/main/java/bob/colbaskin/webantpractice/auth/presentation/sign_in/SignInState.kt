@@ -4,8 +4,11 @@ import bob.colbaskin.webantpractice.common.UiState
 
 data class SignInState(
     val email: String = "",
-    val isEmailValid: Boolean = false,
     val password: String = "",
     val isLoading: Boolean = false,
     val authState: UiState<Unit> = UiState.Loading
-)
+) {
+    val isEmailValid: Boolean
+        get() = email.isNotEmpty() &&
+                android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+}

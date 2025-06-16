@@ -19,6 +19,7 @@
     <string name="check_mark_logo_description">Check mark icon</string>
     <string name="back_arrow_logo_description">Back arrow icon</string>
     <string name="settings_logo_description">Settings icon</string>
+    <string name="fetched_photo_description">Photo from api</string>
 
     <string name="loading">Loading…</string>
     <string name="error_title">Sorry!</string>
@@ -33,10 +34,14 @@
     <string name="generic_error_text">An unexpected error occurred. \nOur team has been notified.</string>
     <string name="server_error_title">System Error!</string>
     <string name="server_error_text">Server is temporarily unavailable. \nPlease try again later.</string>
-    <string name="fields_error_title">Неправильно введена почта!</string>
-    <string name="fields_error_text">Пожалуйста, введите почту корректно или проверьте другие поля.</string>
+    <string name="fields_error_title">Неправильно заполнены поля!</string>
+    <string name="fields_error_text">Пожалуйста, введите данные корректно.</string>
     <string name="user_credentials_error_title">Такого пользователя несуществует!</string>
     <string name="user_credentials_error_text">Пожалуйста, проверьте ваши данные.</string>
+    <string name="null_error_title">Неудалось получить данные!</string>
+    <string name="no_results_found_error">No results found</string>
+    <string name="forbidden_error_title">Доступ запрещен!</string>
+    <string name="forbidden_error_text">У вас недостаточно прав для совершения данного дествия.</string>
 
     <string name="checkbox_new">New</string>
     <string name="checkbox_popular">Popular</string>
@@ -51,7 +56,7 @@
     <string name="error_birthday">Invalid date format</string>
     <string name="error_phone_number">Invalid phone number format</string>
     <string name="error_email">Invalid email address</string>
-    <string name="error_password">Password must be at least 8 characters</string>
+    <string name="error_password">Passwords don`t match</string>
     <string name="error_confirm_password">Passwords don`t match</string>
     <string name="error_empty_field">This field cannot be empty</string>
     <string name="toast_photo_successfully">Photo uploaded successfully</string>
@@ -77,6 +82,9 @@
     <string name="top_bar_title_all_photos">All photos</string>
 
     <string name="next">Next</string>
+    <string name="tab_new">New</string>
+    <string name="tab_popular">Popular</string>
+    <string name="confirm_button">Confirm</string>
 
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>

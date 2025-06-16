@@ -20,19 +20,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import bob.colbaskin.webantpractice.R
 import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.common.design_system.theme.WebAntPracticeTheme
 
+data class MenuItem(
+    val text: String,
+    val action: () -> Unit
+)
+
 @Composable
 fun Dropdown(
     modifier: Modifier = Modifier,
-    menuItemData: List<String>,
+    menuItemData: List<MenuItem>,
     expanded: Boolean,
     onDismissRequest: () -> Unit,
-    onItemClick: () -> Unit
 ) {
 
     DropdownMenu(
@@ -41,10 +46,10 @@ fun Dropdown(
         modifier = modifier,
         containerColor = CustomTheme.colors.white,
     ) {
-        menuItemData.forEach { text ->
+        menuItemData.forEach { item ->
             DropdownItem(
-                text = text,
-                onClick = onItemClick
+                text = item.text,
+                onClick = item.action
             )
         }
     }
@@ -64,7 +69,8 @@ fun DropdownItem(
         text = {
             Text(
                 text = text,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Start
             )
         },
         onClick = onClick,
@@ -83,7 +89,7 @@ fun DropdownItem(
             },
             disabledTextColor = CustomTheme.colors.gray
         ),
-        interactionSource = interactionSource
+        interactionSource = interactionSource,
     )
 }
 
@@ -102,34 +108,14 @@ private fun DropdownPreview() {
             }
             Dropdown(
                 menuItemData = listOf(
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item",
-                    "Menu Item"
+                    MenuItem("Menu Item") { },
+                    MenuItem("Menu Item") { },
+                    MenuItem("Menu Item") { },
+                    MenuItem("Menu Item") { },
+                    MenuItem("Menu Item") { },
                 ),
                 expanded = expanded,
-                onDismissRequest = { expanded = false },
-                onItemClick = {}
+                onDismissRequest = { expanded = false }
             )
         }
     }
