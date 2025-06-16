@@ -1,17 +1,14 @@
 package bob.colbaskin.webantpractice.home.data
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.util.Log
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import bob.colbaskin.webantpractice.R
 import bob.colbaskin.webantpractice.home.domain.PhotosRepository
 import bob.colbaskin.webantpractice.home.domain.models.Photo
 import bob.colbaskin.webantpractice.common.Result
 import bob.colbaskin.webantpractice.common.UiState
+import bob.colbaskin.webantpractice.common.utils.toImageBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -69,7 +66,7 @@ class PhotoPagingSource(
                     val imageResult = imageDeferred.await()
                     val nameResult = nameDeferred.await()
 
-                    val imageState = processImageResult(imageResult)
+                    val imageState = imageResult.toImageBitmap(context)
                     val nameState = processNameResult(nameResult)
 
                     photo.copy(
@@ -78,20 +75,6 @@ class PhotoPagingSource(
                     )
                 }
             }.awaitAll()
-        }
-    }
-
-    private fun processImageResult(result: Result<ByteArray>): UiState<ImageBitmap> {
-        return when (result) {
-            is Result.Success -> {
-                val bitmap = BitmapFactory.decodeByteArray(result.data, 0, result.data.size)
-                bitmap?.asImageBitmap()?.let { UiState.Success(it) }
-                    ?: UiState.Error(
-                        title = context.getString(R.string.error_title),
-                        text = context.getString(R.string.error_text)
-                    )
-            }
-            is Result.Error -> UiState.Error(result.title, result.text)
         }
     }
 
