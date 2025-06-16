@@ -7,14 +7,15 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import bob.colbaskin.webantpractice.common.design_system.TextButtonType
+import bob.colbaskin.webantpractice.common.design_system.TextFieldType
 import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
 
 @Composable
-fun TextFieldDefaults.getOutlinedColors() = colors(
-    focusedTextColor = CustomTheme.colors.black,
-    unfocusedTextColor = CustomTheme.colors.gray,
-    disabledTextColor = CustomTheme.colors.grayLight,
-    errorTextColor = CustomTheme.colors.black,
+fun TextFieldDefaults.getOutlinedColors(type: TextFieldType) = colors(
+    focusedTextColor = if (type == TextFieldType.Empty) CustomTheme.colors.black else CustomTheme.colors.black,
+    unfocusedTextColor = if (type == TextFieldType.Empty) CustomTheme.colors.black else CustomTheme.colors.gray,
+    disabledTextColor = if (type == TextFieldType.Empty) CustomTheme.colors.black else CustomTheme.colors.grayLight,
+    errorTextColor = if (type == TextFieldType.Empty) CustomTheme.colors.black else CustomTheme.colors.black,
 
     focusedContainerColor = Color.Transparent,
     unfocusedContainerColor = Color.Transparent,
@@ -99,7 +100,7 @@ fun TextFieldDefaults.getColors() = colors(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DatePickerDefaults.getColors() = colors(
+fun DatePickerDefaults.getColors(type: TextFieldType) = colors(
     containerColor = CustomTheme.colors.white,
     titleContentColor = CustomTheme.colors.black,
     headlineContentColor = CustomTheme.colors.black,
@@ -124,7 +125,7 @@ fun DatePickerDefaults.getColors() = colors(
     dayInSelectionRangeContentColor = CustomTheme.colors.white,
     dayInSelectionRangeContainerColor = CustomTheme.colors.main,
     dividerColor = CustomTheme.colors.black,
-    dateTextFieldColors = TextFieldDefaults.getOutlinedColors()
+    dateTextFieldColors = TextFieldDefaults.getOutlinedColors(type)
 )
 
 @Composable
