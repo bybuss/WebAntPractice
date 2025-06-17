@@ -4,7 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.input.TextFieldState
@@ -375,47 +378,55 @@ fun BottomBar(
             Destinations.PROFILE
     )
 
-    NavigationBar(
-        containerColor = CustomTheme.colors.white,
-        contentColor = CustomTheme.colors.graySecondary,
-        modifier = modifier
-    ) {
-        val interactionSource = remember { MutableInteractionSource() }
+    Column {
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth(),
+            color = CustomTheme.colors.gray,
+            thickness = 1.dp
+        )
+        NavigationBar(
+            containerColor = CustomTheme.colors.white,
+            contentColor = CustomTheme.colors.graySecondary,
+            modifier = modifier
+        ) {
+            val interactionSource = remember { MutableInteractionSource() }
 
-        items.forEach { destination ->
-            val selected = currentDestination?.hierarchy?.any {
-                it.hasRoute(destination.screen::class)
-            } == true
-            
-            NavigationBarItem(
-                selected = selected,
-                onClick = {
-                    navController.navigate(destination.screen) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+            items.forEach { destination ->
+                val selected = currentDestination?.hierarchy?.any {
+                    it.hasRoute(destination.screen::class)
+                } == true
+
+                NavigationBarItem(
+                    selected = selected,
+                    onClick = {
+                        navController.navigate(destination.screen) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
-                icon = {
-                    Icon(
-                        painter = painterResource(destination.icon),
-                        contentDescription = stringResource(destination.label)
-                    )
-                },
-                modifier = Modifier,
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = CustomTheme.colors.main,
-                    selectedTextColor = CustomTheme.colors.main,
-                    unselectedIconColor = CustomTheme.colors.graySecondary,
-                    unselectedTextColor = CustomTheme.colors.graySecondary,
-                    disabledIconColor = CustomTheme.colors.gray,
-                    disabledTextColor = CustomTheme.colors.gray,
-                    indicatorColor = Color.Transparent
-                ),
-                interactionSource = interactionSource
-            )
+                    },
+                    icon = {
+                        Icon(
+                            painter = painterResource(destination.icon),
+                            contentDescription = stringResource(destination.label)
+                        )
+                    },
+                    modifier = Modifier,
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = CustomTheme.colors.main,
+                        selectedTextColor = CustomTheme.colors.main,
+                        unselectedIconColor = CustomTheme.colors.graySecondary,
+                        unselectedTextColor = CustomTheme.colors.graySecondary,
+                        disabledIconColor = CustomTheme.colors.gray,
+                        disabledTextColor = CustomTheme.colors.gray,
+                        indicatorColor = Color.Transparent
+                    ),
+                    interactionSource = interactionSource
+                )
+            }
         }
     }
 }
