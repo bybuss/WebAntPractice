@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -77,6 +78,7 @@ fun ViewingPhotoScreenRoot(
                 menuModifier = Modifier.width(200.dp)
             )
         },
+        contentWindowInsets = WindowInsets(0),
         contentColor = CustomTheme.colors.black,
         containerColor = CustomTheme.colors.white
     ) { innerPadding ->
@@ -152,7 +154,7 @@ private fun PhotoViewingContent(
                     )
                 }
             }
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
                 Text(
                     text = fullPhotoState.name,
                     style = CustomTheme.typography.h2,

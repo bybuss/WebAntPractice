@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import bob.colbaskin.webantpractice.home.data.PhotoPagingSource
-import bob.colbaskin.webantpractice.home.domain.PhotosRepository
+import bob.colbaskin.webantpractice.common.photo_api.data.PhotoPagingSource
+import bob.colbaskin.webantpractice.common.photo_api.domain.PhotosRepository
 import bob.colbaskin.webantpractice.home.domain.models.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -51,7 +51,8 @@ class HomeViewModel @Inject constructor(
                     context = context,
                     photosRepository = photosRepository,
                     new = if (selectedIndex == 0) true else null,
-                    popular = if (selectedIndex == 1) true else null
+                    popular = if (selectedIndex == 1) true else null,
+                    itemsPerPage = 20
                 )
             }.flow.cachedIn(viewModelScope)
 

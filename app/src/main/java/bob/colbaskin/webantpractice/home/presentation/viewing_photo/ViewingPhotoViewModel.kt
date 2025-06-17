@@ -10,7 +10,7 @@ import bob.colbaskin.webantpractice.common.UiState
 import bob.colbaskin.webantpractice.common.toUiState
 import bob.colbaskin.webantpractice.common.updateIfSuccess
 import bob.colbaskin.webantpractice.common.utils.toImageBitmap
-import bob.colbaskin.webantpractice.home.domain.PhotosRepository
+import bob.colbaskin.webantpractice.common.photo_api.domain.PhotosRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch

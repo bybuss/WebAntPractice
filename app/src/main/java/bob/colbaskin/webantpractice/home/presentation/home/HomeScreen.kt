@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -105,6 +106,7 @@ fun HomeScreenRoot(
                 }
             }
         },
+        contentWindowInsets = WindowInsets(0),
         contentColor = CustomTheme.colors.black,
         containerColor = CustomTheme.colors.white
     ) { innerPadding ->
@@ -184,7 +186,7 @@ private fun PhotosGrid(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -210,7 +212,11 @@ private fun PhotosGrid(
                             AnimatedVisibility(
                                 visible = photos.loadState.append == LoadState.Loading
                             ) {
-                                LoadingIndicator(Modifier.fillMaxWidth().height(40.dp))
+                                LoadingIndicator(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(40.dp)
+                                )
                             }
                         }
                     }
