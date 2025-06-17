@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.common.editing_photo
+package bob.colbaskin.webantpractice.home.presentation.editing_photo
 
 
 interface EditingPhotoAction {

@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.common.editing_photo
+package bob.colbaskin.webantpractice.home.presentation.editing_photo
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -134,15 +134,14 @@ private fun PhotoEditingContent(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    //.height(360.dp)
-                    .background(CustomTheme.colors.grayLight)
-                    .zIndex(100f),
+                    .background(CustomTheme.colors.grayLight),
                 verticalArrangement = Arrangement.Center
             ) {
                 Box(
                     modifier = Modifier
                         .background(CustomTheme.colors.grayLight)
-                        .height(240.dp),
+                        .height(240.dp)
+                        .zIndex(100f),
                     contentAlignment = Alignment.Center
                 ) {
                     when (val imageState = fullPhotoState.imageState) {
