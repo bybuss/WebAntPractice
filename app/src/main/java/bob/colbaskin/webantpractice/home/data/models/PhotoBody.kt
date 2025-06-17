@@ -3,7 +3,7 @@ package bob.colbaskin.webantpractice.home.data.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UpdatePhotoBody(
+data class PhotoBody(
     val file: String,
     val user: String,
     val description: String,
