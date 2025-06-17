@@ -134,14 +134,14 @@ private fun PhotoEditingContent(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(CustomTheme.colors.grayLight),
+                    .background(CustomTheme.colors.grayLight)
+                    .zIndex(100f),
                 verticalArrangement = Arrangement.Center
             ) {
                 Box(
                     modifier = Modifier
                         .background(CustomTheme.colors.grayLight)
-                        .height(240.dp)
-                        .zIndex(100f),
+                        .height(240.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     when (val imageState = fullPhotoState.imageState) {
