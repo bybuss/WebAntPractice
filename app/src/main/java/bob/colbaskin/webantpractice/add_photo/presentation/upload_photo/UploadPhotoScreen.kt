@@ -150,57 +150,61 @@ private fun UploadPhotoScreen(
         if (!transformState.isTransformInProgress && scale > 1f || scale < 1f) scale = 1f
     }
 
-    if (state.isLoading) LoadingIndicator(modifier = Modifier.fillMaxSize())
-
-
-    Column(modifier = modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(360.dp)
-                .background(CustomTheme.colors.grayLight),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Box(
-                modifier = Modifier
-                    .background(CustomTheme.colors.grayLight)
-                    .height(240.dp)
-                    .zIndex(100f),
-                contentAlignment = Alignment.Center
-            ) {
-                state.selectedImage?.let { uri ->
-                    Image(
-                        painter = rememberAsyncImagePainter(uri),
-                        contentDescription = stringResource(R.string.fetched_photo_description),
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .graphicsLayer(scaleX = scale, scaleY = scale)
-                            .transformable(state = transformState)
-                    )
-                } ?: Text(
-                    text = stringResource(R.string.empty_selected_photo),
-                    style = CustomTheme.typography.h3,
-                    color = CustomTheme.colors.gray
-                )
-            }
+    when {
+        state.isLoading == true -> {
+            LoadingIndicator(modifier = Modifier.fillMaxSize().background(CustomTheme.colors.white))
         }
-        Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
-            Text(
-                text = stringResource(R.string.select_photo),
-                style = CustomTheme.typography.p,
-                color = CustomTheme.colors.black
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(4),
-                modifier = Modifier.fillMaxSize(),
-                horizontalArrangement = Arrangement.spacedBy(5.dp),
-                verticalArrangement = Arrangement.spacedBy(5.dp)
-            ) {
-                repeat(100) {
-                    item {
-                        PhotoItem(onAction)
+        else -> {
+            Column(modifier = modifier.fillMaxSize()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(360.dp)
+                        .background(CustomTheme.colors.grayLight),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .background(CustomTheme.colors.grayLight)
+                            .height(240.dp)
+                            .zIndex(100f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        state.selectedImage?.let { uri ->
+                            Image(
+                                painter = rememberAsyncImagePainter(uri),
+                                contentDescription = stringResource(R.string.fetched_photo_description),
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .graphicsLayer(scaleX = scale, scaleY = scale)
+                                    .transformable(state = transformState)
+                            )
+                        } ?: Text(
+                            text = stringResource(R.string.empty_selected_photo),
+                            style = CustomTheme.typography.h3,
+                            color = CustomTheme.colors.gray
+                        )
+                    }
+                }
+                Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
+                    Text(
+                        text = stringResource(R.string.select_photo),
+                        style = CustomTheme.typography.p,
+                        color = CustomTheme.colors.black
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(4),
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalArrangement = Arrangement.spacedBy(5.dp),
+                        verticalArrangement = Arrangement.spacedBy(5.dp)
+                    ) {
+                        repeat(100) {
+                            item {
+                                PhotoItem(onAction)
+                            }
+                        }
                     }
                 }
             }
