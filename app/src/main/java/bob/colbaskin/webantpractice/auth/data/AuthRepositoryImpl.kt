@@ -47,14 +47,14 @@ class AuthRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun saveCurrentUser(): Result<Unit> {
+    override suspend fun getCurrentUser(): Result<User> {
         Log.d(TAG, "Saving current user")
-        return safeApiCall<UserResponse, Unit>(
+        return safeApiCall<UserResponse, User>(
             apiCall = { authApi.getCurrentUser() },
             successHandler = { response ->
-                Log.d(TAG, "Successfully fetched user")
                 val user = response.toDomain()
-                userPreferences.saveUser(user)
+                Log.d(TAG, "Successfully fetched user: $user")
+                user
             },
             context = context
         )
@@ -81,10 +81,9 @@ class AuthRepositoryImpl @Inject constructor(
                 )
             },
             successHandler = { response ->
-                Log.d(TAG, "Registration successful. Saving user data & Authenticated status")
                 userPreferences.saveAuthStatus(AuthConfig.AUTHENTICATED)
                 val user = response.toDomain()
-                userPreferences.saveUser(user)
+                Log.d(TAG, "Registration successful. Saving user data & Authenticated status\n$user")
                 user
             },
             context = context

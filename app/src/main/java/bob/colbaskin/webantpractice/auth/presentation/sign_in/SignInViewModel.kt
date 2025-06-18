@@ -36,8 +36,6 @@ class SignInViewModel @Inject constructor(
                 password = state.password
             ).toUiState()
 
-            authRepository.saveCurrentUser()
-
             state = state.copy(
                 authState = response,
                 isLoading = false

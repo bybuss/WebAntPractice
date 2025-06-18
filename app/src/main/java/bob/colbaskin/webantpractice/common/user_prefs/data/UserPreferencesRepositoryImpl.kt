@@ -16,31 +16,8 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override fun getUserPreferences(): Flow<UserPreferences> = dataStore.getUserPreferences()
 
-    override fun getUser(): Flow<User> = dataStore.getUserPreferences().map { it.toDomain() }
-
     override suspend fun saveAuthStatus(status: AuthConfig) = dataStore.saveAuthStatus(status)
 
     override suspend fun saveOnboardingStatus(status: OnboardingConfig)
         = dataStore.saveOnboardingStatus(status)
-
-    override suspend fun saveUser(user: User) {
-        return dataStore.saveUser(
-            userId = user.id,
-            username = user.displayName,
-            birthDateMs = user.birthday,
-            phone = user.phone,
-            email = user.email,
-            avatarUrl = user.userProfilePhoto,
-        )
-    }
-
-    override suspend fun saveUsername(username: String) = dataStore.saveUsername(username)
-
-    override suspend fun saveAvatarUrl(avatarUrl: String?) = dataStore.saveAvatarUrl(avatarUrl)
-
-    override suspend fun saveBirthDateMs(birthDateMs: Long) = dataStore.saveBirthDateMs(birthDateMs)
-
-    override suspend fun savePhone(phone: String) = dataStore.savePhone(phone)
-
-    override suspend fun saveEmail(email: String) = dataStore.saveEmail(email)
 }
