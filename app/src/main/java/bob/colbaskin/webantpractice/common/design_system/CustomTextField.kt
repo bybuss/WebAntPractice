@@ -57,6 +57,7 @@ fun CustomTextField(
     text: String? = null,
     type: TextFieldType,
     selectedDate: Long? = null,
+    placeholderText: String? = null,
     onValueChange: (String) -> Unit = {},
     onDateSelected: (Long?) -> Unit = {},
     isRequired: Boolean = false,
@@ -107,7 +108,7 @@ fun CustomTextField(
             Text(
                 text = buildAnnotatedString {
                     append(
-                        stringResource(
+                        text = placeholderText ?: stringResource(
                             id = when (type) {
                                 TextFieldType.UserName -> R.string.placeholder_user_name
                                 TextFieldType.Birthday -> R.string.placeholder_birthday
