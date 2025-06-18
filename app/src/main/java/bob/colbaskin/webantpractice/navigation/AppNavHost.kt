@@ -53,7 +53,7 @@ fun AppNavHost(uiState: UiState.Success<UserPreferences>) {
             modifier = Modifier.padding(innerPadding)
         ) {
             onboardingGraph(navController, initialOnboardingStatus, snackbarHostState)
-            mainGraph(navController)
+            mainGraph(navController, snackbarHostState)
             detailedGraph(navController, snackbarHostState)
         }
     }
@@ -74,9 +74,8 @@ private fun NavDestination.getCurrentScreen(): Screens? {
             Screens.SignIn::class.qualifiedName -> Screens.SignIn
             Screens.SignUp::class.qualifiedName -> Screens.SignUp
             Screens.Home::class.qualifiedName -> Screens.Home
-            Screens.AddPhoto::class.qualifiedName -> Screens.AddPhoto
+            Screens.UploadPhoto::class.qualifiedName -> Screens.UploadPhoto
             Screens.Profile::class.qualifiedName -> Screens.Profile
-            Screens.AddPhotoData::class.qualifiedName -> Screens.AddPhotoData
             Screens.Settings::class.qualifiedName -> Screens.Settings
             Screens.ChangePassword::class.qualifiedName -> Screens.ChangePassword
             else -> {
@@ -88,6 +87,11 @@ private fun NavDestination.getCurrentScreen(): Screens? {
                     segments.size > 1 && segments[0] == "editingPhoto" -> {
                         val id = segments[1].toIntOrNull()
                         Screens.EditingPhoto(id ?: -1)
+                    }
+                    segments.size > 1 && segments[0] == "addPhotoData" -> {
+                        val fileId = segments[1].toIntOrNull()
+                        val imageUri = segments[2].toString()
+                        Screens.AddPhotoData(fileId ?: -1, imageUri)
                     }
                     else -> null
                 }

@@ -16,8 +16,8 @@ enum class Destinations(
     ),
     ADD_PHOTO(
         icon = R.drawable.camera,
-        label = R.string.nav_add_photo,
-        screen = Screens.AddPhoto
+        label = R.string.nav_upload_photo,
+        screen = Screens.UploadPhoto
     ),
     PROFILE(
         icon = R.drawable.profile,

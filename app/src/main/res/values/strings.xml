@@ -55,6 +55,9 @@
     <string name="placeholder_password">Password</string>
     <string name="placeholder_confirm_password">Confirm password</string>
     <string name="placeholder_empty"> </string>
+    <string name="placeholder_name">Name</string>
+    <string name="placeholder_description">Description</string>
+
     <string name="error_user_name">Username must be 3–20 characters long</string>
     <string name="error_birthday">Invalid date format</string>
     <string name="error_phone_number">Invalid phone number format</string>
@@ -62,6 +65,7 @@
     <string name="error_password">Passwords don`t match</string>
     <string name="error_confirm_password">Passwords don`t match</string>
     <string name="error_empty_field">This field cannot be empty</string>
+
     <string name="toast_photo_successfully">Photo uploaded successfully</string>
     <string name="toast_empty_selected_image">Пожалуйста, выберите изображение для загрузки!</string>
 
