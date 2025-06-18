@@ -4,10 +4,11 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
-import bob.colbaskin.webantpractice.add_photo.presentation.AddPhotoScreenRoot
+import bob.colbaskin.webantpractice.add_photo.presentation.add_data.AddDataScreenRoot
+import bob.colbaskin.webantpractice.add_photo.presentation.upload_photo.UploadPhotoScreenRoot
 import bob.colbaskin.webantpractice.auth.presentation.sign_in.SignInScreenRoot
 import bob.colbaskin.webantpractice.auth.presentation.sign_up.SignUpScreenRoot
-import bob.colbaskin.webantpractice.common.editing_photo.EditingPhotoScreenRoot
+import bob.colbaskin.webantpractice.home.presentation.editing_photo.EditingPhotoScreenRoot
 import bob.colbaskin.webantpractice.common.user_prefs.data.models.OnboardingConfig
 import bob.colbaskin.webantpractice.home.presentation.home.HomeScreenRoot
 import bob.colbaskin.webantpractice.home.presentation.viewing_photo.ViewingPhotoScreenRoot
@@ -28,10 +29,15 @@ fun NavGraphBuilder.onboardingGraph(
     }
 }
 
-fun NavGraphBuilder.mainGraph(navController: NavHostController) {
+fun NavGraphBuilder.mainGraph(
+    navController: NavHostController,
+    snackbarHostState: SnackbarHostState
+) {
     navigation<Graphs.Main>(startDestination = Screens.Home) {
         animatedTransition<Screens.Home> { HomeScreenRoot(navController) }
-        animatedTransition<Screens.AddPhoto> { AddPhotoScreenRoot(navController) }
+        animatedTransition<Screens.UploadPhoto> {
+            UploadPhotoScreenRoot(navController, snackbarHostState)
+        }
         animatedTransition<Screens.Profile> { ProfileScreenRoot(navController) }
     }
 }
@@ -47,9 +53,9 @@ fun NavGraphBuilder.detailedGraph(
         animatedTransition<Screens.EditingPhoto> {
             EditingPhotoScreenRoot(navController, snackbarHostState)
         }
-        animatedTransition<Screens.AddPhotoData> { AddPhotoScreenRoot(navController) }
         animatedTransition<Screens.Settings> { SettingsScreenRoot(navController) }
         animatedTransition<Screens.ChangePassword> { ChangePasswordScreenRoot(navController) }
+        animatedTransition<Screens.AddPhotoData> { AddDataScreenRoot(navController, snackbarHostState) }
     }
 }
 
