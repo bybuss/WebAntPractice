@@ -6,5 +6,7 @@ import bob.colbaskin.webantpractice.home.domain.models.PhotoFile
 
 data class UploadPhotoState(
     val selectedImage: Uri? = null,
-    val file: UiState<PhotoFile> = UiState.Loading
+    val file: UiState<PhotoFile> = UiState.Loading,
+    val isLoading: Boolean = false,
+    val navigationEvent: UploadPhotoAction.ToAddPhotoData? = null
 )

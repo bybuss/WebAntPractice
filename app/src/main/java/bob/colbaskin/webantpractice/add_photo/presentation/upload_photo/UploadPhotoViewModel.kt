@@ -29,29 +29,54 @@ class UploadPhotoViewModel @Inject constructor(
         when(action) {
             is UploadPhotoAction.SelectFileFromGallery -> setSelectedImage(action.uri)
             UploadPhotoAction.UploadFile -> uploadFile()
+            UploadPhotoAction.ResetNavigation -> resetNavigation()
             else -> Unit
         }
     }
 
     private fun setSelectedImage(uri: Uri?) {
-        state = state.copy(selectedImage = uri)
+        state = state.copy(selectedImage = uri, file = UiState.Loading)
     }
-    
+
     private fun uploadFile() {
-        state = state.copy(file = UiState.Loading)
+        val uri = state.selectedImage ?: run {
+            state = state.copy(
+                file = UiState.Error(
+                    title = context.getString(R.string.empty_file_upload_error_title),
+                    text = context.getString(R.string.toast_empty_selected_image)
+                )
+            )
+            return
+        }
+
+        state = state.copy(file = UiState.Loading, isLoading = true)
         viewModelScope.launch {
             try {
-                val uri = state.selectedImage ?: throw Exception(context.getString(
-                    R.string.empty_file_upload_error_title
-                ))
                 val (originalName, byteArray) = getFileDataFromUri(uri)
-                val response = photosRepository.uploadFile(originalName, byteArray).toUiState()
-                state = state.copy(file = response)
+                when (val response = photosRepository.uploadFile(originalName, byteArray).toUiState()) {
+                    is UiState.Success -> {
+                        state = state.copy(
+                            file = response,
+                            isLoading = false,
+                            navigationEvent = UploadPhotoAction.ToAddPhotoData(
+                                fileId = response.data.id,
+                                imageUri = uri
+                            )
+                        )
+                    }
+                    is UiState.Error -> {
+                        state = state.copy(file = response, isLoading = false)
+                    }
+                    else -> Unit
+                }
             } catch (e: Exception) {
-                state = state.copy(file = UiState.Error(
-                    title = context.getString(R.string.file_upload_error_title),
-                    text = e.message.toString()
-                ))
+                state = state.copy(
+                    file = UiState.Error(
+                        title = context.getString(R.string.file_upload_error_title),
+                        text = e.message.toString()
+                    ),
+                    isLoading = false
+                )
             }
         }
     }
@@ -76,5 +101,14 @@ class UploadPhotoViewModel @Inject constructor(
             if (cursor.moveToFirst() && nameIndex != -1) return cursor.getString(nameIndex)
         }
         return "image_${System.currentTimeMillis()}"
+    }
+
+    private fun resetNavigation() {
+        state = state.copy(
+            selectedImage = null,
+            file = UiState.Loading,
+            isLoading = false,
+            navigationEvent = null
+        )
     }
 }

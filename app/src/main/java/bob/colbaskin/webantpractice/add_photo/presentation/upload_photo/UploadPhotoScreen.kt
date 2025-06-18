@@ -25,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -42,10 +43,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavHostController
 import bob.colbaskin.webantpractice.R
-import bob.colbaskin.webantpractice.common.UiState
 import bob.colbaskin.webantpractice.common.design_system.FABButton
+import bob.colbaskin.webantpractice.common.design_system.LoadingIndicator
 import bob.colbaskin.webantpractice.common.design_system.TextWithActionTopAppBar
 import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
 import bob.colbaskin.webantpractice.navigation.Screens
@@ -61,6 +65,7 @@ fun UploadPhotoScreenRoot(
     val state = viewModel.state
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
@@ -69,31 +74,44 @@ fun UploadPhotoScreenRoot(
         }
     }
 
+    LaunchedEffect(state.navigationEvent) {
+        state.navigationEvent?.let { event ->
+            navController.navigate(
+                Screens.AddPhotoData(
+                    fileId = event.fileId,
+                    imageUri = event.imageUri.toString()
+                )
+            )
+            viewModel.onAction(UploadPhotoAction.ResetNavigation)
+        }
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_START) {
+                viewModel.onAction(UploadPhotoAction.ResetNavigation)
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
     Scaffold(
         topBar = {
             TextWithActionTopAppBar(
                 title = stringResource(R.string.top_bar_title_all_photos),
                 actionButtonLabel = stringResource(R.string.next),
-                onActionClick = { 
+                onActionClick = {
                     if (state.selectedImage != null) {
                         viewModel.onAction(UploadPhotoAction.UploadFile)
-                        when (state.file) {
-                            is UiState.Success -> {
-                                navController.navigate(Screens.AddPhotoData(
-                                    fileId = state.file.data.id,
-                                    imageUri = state.selectedImage.toString()
-                                ))
-                            }
-                            is UiState.Error -> scope.launch {
-                                snackbarHostState.showSnackbar(state.file.title)
-                            }
-                            else -> {}
-                        }
                     } else {
                         scope.launch {
-                            snackbarHostState.showSnackbar(context.getString(
-                                R.string.toast_empty_selected_image
-                            ))
+                            snackbarHostState.showSnackbar(
+                                context.getString(R.string.toast_empty_selected_image)
+                            )
                         }
                     }
                 }
@@ -131,6 +149,9 @@ private fun UploadPhotoScreen(
     LaunchedEffect(transformState.isTransformInProgress) {
         if (!transformState.isTransformInProgress && scale > 1f || scale < 1f) scale = 1f
     }
+
+    if (state.isLoading) LoadingIndicator(modifier = Modifier.fillMaxSize())
+
 
     Column(modifier = modifier.fillMaxSize()) {
         Column(
@@ -201,9 +222,7 @@ private fun PhotoItem(onAction: (UploadPhotoAction) -> Unit) {
     ) {
         Image(
             painter = painterResource(R.drawable.webant_logo),
-            contentDescription = stringResource(
-                R.string.fetched_photo_description
-            ),
+            contentDescription = stringResource(R.string.fetched_photo_description),
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
