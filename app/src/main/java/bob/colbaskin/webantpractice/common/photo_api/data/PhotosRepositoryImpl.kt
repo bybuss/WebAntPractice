@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.home.data
+package bob.colbaskin.webantpractice.common.photo_api.data
 
 import android.content.Context
 import android.util.Log
@@ -7,11 +7,17 @@ import bob.colbaskin.webantpractice.common.utils.safeApiCall
 import bob.colbaskin.webantpractice.home.data.models.FullPhotoResponse
 import bob.colbaskin.webantpractice.home.data.models.PhotoNameOnlyResponse
 import bob.colbaskin.webantpractice.home.data.models.PhotosResponse
-import bob.colbaskin.webantpractice.home.data.models.UpdatePhotoBody
-import bob.colbaskin.webantpractice.home.domain.PhotosApiService
-import bob.colbaskin.webantpractice.home.domain.PhotosRepository
+import bob.colbaskin.webantpractice.home.data.models.PhotoBody
+import bob.colbaskin.webantpractice.home.data.toDomain
+import bob.colbaskin.webantpractice.common.photo_api.domain.PhotosApiService
+import bob.colbaskin.webantpractice.common.photo_api.domain.PhotosRepository
+import bob.colbaskin.webantpractice.home.data.models.PhotoFileResponse
 import bob.colbaskin.webantpractice.home.domain.models.FullPhoto
 import bob.colbaskin.webantpractice.home.domain.models.Photo
+import bob.colbaskin.webantpractice.home.domain.models.PhotoFile
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 private const val TAG = "Photos"
@@ -88,17 +94,70 @@ class PhotosRepositoryImpl @Inject constructor(
     ): Result<FullPhoto> {
         Log.d(TAG, "Updating photo for id: $id")
         return safeApiCall<FullPhotoResponse, FullPhoto>(
-            apiCall = { photosApi.updatePhoto(
-                id = id,
-                body = UpdatePhotoBody(
-                    file = "/files/$fileId",
-                    user = "/users/$userId",
-                    description = description,
-                    name = name,
-                    new = isNew,
-                    popular = isPopular
+            apiCall = {
+                photosApi.updatePhoto(
+                    id = id,
+                    body = PhotoBody(
+                        file = "/files/$fileId",
+                        user = "/users/$userId",
+                        description = description,
+                        name = name,
+                        new = isNew,
+                        popular = isPopular
+                    )
                 )
-            ) },
+            },
+            successHandler = { it.toDomain() },
+            context = context
+        )
+    }
+
+    override suspend fun uploadFile(
+        originalName: String,
+        file: ByteArray
+    ): Result<PhotoFile> {
+        Log.d(TAG, "Uploading file: $originalName")
+        val originalNamePart = MultipartBody.Part.createFormData(
+            name = "originalName",
+            filename = null,
+            body = originalName.toRequestBody("text/plain".toMediaTypeOrNull())
+        )
+        val filePart = MultipartBody.Part.createFormData(
+            name = "file",
+            filename = originalName,
+            body = file.toRequestBody("image/*".toMediaTypeOrNull())
+        )
+        return safeApiCall<PhotoFileResponse, PhotoFile>(
+            apiCall = {
+                photosApi.uploadFile(originalNamePart, filePart)
+            },
+            successHandler = { it.toDomain() },
+            context = context
+        )
+    }
+
+    override suspend fun createPhoto(
+        fileId: Int,
+        userId: Int,
+        description: String,
+        name: String,
+        isNew: Boolean,
+        isPopular: Boolean
+    ): Result<FullPhoto> {
+        Log.d(TAG, "Creating new photo: $name")
+        return safeApiCall<FullPhotoResponse, FullPhoto>(
+            apiCall = {
+                photosApi.createPhoto(
+                    body = PhotoBody(
+                        file = "/files/$fileId",
+                        user = "/users/$userId",
+                        description = description,
+                        name = name,
+                        new = isNew,
+                        popular = isPopular
+                    )
+                )
+            },
             successHandler = { it.toDomain() },
             context = context
         )

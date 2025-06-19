@@ -1,4 +1,4 @@
-package bob.colbaskin.webantpractice.common.editing_photo
+package bob.colbaskin.webantpractice.home.presentation.editing_photo
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -134,7 +135,6 @@ private fun PhotoEditingContent(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    //.height(360.dp)
                     .background(CustomTheme.colors.grayLight)
                     .zIndex(100f),
                 verticalArrangement = Arrangement.Center
@@ -171,6 +171,7 @@ private fun PhotoEditingContent(
                     onValueChange = {
                         onAction(EditingPhotoAction.UpdateImageName(it))
                     },
+                    placeholderText = stringResource(R.string.placeholder_name)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 CustomTextField(
@@ -179,6 +180,8 @@ private fun PhotoEditingContent(
                     onValueChange = {
                         onAction(EditingPhotoAction.UpdateImageDescription(it))
                     },
+                    placeholderText = stringResource(R.string.placeholder_description),
+                    modifier = Modifier.defaultMinSize(minHeight = 128.dp)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(

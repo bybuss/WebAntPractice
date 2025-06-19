@@ -1,14 +1,14 @@
-package bob.colbaskin.webantpractice.home.data
+package bob.colbaskin.webantpractice.common.photo_api.data
 
 import android.content.Context
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import bob.colbaskin.webantpractice.home.domain.PhotosRepository
-import bob.colbaskin.webantpractice.home.domain.models.Photo
 import bob.colbaskin.webantpractice.common.Result
 import bob.colbaskin.webantpractice.common.UiState
 import bob.colbaskin.webantpractice.common.utils.toImageBitmap
+import bob.colbaskin.webantpractice.common.photo_api.domain.PhotosRepository
+import bob.colbaskin.webantpractice.home.domain.models.Photo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -20,7 +20,8 @@ class PhotoPagingSource(
     private val context: Context,
     private val photosRepository: PhotosRepository,
     private val new: Boolean?,
-    private val popular: Boolean?
+    private val popular: Boolean?,
+    private val itemsPerPage: Int
 ) : PagingSource<Int, Photo>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Photo> {
@@ -28,7 +29,7 @@ class PhotoPagingSource(
         return try {
             val response = photosRepository.getPhotos(
                 page = page,
-                itemsPerPage = ITEMS_PER_PAGE,
+                itemsPerPage = itemsPerPage,
                 order = null,
                 new = new,
                 popular = popular

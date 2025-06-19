@@ -18,7 +18,6 @@ fun UserResponse.toDomain(): User {
     return User(
         id = this.id,
         email = this.email,
-        userProfilePhoto = null,
         birthday = this.birthday.parseToMillis(),
         displayName = this.displayName,
         phone = this.phone

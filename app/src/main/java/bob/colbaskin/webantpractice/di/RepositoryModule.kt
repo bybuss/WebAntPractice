@@ -11,9 +11,9 @@ import bob.colbaskin.webantpractice.common.user_prefs.data.local.datastore.UserD
 import bob.colbaskin.webantpractice.common.user_prefs.domain.UserPreferencesRepository
 import bob.colbaskin.webantpractice.common.user_prefs.data.UserPreferencesRepositoryImpl
 import bob.colbaskin.webantpractice.di.token.TokenManager
-import bob.colbaskin.webantpractice.home.data.PhotosRepositoryImpl
-import bob.colbaskin.webantpractice.home.domain.PhotosApiService
-import bob.colbaskin.webantpractice.home.domain.PhotosRepository
+import bob.colbaskin.webantpractice.common.photo_api.data.PhotosRepositoryImpl
+import bob.colbaskin.webantpractice.common.photo_api.domain.PhotosApiService
+import bob.colbaskin.webantpractice.common.photo_api.domain.PhotosRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

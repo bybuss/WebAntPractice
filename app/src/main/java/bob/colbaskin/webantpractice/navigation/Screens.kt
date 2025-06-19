@@ -1,5 +1,6 @@
 package bob.colbaskin.webantpractice.navigation
 
+import android.net.Uri
 import kotlinx.serialization.Serializable
 
 sealed interface Screens {
@@ -16,7 +17,7 @@ sealed interface Screens {
     data object Home: Screens
 
     @Serializable
-    data object AddPhoto: Screens
+    data object UploadPhoto: Screens
 
     @Serializable
     data object Profile: Screens
@@ -28,7 +29,7 @@ sealed interface Screens {
     data class EditingPhoto(val id: Int?): Screens
 
     @Serializable
-    data object AddPhotoData: Screens
+    data class AddPhotoData(val fileId: Int, val imageUri: String): Screens
 
     @Serializable
     data object Settings: Screens
