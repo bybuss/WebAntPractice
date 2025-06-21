@@ -14,6 +14,7 @@ import bob.colbaskin.webantpractice.home.presentation.home.HomeScreenRoot
 import bob.colbaskin.webantpractice.home.presentation.viewing_photo.ViewingPhotoScreenRoot
 import bob.colbaskin.webantpractice.onboarding.presentation.WelcomeScreenRoot
 import bob.colbaskin.webantpractice.profile.presentation.change_password.ChangePasswordScreenRoot
+import bob.colbaskin.webantpractice.profile.presentation.change_password.SuccessChangePasswordRoot
 import bob.colbaskin.webantpractice.profile.presentation.profile.ProfileScreenRoot
 import bob.colbaskin.webantpractice.profile.presentation.settings.SettingsScreenRoot
 
@@ -53,9 +54,10 @@ fun NavGraphBuilder.detailedGraph(
         animatedTransition<Screens.EditingPhoto> {
             EditingPhotoScreenRoot(navController, snackbarHostState)
         }
-        animatedTransition<Screens.Settings> { SettingsScreenRoot(navController) }
-        animatedTransition<Screens.ChangePassword> { ChangePasswordScreenRoot(navController) }
+        animatedTransition<Screens.Settings> { SettingsScreenRoot(navController, snackbarHostState) }
         animatedTransition<Screens.AddPhotoData> { AddDataScreenRoot(navController, snackbarHostState) }
+        animatedTransition<Screens.ChangePassword> { ChangePasswordScreenRoot(navController) }
+        animatedTransition<Screens.SuccessChangePassword> { SuccessChangePasswordRoot(navController) }
     }
 }
 

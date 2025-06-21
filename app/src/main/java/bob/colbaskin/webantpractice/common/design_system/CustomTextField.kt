@@ -204,7 +204,7 @@ fun CustomTextField(
                 )
             )
         },
-        colors = TextFieldDefaults.getOutlinedColors(type)
+        colors = TextFieldDefaults.getOutlinedColors()
     )
 }
 
