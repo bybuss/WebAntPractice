@@ -23,10 +23,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -39,7 +35,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import bob.colbaskin.webantpractice.R
 import bob.colbaskin.webantpractice.common.UiState
-import bob.colbaskin.webantpractice.common.design_system.Dialog
 import bob.colbaskin.webantpractice.common.design_system.ErrorIndicator
 import bob.colbaskin.webantpractice.common.design_system.LoadingIndicator
 import bob.colbaskin.webantpractice.common.design_system.SettingsTopAppBar
