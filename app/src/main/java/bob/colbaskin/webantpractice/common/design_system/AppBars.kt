@@ -4,8 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -348,22 +347,31 @@ fun SettingsTopAppBar(
     onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    TopAppBar(
-        modifier = modifier,
-        title = {},
-        actions = {
-            CustomIconButton(
-                painterId = R.drawable.settings,
-                contentDescriptionId = stringResource(R.string.settings_logo_description),
-                onClick = onSettingsClick
+    Box{
+        TopAppBar(
+            modifier = modifier,
+            title = {},
+            actions = {
+                CustomIconButton(
+                    painterId = R.drawable.settings,
+                    contentDescriptionId = stringResource(R.string.settings_logo_description),
+                    onClick = onSettingsClick
+                )
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = CustomTheme.colors.white,
+                titleContentColor = CustomTheme.colors.black,
+                actionIconContentColor = CustomTheme.colors.gray
             )
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = CustomTheme.colors.white,
-            titleContentColor = CustomTheme.colors.black,
-            actionIconContentColor = CustomTheme.colors.gray
         )
-    )
+        HorizontalDivider(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth(),
+            color = CustomTheme.colors.gray,
+            thickness = 1.dp
+        )
+    }
 }
 
 @Composable
