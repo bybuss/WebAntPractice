@@ -9,19 +9,24 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -34,29 +39,54 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import bob.colbaskin.webantpractice.R
 import bob.colbaskin.webantpractice.common.UiState
+import bob.colbaskin.webantpractice.common.design_system.Dialog
 import bob.colbaskin.webantpractice.common.design_system.ErrorIndicator
 import bob.colbaskin.webantpractice.common.design_system.LoadingIndicator
+import bob.colbaskin.webantpractice.common.design_system.SettingsTopAppBar
 import bob.colbaskin.webantpractice.common.design_system.theme.CustomTheme
+import bob.colbaskin.webantpractice.common.user_prefs.domain.models.User
 import bob.colbaskin.webantpractice.common.utils.toFormattedDate
-import bob.colbaskin.webantpractice.profile.domain.models.User
+import bob.colbaskin.webantpractice.navigation.Screens
+import bob.colbaskin.webantpractice.profile.presentation.common.ProfileState
+import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun ProfileScreenRoot(
     navController: NavHostController,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
-    ProfileScreen(
-        state = viewModel.state,
-        onAction = viewModel::onAction
-    )
+    Scaffold(
+        topBar = {
+            SettingsTopAppBar(
+                onSettingsClick = { navController.navigate(Screens.Settings) }
+            )
+        },
+        contentWindowInsets = WindowInsets(0),
+        contentColor = CustomTheme.colors.black,
+        containerColor = CustomTheme.colors.white
+    ) { innerPadding ->
+        ProfileScreen(
+            state = viewModel.state,
+            onAction = viewModel::onAction,
+            modifier = Modifier.padding(innerPadding)
+        )
+    }
 }
 
 @Composable
-private fun ProfileScreen(state: ProfileState, onAction: (ProfileAction) -> Unit) {
+private fun ProfileScreen(
+    state: ProfileState,
+    onAction: (ProfileAction) -> Unit,
+    modifier: Modifier = Modifier
+) {
     when (val userState = state.user) {
         is UiState.Success -> {
-            Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-                ProfileHeader(state = state, user = userState)
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+            ) {
+                ProfileHeader(user = userState.data)
                 Spacer(modifier = Modifier.height(16.dp))
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(4),
@@ -84,12 +114,13 @@ private fun ProfileScreen(state: ProfileState, onAction: (ProfileAction) -> Unit
 }
 
 @Composable
-fun ProfileHeader(
-    state: ProfileState, // FIXME: MOST LIKELY THE IMAGE PARAM WILL BE IN THE USER
-    user: UiState.Success<User>
-) {
-    Spacer(modifier = Modifier.height(20.dp))
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+fun ProfileHeader(user: User) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(modifier = Modifier.height(20.dp))
         Box(
             modifier = Modifier
                 .size(80.dp)
@@ -98,36 +129,33 @@ fun ProfileHeader(
                 .border(1.dp, CustomTheme.colors.grayLight, CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            when (val imageState = state.image) {
-                is UiState.Success -> Image(
-                    bitmap = imageState.data,
+            if (user.userProfilePhoto != null) {
+                Image(
+                    painter = rememberAsyncImagePainter(user.userProfilePhoto), // FIXME: REPLACE PAINTER TO IMAGE BITMAP FROM API
                     contentDescription = stringResource(R.string.profile_photo),
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.clip(CircleShape).fillMaxSize()
                 )
-
-                is UiState.Loading -> LoadingIndicator(
-                    modifier = Modifier.fillMaxSize(),
-                    isIndicatorOnly = true
-                )
-
-                is UiState.Error -> Icon(
-                    painter = painterResource(R.drawable.webant_error_logo),
-                    contentDescription = null,
-                    tint = CustomTheme.colors.graySecondary,
-                    modifier = Modifier.wrapContentSize()
+            } else {
+                Image(
+                    painter = painterResource(R.drawable.webant_logo),
+                    contentDescription = stringResource(R.string.profile_photo),
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(vertical = 9.dp, horizontal = 10.dp)
                 )
             }
         }
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.width(20.dp))
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(
-                text = user.data.displayName,
+                text = user.displayName,
                 style = CustomTheme.typography.h3,
                 color = CustomTheme.colors.black
             )
             Text(
-                text = user.data.birthday.toFormattedDate(),
+                text = user.birthday.toFormattedDate(),
                 style = CustomTheme.typography.p,
                 color = CustomTheme.colors.gray
             )
@@ -137,11 +165,12 @@ fun ProfileHeader(
     HorizontalDivider(
         modifier = Modifier
             .fillMaxWidth()
-            .alpha(0.5f),
+            .alpha(0.3f),
         color = CustomTheme.colors.main,
         thickness = 1.dp
     )
 }
+
 @Composable
 private fun PhotoItem(onAction: (ProfileAction) -> Unit) {
     Box(
@@ -156,9 +185,8 @@ private fun PhotoItem(onAction: (ProfileAction) -> Unit) {
         Image(
             painter = painterResource(R.drawable.webant_logo),
             contentDescription = stringResource(R.string.fetched_photo_description),
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             modifier = Modifier.fillMaxSize()
         )
     }
 }
-
