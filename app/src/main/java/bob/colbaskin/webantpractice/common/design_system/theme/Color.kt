@@ -16,7 +16,8 @@ data class AppColors(
     val errorRed: Color,
     val blue: Color,
     val green: Color,
-    val snackbarContainer: Color
+    val snackbarContainer: Color,
+    val avatarEditBox: Color
 )
 
 val LocalColors = compositionLocalOf { lightColors }
@@ -34,7 +35,8 @@ val lightColors = AppColors(
     errorRed = Color(0xFFED3E3E),
     blue = Color(0xFF409EFF),
     green = Color(0xFF1ab46b),
-    snackbarContainer = Color(0xFF717171)
+    snackbarContainer = Color(0xFF717171),
+    avatarEditBox = Color(0xFF1D1D1D)
 )
 
 val darkColors = AppColors(
@@ -50,5 +52,6 @@ val darkColors = AppColors(
     errorRed = Color(0xFFED3E3E),
     blue = Color(0xFF409EFF),
     green = Color(0xFF1ab46b),
-    snackbarContainer = Color(0xFF717171)
+    snackbarContainer = Color(0xFF717171),
+    avatarEditBox = Color(0xFF1D1D1D)
 )
