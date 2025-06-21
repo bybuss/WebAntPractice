@@ -227,7 +227,7 @@ private fun PhotoItem(onAction: (UploadPhotoAction) -> Unit) {
         Image(
             painter = painterResource(R.drawable.webant_logo),
             contentDescription = stringResource(R.string.fetched_photo_description),
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             modifier = Modifier.fillMaxSize()
         )
     }
