@@ -1,6 +1,5 @@
 package bob.colbaskin.webantpractice.navigation
 
-import android.net.Uri
 import kotlinx.serialization.Serializable
 
 sealed interface Screens {
@@ -36,4 +35,7 @@ sealed interface Screens {
 
     @Serializable
     data object ChangePassword: Screens
+
+    @Serializable
+    data object SuccessChangePassword: Screens
 }
