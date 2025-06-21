@@ -12,3 +12,8 @@ fun <T> UiState<T>.updateIfSuccess(block: T.() -> T): UiState<T> {
         else -> this
     }
 }
+
+fun <T> UiState<T>.takeIfSuccess(): T? = when (this) {
+    is UiState.Success -> data
+    else -> null
+}

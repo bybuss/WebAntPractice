@@ -45,6 +45,8 @@
     <string name="forbidden_error_text">У вас недостаточно прав для совершения данного дествия.</string>
     <string name="file_upload_error_title">Не удалось загрузить файл!</string>
     <string name="empty_file_upload_error_title">Вы не можете загрузить фотографию, не выбрав ее!</string>
+    <string name="error_get_user_title">Не удалось получить пользователя!</string>
+    <string name="error_get_user_text">Попробуйте выйте в настройках аккаунта и зайти заново.\nИли попробуйте позже</string>
 
     <string name="checkbox_new">New</string>
     <string name="checkbox_popular">Popular</string>
@@ -98,6 +100,9 @@
 
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
+
+
+    <string name="profile_photo">Profile photo</string>
 
     <string name="nav_home">Home</string>
     <string name="nav_upload_photo">Upload photo</string>

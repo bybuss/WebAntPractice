@@ -14,6 +14,9 @@ import bob.colbaskin.webantpractice.di.token.TokenManager
 import bob.colbaskin.webantpractice.common.photo_api.data.PhotosRepositoryImpl
 import bob.colbaskin.webantpractice.common.photo_api.domain.PhotosApiService
 import bob.colbaskin.webantpractice.common.photo_api.domain.PhotosRepository
+import bob.colbaskin.webantpractice.profile.data.ProfileRepositoryImpl
+import bob.colbaskin.webantpractice.profile.domain.ProfileApiService
+import bob.colbaskin.webantpractice.profile.domain.ProfileRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -90,5 +93,19 @@ object RepositoryModule {
             context = context,
             photosApi = photosApi,
         )
+    }
+    @Provides
+    @Singleton
+    fun provideProfileApiService(retrofit: Retrofit): ProfileApiService {
+        return retrofit.create(ProfileApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileRepository(
+        @ApplicationContext context: Context,
+        profileApi: ProfileApiService
+    ): ProfileRepository {
+        return ProfileRepositoryImpl(context = context, profileApi = profileApi)
     }
 }
