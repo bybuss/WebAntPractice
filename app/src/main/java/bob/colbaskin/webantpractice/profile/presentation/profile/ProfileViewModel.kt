@@ -33,8 +33,8 @@ class ProfileViewModel @Inject constructor(
             else -> Unit
         }
     }
-    private fun getProfile() {
-        state = state.copy(user = UiState.Loading)
+    fun getProfile() {
+        state = state.copy(user = UiState.Loading, isUserUpdated = false)
         viewModelScope.launch {
             val response = authRepository.getCurrentUser().toUiState()
             when (response) {
