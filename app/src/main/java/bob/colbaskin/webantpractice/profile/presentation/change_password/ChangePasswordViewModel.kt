@@ -1,24 +1,20 @@
 package bob.colbaskin.webantpractice.profile.presentation.change_password
 
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import bob.colbaskin.webantpractice.R
 import bob.colbaskin.webantpractice.auth.domain.auth.AuthRepository
 import bob.colbaskin.webantpractice.common.UiState
 import bob.colbaskin.webantpractice.common.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ChangePasswordViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
-    @ApplicationContext private val context: Context
+    private val authRepository: AuthRepository
 ): ViewModel() {
 
     var state by mutableStateOf(ChangePasswordState())

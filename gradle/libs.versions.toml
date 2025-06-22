@@ -14,7 +14,6 @@ navigationCompose = "2.9.0"
 
 # Kotlin serialization
 kotlinxSerializationJson = "1.8.0"
-jetbrainsKotlinJvm = "2.0.0"
 
 # Datastore
 datastorePreferences = "1.1.7"
@@ -120,7 +119,6 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 
 # Serialization
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
 # Datastore
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
