@@ -15,5 +15,8 @@ data class AddDataState(
     val fullPhoto: UiState<FullPhoto> = UiState.Loading
 ) {
     val isConfirmButtonEnabled: Boolean
-        get() = name.isNotEmpty() && description.isNotEmpty() && isNew || isPopular
+        get() =
+            name.isNotEmpty() &&
+                    description.isNotEmpty() &&
+                    (isNew || isPopular)
 }
