@@ -56,7 +56,7 @@ fun NavGraphBuilder.detailedGraph(
         }
         animatedTransition<Screens.Settings> { SettingsScreenRoot(navController, snackbarHostState) }
         animatedTransition<Screens.AddPhotoData> { AddDataScreenRoot(navController, snackbarHostState) }
-        animatedTransition<Screens.ChangePassword> { ChangePasswordScreenRoot(navController) }
+        animatedTransition<Screens.ChangePassword> { ChangePasswordScreenRoot(navController, snackbarHostState) }
         animatedTransition<Screens.SuccessChangePassword> { SuccessChangePasswordRoot(navController) }
     }
 }

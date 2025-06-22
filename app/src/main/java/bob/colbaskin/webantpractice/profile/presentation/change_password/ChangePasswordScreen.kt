@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,8 +27,16 @@ import bob.colbaskin.webantpractice.navigation.Screens
 @Composable
 fun ChangePasswordScreenRoot(
     navController: NavHostController,
+    snackbarHostState: SnackbarHostState,
     viewModel: ChangePasswordViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state
+
+    LaunchedEffect(state.errorMessage) {
+        if (!state.errorMessage.isNullOrEmpty()) {
+            snackbarHostState.showSnackbar(state.errorMessage)
+        }
+    }
     Scaffold(
         topBar = {
             BackTextTopAppBar(
@@ -38,18 +48,20 @@ fun ChangePasswordScreenRoot(
         containerColor = CustomTheme.colors.white
     ) { innerPadding ->
         ChangePasswordScreen(
-            state = viewModel.state,
+            state = state,
             onAction = { action ->
                 when (action) {
                     ChangePasswordAction.NavigateToSuccess -> {
-                        viewModel.state.copy(isLoading = false)
-                        navController.navigate(Screens.SuccessChangePassword) {
-                            popUpTo(Graphs.Detailed) { inclusive = true}
-                        }
+                        viewModel.changePassword()
                     }
                     else -> Unit
                 }
                 viewModel.onAction(action)
+            },
+            onSuccess = {
+                navController.navigate(Screens.SuccessChangePassword) {
+                    popUpTo(Graphs.Detailed) { inclusive = true }
+                }
             },
             modifier = Modifier.padding(innerPadding)
         )
@@ -59,9 +71,16 @@ fun ChangePasswordScreenRoot(
 @Composable
 private fun ChangePasswordScreen(
     state: ChangePasswordState,
+    onSuccess: () -> Unit,
     onAction: (ChangePasswordAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    LaunchedEffect(state.isPasswordChanged) {
+        if (state.isPasswordChanged) {
+            onSuccess()
+        }
+    }
+
     Column(modifier = modifier.padding(16.dp)) {
         Text(
             text = stringResource(R.string.enter_new_password),
