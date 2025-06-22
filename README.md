@@ -63,8 +63,10 @@
 | **Secrets Plugin**            | Сокрытие конфиденциальной информации                           |
 
 ## Установка
-<p align="center"> <img src="screenshots/qr.png" alt="Главный экран - Симуляция забега" width="125" /> </p>
-<p align="center">Или скачать по ссылке на <a href="https://www.rustore.ru/catalog/app/bob.colbaskin.iubip_spring2025">RuStore</a></p>
+
+<p align="center">Ссылка на текущую версию <a href="https://github.com/bybuss/WebAntPractice/releases/tag/v1.0.0">Releases</a></p>
+<p align="center"><a href="https://github.com/user-attachments/files/20852622/apk.zip">Прямая ссылка на установку .zip</a></p>
+<p align="center"><a href="https://github.com/bybuss/WebAntPractice/blob/main/app/release/app-release.apk">Прямая ссылка на установку .apk</a></p>
 
 
 ## Портфолио
