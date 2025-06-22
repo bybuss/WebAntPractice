@@ -16,4 +16,18 @@ interface AuthRepository {
         phone: String,
         plainPassword: String
     ): Result<User>
+
+    suspend fun updateUser(
+        id: Int,
+        email: String,
+        birthday: Long,
+        displayName: String,
+        phone: String,
+    ): Result<User>
+
+    suspend fun changePassword(
+        id: Int,
+        oldPassword: String,
+        newPassword: String
+    ): Result<User>
 }

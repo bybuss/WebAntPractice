@@ -2,8 +2,10 @@ package bob.colbaskin.webantpractice.auth.data
 
 import android.content.Context
 import android.util.Log
+import bob.colbaskin.webantpractice.auth.data.models.ChangePasswordBody
 import bob.colbaskin.webantpractice.auth.data.models.RegisterRequestBody
 import bob.colbaskin.webantpractice.auth.data.models.TokenResponse
+import bob.colbaskin.webantpractice.auth.data.models.UpdateUserBody
 import bob.colbaskin.webantpractice.auth.data.models.UserResponse
 import bob.colbaskin.webantpractice.auth.data.models.toDomain
 import bob.colbaskin.webantpractice.auth.domain.auth.AuthApiService
@@ -84,6 +86,60 @@ class AuthRepositoryImpl @Inject constructor(
                 userPreferences.saveAuthStatus(AuthConfig.AUTHENTICATED)
                 val user = response.toDomain()
                 Log.d(TAG, "Registration successful. Saving user data & Authenticated status\n$user")
+                user
+            },
+            context = context
+        )
+    }
+
+    override suspend fun updateUser(
+        id: Int,
+        email: String,
+        birthday: Long,
+        displayName: String,
+        phone: String,
+    ): Result<User> {
+        Log.d(TAG, "Updating user: $id")
+        return safeApiCall<UserResponse, User>(
+            apiCall = {
+                authApi.updateUser(
+                    id = id,
+                    body = UpdateUserBody(
+                        email = email,
+                        birthday = birthday.formatFromMillis(),
+                        displayName = displayName,
+                        phone = phone
+                    )
+                )
+            },
+            successHandler = { response ->
+                val user = response.toDomain()
+                Log.d(TAG, "User updated: $user")
+                user
+            },
+            context = context
+        )
+    }
+
+    override suspend fun changePassword(
+        id: Int,
+        oldPassword: String,
+        newPassword: String
+    ): Result<User> {
+        Log.d(TAG, "Changing password for user: $id")
+        return safeApiCall<UserResponse, User>(
+            apiCall = {
+                authApi.changePassword(
+                    id = id,
+                    body = ChangePasswordBody(
+                        oldPassword = oldPassword,
+                        plainPassword = newPassword
+                    )
+                )
+            },
+            successHandler = { response ->
+                val user = response.toDomain()
+                Log.d(TAG, "Password changed for user: $id")
                 user
             },
             context = context
