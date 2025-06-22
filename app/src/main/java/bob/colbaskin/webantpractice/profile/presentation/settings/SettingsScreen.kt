@@ -21,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -115,6 +116,12 @@ fun SettingsScreenRoot(
                 showDeletingDialog = false
             }
         )
+    }
+
+    LaunchedEffect(viewModel.state.isUserUpdated) {
+        if (viewModel.state.isUserUpdated) {
+            navController.popBackStack()
+        }
     }
 
     Scaffold(
@@ -278,9 +285,7 @@ fun SettingsContent(
         }
         FilledButton(
             text = stringResource(R.string.save),
-            onClick = {
-                // TODO: SAVE SETTINGS
-            },
+            onClick = { onAction(SettingsAction.Save) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 20.dp),

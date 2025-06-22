@@ -12,4 +12,5 @@ sealed interface SettingsAction {
     data class SelectFileFromGallery(val uri: Uri): SettingsAction
     data object OnDeleteAccountClick: SettingsAction
     data object ChangePassword: SettingsAction
+    data object Save: SettingsAction
 }

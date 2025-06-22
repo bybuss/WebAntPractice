@@ -11,6 +11,7 @@ import bob.colbaskin.webantpractice.R
 import bob.colbaskin.webantpractice.auth.domain.auth.AuthRepository
 import bob.colbaskin.webantpractice.common.UiState
 import bob.colbaskin.webantpractice.common.photo_api.domain.PhotosRepository
+import bob.colbaskin.webantpractice.common.takeIfSuccess
 import bob.colbaskin.webantpractice.common.toUiState
 import bob.colbaskin.webantpractice.common.updateIfSuccess
 import bob.colbaskin.webantpractice.common.user_prefs.data.models.AuthConfig
@@ -46,12 +47,13 @@ class SettingsViewModel @Inject constructor(
             is SettingsAction.UpdateEmail -> updateEmail(action.email)
             SettingsAction.SignOut -> signOut()
             is SettingsAction.SelectFileFromGallery -> setSelectedImage(action.uri)
+            SettingsAction.Save -> saveUserData()
             else -> Unit
         }
     }
 
     private fun getUserData() {
-        state = state.copy(user = UiState.Loading)
+        state = state.copy(user = UiState.Loading, isUserUpdated = false)
 
         viewModelScope.launch {
             val response = authRepository.getCurrentUser().toUiState()
@@ -93,6 +95,21 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             tokenManager.cleatTokens()
             userPreferences.saveAuthStatus(AuthConfig.NOT_AUTHENTICATED)
+        }
+    }
+
+    private fun saveUserData() {
+        val user = state.user.takeIfSuccess() ?: return
+        state = state.copy(user = UiState.Loading, isUserUpdated = false)
+        viewModelScope.launch {
+            val response = authRepository.updateUser(
+                id = user.id,
+                email = user.email,
+                birthday = user.birthday,
+                displayName = user.displayName,
+                phone = user.phone
+            ).toUiState()
+            state = state.copy(user = response, isUserUpdated = response is UiState.Success)
         }
     }
 
