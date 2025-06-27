@@ -14,8 +14,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 
-private const val ITEMS_PER_PAGE = 20
-
 class PhotoPagingSource(
     private val context: Context,
     private val photosRepository: PhotosRepository,
@@ -30,7 +28,7 @@ class PhotoPagingSource(
             val response = photosRepository.getPhotos(
                 page = page,
                 itemsPerPage = itemsPerPage,
-                order = null,
+                order = "desc",
                 new = new,
                 popular = popular
             )
