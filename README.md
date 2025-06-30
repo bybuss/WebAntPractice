@@ -29,7 +29,14 @@
 - **Дизайн‑система** включает собственную тему [`WebAntPracticeTheme`](app/src/main/java/bob/colbaskin/webantpractice/common/design_system/theme/Theme.kt), палитру цветов, шейпы и типографику. Все компоненты интерфейса из [UiKit'а](https://www.figma.com/design/90x9N8TsvSJLx9eecN2zGr/iOS-Тестовое-Gallery?node-id=12685-2013&p=f&t=Ib96xtaazHErKtDj-0) (`AppBars`, `Buttons`, `CustomTextField` и др. также необходимые по макету)  переиспользуются во всех экранах.
 - Все строки и ресурсы вынесены в [`strings.xml`](app/src/main/res/values/strings.xml) и обращение к ним происходит через `R.string.*`, что упрощает локализацию.
 - Для загрузки изображений используется **Coil**, а сетевые запросы выполняются через **Retrofit** с логированием и хранением cookies.
-- **Secrets Plugin** используется для сокрытия конфиденциальной информации в `local.properties`. Для запуска будет необходимо указать нужные данные: `BASE_API_URL`, `CLIENT_ID` и  `CLIENT_SECRET` в `local.properties`
+- **Secrets Plugin** используется для сокрытия конфиденциальной информации в `local.properties`. Для запуска будет необходимо указать нужные данные: `BASE_API_URL`, `CLIENT_ID` и `CLIENT_SECRET`.
+Пример файла `local.properties`, если захотите скачать и запустить проект:
+```properties
+    sdk.dir=...
+    BASE_API_URL=https://example.api/
+    CLIENT_ID=...
+    CLIENT_SECRET=...
+```
 
 ## Скриншоты
 <p align="center">
