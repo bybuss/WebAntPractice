@@ -20,6 +20,7 @@ import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,6 +51,10 @@ fun Search(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
+    LaunchedEffect(searchResults) {
+        expanded = searchResults.isNotEmpty()
+    }
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -73,7 +78,11 @@ fun Search(
                         expanded = false
                     },
                     expanded = expanded,
-                    onExpandedChange = { expanded = it },
+                    onExpandedChange = { newExpanded ->
+                        if (!newExpanded) {
+                            expanded = false
+                        }
+                    },
                     placeholder = { Text(
                         text = stringResource(R.string.search_placeholder)
                     ) },
@@ -107,7 +116,11 @@ fun Search(
                 )
             },
             expanded = expanded,
-            onExpandedChange = { expanded = it },
+            onExpandedChange = { newExpanded ->
+                if (!newExpanded) {
+                    expanded = false
+                }
+            },
             shape = CustomTheme.shapes.search,
             colors = SearchBarDefaults.colors(
                 containerColor = CustomTheme.colors.grayLight,
